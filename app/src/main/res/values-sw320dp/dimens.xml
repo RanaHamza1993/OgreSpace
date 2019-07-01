@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <dimen tools:override="true" name="design_navigation_icon_padding">16dp</dimen>
+    <dimen name="design_bottom_navigation_icon_size" tools:override="true">10dp</dimen>
+    <!--gernal-->
+    <dimen name="subcatbox">130dp</dimen>
+    <dimen name="toolbar_size">40dp</dimen>
+    <dimen name="dialog_width">340dp</dimen>
+    <dimen name="catpic">40dp</dimen>
+    <dimen name="social_btn_height">40dp</dimen>
+    <dimen name="btn_radius">12dp</dimen>
+    <dimen name="catimgsize">48dp</dimen>
+    <dimen name="detailpadding">8dp</dimen>
+    <dimen name="detailmargin">8dp</dimen>
+    <dimen name="creditcardimage">120dp</dimen>
+    <dimen name="creditcard_heading">28sp</dimen>
+    <dimen name="fblogmargin">0dp</dimen>
+    <dimen name="fblogsize">32dp</dimen>
+    <dimen name="logincardmargin">15dp</dimen>
+    <dimen name="fblogpadtop">8dp</dimen>
+    <dimen name="fblogpadRight">4dp</dimen>
+    <dimen name="toolmargin">8dp</dimen>
+    <dimen name="loginInnerMargin">20dp</dimen>
+    <dimen name="app_heading_text">20sp</dimen> <!--used for captions -->
+    <dimen name="app_input_text">16sp</dimen> <!--used in edit texts-->
+    <dimen name="app_input_hint">14sp</dimen> <!--caption that move to about edit text TextAppearance.Design.Hint-->
+    <dimen name="app_upper_hint">18sp</dimen> <!--caption that move to about edit text TextAppearance.Design.Hint-->
+    <dimen name="app_button_text">18sp</dimen> <!--text on button-->
+    <dimen name="app_spinner_text">22sp</dimen> <!--dropdown text-->
+    <dimen name="app_title">30sp</dimen> <!--for big title-->
+    <dimen name="app_normal_text">18sp</dimen> <!--average text like description-->
+    <dimen name="app_small_text">14sp</dimen>
+    <dimen name="app_mini_text">12sp</dimen><!--like tabs text, privacy line-->
+    <dimen name="app_spacing">15dp</dimen> <!--for extra space between to views-->
+    <dimen name="app_spacing_small">7dp</dimen> <!--Normal space between view, used as padding and margins-->
+    <dimen name="app_spacing_smallest">4dp</dimen>
+    <dimen name="app_elevation">2dp</dimen> <!--elevation of buttons cards every thing-->
+    <dimen name="button_elevation">4dp</dimen> <!--elevation of buttons cards every thing-->
+    <dimen name="input_text">22sp</dimen>
+    <dimen name="features_width">285dp</dimen>
+    <dimen name="col1_width">120dp</dimen>
+    <dimen name="col2_width">70dp</dimen>
+    <dimen name="col3_width">80dp</dimen>
+    <dimen name="col4_width">95dp</dimen>
+    <dimen name="col5_width">65dp</dimen>
+    <dimen name="col6_width">60dp</dimen>
+    <dimen name="dialog_img_height">110dp</dimen>
+    <dimen name="ask_question_grid_img_height">100dp</dimen>
+    <dimen name="cross_btn_height">30dp</dimen>
+    <dimen name="ask_small_img_height">65dp</dimen>
+    <dimen name="header_text_padding_left">22dp</dimen>
+    <dimen name="bidding_icon_size">25dp</dimen>
+    <dimen name="input_hint_text">18sp</dimen>
+    <dimen name="seller_img_height_bid_now">130dp</dimen>
+    <dimen name="heart_size_img">30dp</dimen>
+    <dimen name="button_text">22sp</dimen>
+    <dimen name="crossBtn_width_postAd">25dp</dimen>
+    <dimen name="crossBtn_height_postAd">25dp</dimen>
+    <dimen name="linearLayout_top_imageview_width">80dp</dimen>
+    <dimen name="s4b_padding">10dp</dimen>
+    <dimen name="s4b_padding_small">10dp</dimen>
+    <dimen name="cat_item_img_height">40dp</dimen>
+    <dimen name="cardelevation_postAd">20dp</dimen>
+    <dimen name="cardCornorRadius_postAd">5dp</dimen>
+    <dimen name="postPhoto_thumbNail_size">60dp</dimen>
+
+
+
+    <!--cramfrenzy gernal-->
+    <dimen name="homefragmentmargin">8dp</dimen>  <!--homefragment fragment caRD margin-->
+    <dimen name="homefragmentpadding">8dp</dimen>  <!--homefragment fragment caRD margin-->
+    <dimen name="bidcardmargintop">5dp</dimen>  <!--bidcard caRD margin top-->
+    <dimen name="bidcardmarginbot">15dp</dimen>  <!--bidcard caRD margin bottom-->
+    <dimen name="morefragmentmargin">5dp</dimen> <!--more fragment caRD margin-->
+    <dimen name="cramnormaltext">16sp</dimen>    <!--app normal textsize-->
+
+    <dimen name="default_large_textsize">20sp</dimen>
+    <dimen name="default_small_textsize">15sp</dimen>
+    <dimen name="margintop_medium">7dp</dimen>
+
+
+
+    <!--catergoryimages dimens-->
+
+    <dimen name = "category_item_text_length">80dp</dimen>
+    <dimen name="front_cat_text_size">15sp</dimen>
+    <dimen name="margintop_large">15dp</dimen>
+
+
+
+    <!--cramfrenzy margings -->
+    <dimen name="crammargin1">1dp</dimen>
+    <dimen name="crammargin2">2dp</dimen>
+    <dimen name="crammargin3">3dp</dimen>
+    <dimen name="crammargin4">4dp</dimen>
+    <dimen name="crammargin5">5dp</dimen>
+    <dimen name="crammargin6">6dp</dimen>
+    <dimen name="crammargin7">7dp</dimen>
+    <dimen name="crammargin8">8dp</dimen>
+    <dimen name="crammargin9">9dp</dimen>
+    <dimen name="crammargin10">10dp</dimen>
+    <dimen name="crammargin11">11dp</dimen>
+    <dimen name="crammargin12">12dp</dimen>
+    <dimen name="crammargin13">13dp</dimen>
+    <dimen name="crammargin14">14dp</dimen>
+    <dimen name="crammargin15">15dp</dimen>
+    <dimen name="crammargin16">16dp</dimen>
+    <dimen name="crammargin17">17dp</dimen>
+    <dimen name="crammargin18">18dp</dimen>
+    <dimen name="crammargin19">19dp</dimen>
+    <dimen name="crammargin20">20dp</dimen>
+    <dimen name="crammargin21">21dp</dimen>
+    <dimen name="crammargin22">22dp</dimen>
+    <dimen name="crammargin23">23dp</dimen>
+    <dimen name="crammargin24">24dp</dimen>
+    <dimen name="crammargin25">25dp</dimen>
+    <dimen name="crammargin26">26dp</dimen>
+    <dimen name="crammargin27">27dp</dimen>
+    <dimen name="crammargin28">28dp</dimen>
+    <dimen name="crammargin29">29dp</dimen>
+    <dimen name="crammargin30">30dp</dimen>
+
+    <!--crampadding-->
+
+
+    <dimen name="crammpadding1">1dp</dimen>
+    <dimen name="crampadding2">2dp</dimen>
+    <dimen name="crampadding3">3dp</dimen>
+    <dimen name="crampadding4">4dp</dimen>
+    <dimen name="crampadding5">5dp</dimen>
+    <dimen name="crampadding6">6dp</dimen>
+    <dimen name="crampadding7">7dp</dimen>
+    <dimen name="crampadding8">8dp</dimen>
+    <dimen name="crampadding9">9dp</dimen>
+    <dimen name="crampadding10">10dp</dimen>
+    <dimen name="crampadding11">11dp</dimen>
+    <dimen name="crampadding12">12dp</dimen>
+    <dimen name="crampadding13">13dp</dimen>
+    <dimen name="crampadding14">14dp</dimen>
+    <dimen name="crampadding15">15dp</dimen>
+    <dimen name="crampadding16">16dp</dimen>
+    <dimen name="crampadding17">17dp</dimen>
+    <dimen name="crampadding18">18dp</dimen>
+    <dimen name="crampadding19">19dp</dimen>
+    <dimen name="crampadding20">20dp</dimen>
+    <dimen name="crampadding21">21dp</dimen>
+    <dimen name="crampadding22">22dp</dimen>
+    <dimen name="crampadding23">23dp</dimen>
+    <dimen name="crampadding24">24dp</dimen>
+
+
+
+
+    <!--oldcram-->
+
+
+
+
+    <dimen name="textsize">16sp</dimen>
+    <dimen name="catCardSize">60dp</dimen>
+    <dimen name="catCardHeight">120dp</dimen>
+    <dimen name="tutorCardHeight">120dp</dimen>
+    <dimen name="tutorImageSize">80dp</dimen>
+
+    <dimen name="takeimg_height_adpost">45dp</dimen>
+    <dimen name="bidCardSize">180dp</dimen>
+    <dimen name="moreebidCardSize">160dp</dimen>
+    <dimen name="offerCardSize">110dp</dimen>
+    <dimen name="tutorimgsize">130dp</dimen>
+    <dimen name="heightMore">140dp</dimen>
+    <dimen name="button_margin_addpost">12dp</dimen>
+    <dimen name="text_padding_how_it">6dp</dimen>
+    <dimen name="bidCardbtntext">16sp</dimen>
+    <dimen name="contact_img_height">170dp</dimen>
+    <dimen name="login_top_margin">10dp</dimen>
+    <dimen name="bidCardtext">14sp</dimen>
+
+    <dimen name="bidheartsize">20dp</dimen>
+    <dimen name="morebidCardSize">142dp</dimen>
+    <dimen name="morebidCardImageHeight">110dp</dimen>
+    <dimen name="morebidCardbtnSize">65dp</dimen>
+    <dimen name="morebidCardheartSize">20dp</dimen>
+    <dimen name="morebidCardCartSize">30dp</dimen>
+    <dimen name="WatchlistCardCartSize">40dp</dimen>
+    <dimen name="flipimagesize">180dp</dimen>
+    <dimen name="watchlistheight">133dp</dimen>
+    <dimen name="cartlistheight">133dp</dimen>
+
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">175dp</dimen>
+    <dimen name="nav_header_image">60dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="nav_item_img_size">50dp</dimen>
+    <dimen name="nav_item_img_size_minus">-50dp</dimen>
+    <dimen name="nav_item_plus_size">20dp</dimen>
+    <dimen name="margin_5dp">5dp</dimen>
+    <dimen name="margin_10dp">10dp</dimen>
+    <dimen name="signup_verifyicon_height">25dp</dimen>
+    <dimen name="signup_verifyicon_height_minus">-25dp</dimen>
+    <dimen name="cart_icon">30dp</dimen>
+    <dimen name="chat_img">65dp</dimen>
+
+    <dimen name="margin">65dp</dimen>
+    <dimen name="margin_minus">-55dp</dimen>
+
+
+    <dimen name="slider_height">150dp</dimen>
+    <dimen name="content_detail_img">140dp</dimen>
+    <dimen name="rangebar_width">250dp</dimen>
+    <dimen name="rating_height">12dp</dimen>
+    <dimen name="rating_width">110dp</dimen>
+
+    <dimen name="home_cat_width">120dp</dimen>
+    <dimen name="home_cat_height">100dp</dimen>
+
+    <dimen name="rating_height2">18dp</dimen>
+    <dimen name="rating_width2">111dp</dimen>
+
+    <dimen name="home_rc_img_width">200dp</dimen>
+    <dimen name="profile_rc_img_width">170dp</dimen>
+    <dimen name="home_rc_img_height">140dp</dimen>
+    <dimen name="home_rc_heart_size">50dp</dimen>
+    <dimen name="dtlbtn">8dp</dimen>
+    <dimen name="dtlprice">14dp</dimen>
+    <dimen name="setting_textSize">12sp</dimen>
+
+    <dimen name="btnsize">35dp</dimen>
+    <dimen name="button_margin">5dp</dimen>
+    <dimen name="bid_timer_width">80dp</dimen>
+    <dimen name="textBottomLine">15.5dp</dimen>
+
+    <dimen name="tv_bid_timer">40sp</dimen>
+    <dimen name="larger_text_for_heading">36dp</dimen>
+    <dimen name="tv_heading1_fontsize">26sp</dimen>
+    <dimen name="tv_heading2_fontsize">24sp</dimen>
+    <dimen name="tv_heading3_fontsize">22sp</dimen>
+    <dimen name="bidCardImageHeight">100dp</dimen>
+    <dimen name="bidCardbtnheight">32dp</dimen>
+
+    <dimen name="tv_heading4_fontsize">20sp</dimen>
+    <dimen name="tv_heading5_fontsize">18sp</dimen>
+    <dimen name="tv_heading6_fontsize">16sp</dimen>
+    <dimen name="tv_heading7_fontsize">15sp</dimen>
+    <dimen name="tv_heading8_fontsize">12sp</dimen>
+    <dimen name="sctextsize">16sp</dimen>
+    <dimen name="scheadsize">16sp</dimen>
+    <dimen name="scmarginleft">10dp</dimen>
+    <dimen name="insCityText">11sp</dimen>
+
+    <dimen name="ic_next">24dp</dimen>
+    <dimen name="txtViewSize">30dp</dimen>
+    <dimen name="txtViewmargin">6dp</dimen>
+    <dimen name="mainSearchBarSize">40dp</dimen>
+
+
+
+
+    <!--CourseFRenzy Dimens-->
+
+
+
+    <!--Dimens On More Option-->
+    <dimen name="cardViewTopMargin">0dp</dimen>
+    <dimen name="cardViewRightMargin">0dp</dimen>
+
+    <dimen name="text_size">40sp</dimen>
+    <dimen name="privacy_policy_And_terms_conditions_text_size">18sp</dimen>
+
+    <dimen name="difficultyAndImageWidth">120dp</dimen>
+    <dimen name="difficultyAndImageHeight">35dp</dimen>
+    <dimen name="ImageBelowDifficultyHeight">100dp</dimen>
+
+    <dimen name="DifficultyLevelButtonLeftMargin">0dp</dimen>
+    <dimen name="DifficultyLevelButtonRightMargin">0dp</dimen>
+    <dimen name="DifficultyLevelButtonTopMargin">4dp</dimen>
+
+    <dimen name="menuImageTopMargin">2dp</dimen>
+    <dimen name="menuImageBottomMargin">8dp</dimen>
+
+    <dimen name="width_for_add_to_cart">100dp</dimen>
+
+    <dimen name="width_for_buy_now">100dp</dimen>
+
+    <dimen name="courseNameAndProfessorAndOldNewPrice">15sp</dimen>
+    <dimen name="courseNameAndProfessorLeftMargin">8dp</dimen>
+    <dimen name="courseNameAndProfessorRightMargin">10sp</dimen>
+
+    <dimen name="dollarSignMarginTop">2dp</dimen>
+    <dimen name="dollarSignMarginLeft">4dp</dimen>
+
+    <dimen name="oldPriceMarginLeft">2sp</dimen>
+
+    <dimen name="newPriceDollarSignLeftMargin">24dp</dimen>
+    <dimen name="newPriceLeftMargin">2dp</dimen>
+
+    <dimen name="ratingBarTopMargin">2dp</dimen>
+    <dimen name="ratingBarLeftMargin">0dp</dimen>
+
+    <dimen name="heartIconWidth">30dp</dimen>
+    <dimen name="heartIconHeight">30dp</dimen>
+    <dimen name="heartIconTopMargin">8dp</dimen>
+    <dimen name="heartIconBottomMargin">50dp</dimen>
+
+    <dimen name="addToCartLeftMargin">24dp</dimen>
+    <dimen name="addToCartTopMargin">8dp</dimen>
+
+    <dimen name="buyNowLeftMargin">8dp</dimen>
+    <dimen name="buyNowRightMargin">8dp</dimen>
+
+    <!--Now Dimens For ADD AN EVENT -->
+
+    <dimen name="title_text_size">20sp</dimen>
+    <dimen name="event_name_vertical_line">0dp</dimen>
+    <dimen name="event_detail_vertical_line">3dp</dimen>
+    <dimen name="price_vertical_line">63dp</dimen>
+    <dimen name="event_event_date_vertical_line">0dp</dimen>
+    <dimen name="event_start_time_vertical_line">1dp</dimen>
+    <dimen name="event_end_time_vertical_line">11dp</dimen>
+    <dimen name="map_widget_height">450dp</dimen>
+
+    <!--Now Dimens To View Added Events-->
+    <dimen name="added_event_image_width">100dp</dimen>
+    <dimen name="added_event_image_height">100dp</dimen>
+    <dimen name="added_event_image_margin">8dp</dimen>
+
+    <dimen name="event_name_text_view_width">0dp</dimen>
+    <dimen name="event_name_text_view_height">29dp</dimen>
+    <dimen name="event_name_text_view_text_size">15sp</dimen>
+    <dimen name="event_name_text_view_left_margin">8dp</dimen>
+    <dimen name="event_name_text_view_right_margin">4dp</dimen>
+
+    <dimen name="event_ticket_price_text_size">14sp</dimen>
+    <dimen name="event_ticket_price_right_margin">8dp</dimen>
+    <dimen name="event_ticket_price_top_margin">1dp</dimen>
+
+    <dimen name="event_description_text_view_width">0dp</dimen>
+    <dimen name="event_description_text_view_right_margin">8dp</dimen>
+    <dimen name="event_description_text_view_top_margin">4dp</dimen>
+    <dimen name="event_description_text_view_max_lines">2</dimen>
+    <dimen name="event_description_text_view_text_size">15sp</dimen>
+
+
+    <dimen name="event_guest_text_view_right_margin">8dp</dimen>
+    <dimen name="event_guest_text_view_width">0dp</dimen>
+    <dimen name="event_guest_text_view_text_size">15sp</dimen>
+
+    <dimen name="event_address_text_view_width">0dp</dimen>
+    <dimen name="event_address_text_view_top_margin">2dp</dimen>
+    <dimen name="event_address_text_view_right_margin">8dp</dimen>
+    <dimen name="event_address_text_view_max_lines">1</dimen>
+    <dimen name="event_address_text_view_text_size">15sp</dimen>
+    <dimen name="links_image_icon">35dp</dimen>
+    <dimen name="icon_left_margin">16dp</dimen>
+
+
+
+
+    <!--Now Dimens For my_cart layout-->
+    <dimen name="total_lectures_text_view_text_size">18sp</dimen>
+    <dimen name="tutor_name_text_view_text_size">14sp</dimen>
+
+    <dimen name="total_lectures_text_view_margin">8dp</dimen>
+    <dimen name="tutor_name_text_view_margin">0dp</dimen>
+
+    <dimen name="tutor_name_text_view_top_margin">24dp</dimen>
+
+    <dimen name="image_height">130dp</dimen>
+    <dimen name="notification_size">10sp</dimen>
+
+
+</resources>

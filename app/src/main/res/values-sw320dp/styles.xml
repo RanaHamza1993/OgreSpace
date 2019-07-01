@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--&lt;!&ndash; Base application theme. &ndash;&gt;-->
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+    <!--</style>-->
+    <!--&lt;!&ndash;&ndash;&gt;-->
+    <!--<style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">-->
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="windowNoTitle">true</item>-->
+
+    <!--</style>-->
+
+    <!--<style name="CustomTextAppearance" parent="@android:style/TextAppearance">-->
+        <!--<item name="android:textSize">@dimen/input_text</item>-->
+        <!--<item name="android:textStyle">bold</item>-->
+
+
+    <!--</style>-->
+    <!--<style name="InputTextLayout" parent="@android:style/TextAppearance">-->
+        <!--<item name="android:textSize">@dimen/app_small_text</item>-->
+        <!--<item name="android:textStyle">bold</item>-->
+        <!--<item name="android:textColor">@color/grey</item>-->
+
+
+    <!--</style>-->
+    <!--<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
+
+    <!--<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
+
+    <!--&lt;!&ndash;&ndash;&gt;-->
+    <!--&lt;!&ndash; custom activity as dialog&ndash;&gt;-->
+    <!--<style name="AppTheme.Popup">-->
+
+        <!--&lt;!&ndash; <item name="windowActionBar">true</item>-->
+
+         <!--<item name="windowNoTitle">true</item>&ndash;&gt;-->
+
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+
+        <!--<item name="android:windowCloseOnTouchOutside">true</item>-->
+
+        <!--<item name="android:backgroundDimEnabled">true</item>-->
+    <!--</style>-->
+    <!--&lt;!&ndash; Spinner color&ndash;&gt;-->
+    <!--<style name="Spinner" parent="Widget.AppCompat.Spinner">-->
+        <!--<item name="backgroundTint">@color/colorPrimary</item>-->
+    <!--</style>-->
+
+    <!--<style name="FullscreenTheme" parent="AppTheme">-->
+        <!--<item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>-->
+        <!--<item name="android:windowActionBarOverlay">true</item>-->
+        <!--<item name="android:windowBackground">@null</item>-->
+        <!--<item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>-->
+        <!--<item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>-->
+    <!--</style>-->
+
+    <!--<style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">-->
+        <!--<item name="android:background">@color/black_overlay</item>-->
+    <!--</style>-->
+    <!--<style name="RatingBar" parent="Theme.AppCompat">-->
+        <!--<item name="colorControlNormal">@color/holo_darker_gray</item>-->
+        <!--<item name="colorControlActivated">@color/Red</item>-->
+    <!--</style>-->
+    <style name="navigationDrawerStyle">
+    <!-- NavigationDrawer theme. -->
+    <item name="android:textSize">18sp</item>
+    <item name="android:textStyle">bold</item>
+    </style>
+    <style name="custom_bottom_text">
+        <!--<item name="android:textSize">14dp</item>-->
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

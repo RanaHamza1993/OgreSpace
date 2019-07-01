@@ -1,0 +1,158 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <!--<dimen name="activity_horizontal_margin">16dp</dimen>-->
+    <!--<dimen name="activity_vertical_margin">16dp</dimen>-->
+
+    <!--<dimen name="nav_header_vertical_spacing">8dp</dimen>-->
+    <!--<dimen name="nav_header_height">176dp</dimen>-->
+    <!--<dimen name="fab_margin">16dp</dimen>-->
+
+    <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
+    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">10sp</dimen>
+    <dimen name="design_bottom_navigation_icon_size" tools:override="true">10dp</dimen>
+    <dimen name="subcatbox">120dp</dimen>
+    <dimen name="toolbar_size">40dp</dimen>
+    <dimen name="dialog_width">350dp</dimen>
+    <dimen name="catpic">48dp</dimen>
+    <dimen name="btn_radius">12dp</dimen>
+    <dimen name="social_btn_height">48dp</dimen>
+    <dimen name="catimgsize">48dp</dimen>
+    <dimen name="detailpadding">8dp</dimen>
+    <dimen name="detailmargin">8dp</dimen>
+    <dimen name="creditcardimage">120dp</dimen>
+    <dimen name="creditcard_heading">28sp</dimen>
+    <dimen name="fblogsize">40dp</dimen>
+    <dimen name="fblogmargin">2dp</dimen>
+    <dimen name="logincardmargin">15dp</dimen>
+    <dimen name="fblogpadtop">12dp</dimen>
+    <dimen name="fblogpadRight">8dp</dimen>
+    <dimen name="toolmargin">8dp</dimen>
+    <dimen name="loginInnerMargin">20dp</dimen>
+    <dimen name="caftCardSize">130dp</dimen>
+    <dimen name="bidCardSize">150dp</dimen>
+    <dimen name="tutorimgsize">120dp</dimen>
+    <dimen name="bidCardbtnheight">22dp</dimen>
+    <dimen name="header_text_padding_left">20dp</dimen>
+    <dimen name="features_width">270dp</dimen>
+    <dimen name="col1_width">100dp</dimen>
+    <dimen name="col2_width">65dp</dimen>
+    <dimen name="col3_width">80dp</dimen>
+    <dimen name="col4_width">95dp</dimen>
+    <dimen name="col5_width">60dp</dimen>
+    <dimen name="col6_width">60dp</dimen>
+    <dimen name="bidding_icon_size">25dp</dimen>
+    <dimen name="ask_question_grid_img_height">80dp</dimen>
+    <dimen name="cross_btn_height">25dp</dimen>
+    <dimen name="ask_small_img_height">60dp</dimen>
+    <dimen name="bidCardheight">150dp</dimen>
+    <dimen name="bidCardImageHeight">140dp</dimen>
+    <dimen name="bidheartsize">20dp</dimen>
+    <dimen name="catCardSize">100dp</dimen>
+    <dimen name="catCardHeight">160dp</dimen>
+    <dimen name="seller_img_height_bid_now">110dp</dimen>
+    <dimen name="heart_size_img">25dp</dimen>
+    <dimen name="dialog_img_height">90dp</dimen>
+    <dimen name="crossBtn_width_postAd">25dp</dimen>
+    <dimen name="crossBtn_height_postAd">25dp</dimen>
+    <dimen name="linearLayout_top_imageview_width">80dp</dimen>
+    <dimen name="s4b_padding">10dp</dimen>
+    <dimen name="s4b_padding_small">10dp</dimen>
+    <dimen name="cat_item_img_height">40dp</dimen>
+    <dimen name="postPhoto_thumbNail_size">60dp</dimen>
+    <dimen name="cardCornorRadius_postAd">5dp</dimen>
+    <dimen name="cardelevation_postAd">20dp</dimen>
+
+    <dimen name="heightMore">145dp</dimen>
+    <dimen name="morebidCardSize">150dp</dimen>
+    <dimen name="morebidCardbtnSize">80dp</dimen>
+    <dimen name="morebidCardheartSize">30dp</dimen>
+    <dimen name="morebidCardCartSize">30dp</dimen>
+
+
+
+    <dimen name="app_title_text">32sp</dimen>
+    <dimen name="app_normal_text">22sp</dimen>
+    <dimen name="app_small_text">14sp</dimen>
+    <dimen name="app_mini_text">12sp</dimen>
+
+
+    <dimen name="takeimg_height_adpost">35dp</dimen>
+    <dimen name="app_heading_text">26sp</dimen>
+    <dimen name="button_margin_addpost">10dp</dimen>
+    <dimen name="text_padding_how_it">4dp</dimen>
+    <dimen name="contact_img_height">170dp</dimen>
+    <dimen name="login_top_margin">10dp</dimen>
+    <dimen name="app_input_text">22sp</dimen>
+    <dimen name="app_button_text">20sp</dimen>
+    <dimen name="title_text_size">22sp</dimen>
+    <dimen name="flipimagesize">180dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">190dp</dimen>
+    <dimen name="nav_header_image">60dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="nav_item_img_size">50dp</dimen>
+    <dimen name="nav_item_img_size_minus">-50dp</dimen>
+    <dimen name="nav_item_plus_size">20dp</dimen>
+    <dimen name="margin_5dp">5dp</dimen>
+    <dimen name="margin_10dp">10dp</dimen>
+    <dimen name="signup_verifyicon_height">25dp</dimen>
+    <dimen name="signup_verifyicon_height_minus">-25dp</dimen>
+    <dimen name="cart_icon">30dp</dimen>
+    <dimen name="chat_img">65dp</dimen>
+    <dimen name="textBottomLine">20dp</dimen>
+
+    <dimen name="margin">65dp</dimen>
+    <dimen name="margin_minus">-55dp</dimen>
+
+
+    <dimen name="slider_height">150dp</dimen>
+    <dimen name="content_detail_img">150dp</dimen>
+    <dimen name="rangebar_width">250dp</dimen>
+    <dimen name="rating_height">12dp</dimen>
+    <dimen name="rating_width">100dp</dimen>
+
+    <dimen name="home_cat_width">120dp</dimen>
+    <dimen name="home_cat_height">100dp</dimen>
+
+    <dimen name="rating_height2">18dp</dimen>
+    <dimen name="rating_width2">111dp</dimen>
+
+    <dimen name="home_rc_img_width">200dp</dimen>
+    <dimen name="profile_rc_img_width">170dp</dimen>
+    <dimen name="home_rc_img_height">140dp</dimen>
+    <dimen name="home_rc_heart_size">40dp</dimen>
+    <dimen name="dtlbtn">8dp</dimen>
+    <dimen name="dtlprice">10dp</dimen>
+
+    <dimen name="bid_timer_width">80dp</dimen>
+
+    <dimen name="btnsize">40dp</dimen>
+    <dimen name="button_margin">8dp</dimen>
+    <dimen name="tv_bid_timer">40sp</dimen>
+    <dimen name="larger_text_for_heading">34dp</dimen>
+    <dimen name="tv_heading1_fontsize">26sp</dimen>
+    <dimen name="tv_heading2_fontsize">24sp</dimen>
+    <dimen name="tv_heading3_fontsize">22sp</dimen>
+    <dimen name="tv_heading4_fontsize">20sp</dimen>
+    <dimen name="tv_heading5_fontsize">18sp</dimen>
+    <dimen name="tv_heading6_fontsize">16sp</dimen>
+    <dimen name="tv_heading7_fontsize">14sp</dimen>
+    <dimen name="tv_heading8_fontsize">12sp</dimen>
+    <dimen name="sctextsize">15sp</dimen>
+    <dimen name="scmarginleft">10dp</dimen>
+    <dimen name="scheadsize">21sp</dimen>
+    <dimen name="insCityText">13sp</dimen>
+
+    <dimen name="setting_textSize">20sp</dimen>
+    <dimen name="textsize">20sp</dimen>
+    <dimen name="ic_next">24dp</dimen>
+    <dimen name="txtViewSize">40dp</dimen>
+    <dimen name="mainSearchBarSize">20dp</dimen>
+    <dimen name="notification_size">12sp</dimen>
+
+
+</resources>

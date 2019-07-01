@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <LinearLayout android:gravity="center_vertical|center" android:layout_height="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <pl.droidsonroids.gif.GifImageView android:layout_height="@dimen/_100sdp" android:layout_width="@dimen/_100sdp" android:src="@drawable/fidget1" android:scaleType="fitXY" android:layout_gravity="center_horizontal" android:id="@+id/myimg"> </pl.droidsonroids.gif.GifImageView>
+
+    <TextView
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/mytxt"
+        android:textStyle="bold"
+        android:textSize="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_5sdp"/>
+
+</LinearLayout>

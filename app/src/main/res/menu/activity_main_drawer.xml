@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view">
+
+    <item android:title="@string/ogre_space">
+        <menu>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/navlogin"
+            android:title="Login" />
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/navhome"
+            android:title="Home" />
+
+        <!--<item-->
+            <!--android:id="@+id/nav_flash_card"-->
+            <!--android:icon="@drawable/navaddflash"-->
+            <!--android:title="Add Flash Cards" />-->
+        <item
+            android:id="@+id/watch_list"
+            android:icon="@drawable/navwishlist"
+            android:title="My Watch List" />
+
+    </group>
+        </menu>
+    </item>
+
+    <item android:title="@string/about_ogre_space">
+        <menu>
+            <group android:checkableBehavior="single">
+
+
+                <item android:id="@+id/nav_whatiscramfrenzy"
+                    android:title="What is OgreSpace"
+                      android:icon="@drawable/who_we_icon"/>
+                <item android:id="@+id/nav_whoweare"
+                    android:title="Who We Are?"
+                    android:icon="@drawable/who_we_icon"/>
+                <item
+                    android:id="@+id/howitworks"
+                    android:icon="@drawable/navwork"
+                    android:title="How It Works"
+                    android:visible="true" />
+                <item android:id="@+id/nav_partnership"
+                    android:title="Partnership"
+                    android:icon="@drawable/parnership_icon"/>
+                <item
+                    android:id="@+id/nav_faqs"
+                    android:icon="@drawable/navfaqimg"
+                    android:title="FAQs" />
+
+                <item
+                    android:id="@+id/established_contact"
+                    android:icon="@drawable/contact"
+                    android:title="Contact Us" />
+                <item
+                    android:id="@+id/nav_terms_condition"
+                    android:icon="@drawable/termconditions"
+                    android:title="Terms of Use" />
+                <item
+                    android:id="@+id/nav_privacy_policy"
+                    android:icon="@drawable/privacy_terms"
+                    android:title="Privacy Policy" />
+
+                <item android:id="@+id/nav_share"
+                    android:title="Share"
+                    android:icon="@drawable/inviteother"/>
+                <item
+                    android:id="@+id/logout"
+                    android:icon="@drawable/logout"
+                    android:title="Logout"
+                    android:visible="true"
+                    />
+
+
+            </group>
+        </menu>
+    </item>
+</menu>

@@ -1,0 +1,444 @@
+<androidx.core.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/tools"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent"
+        tools:context="com.brainplow.ogrespace.fragments.HomeFragment"
+        tools:ignore="NamespaceTypo">
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/homeFragment"
+            android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardElevation="4dp"
+                android:layout_marginBottom="@dimen/text_padding_how_it">
+
+            <com.daimajia.slider.library.SliderLayout
+                    android:id="@+id/banner1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_150sdp"
+                    android:background="@color/white" />
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/homefragmentmargin"
+                    android:layout_marginTop="3dp"
+                    android:text="States"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/app_heading_text"
+                    android:textStyle="bold" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerCategories"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:minHeight="@dimen/_40sdp"
+                    android:clipToPadding="false"
+                    android:paddingLeft="@dimen/homefragmentmargin" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/trending_section"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/homefragmentmargin"
+                        android:layout_marginTop="3dp"
+                        android:text="Trending Now"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/app_heading_text"
+                        android:textStyle="bold" />
+
+                <TextView
+                        android:id="@+id/trendingnowMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/homefragmentmargin"
+                        android:textColor="@drawable/bidbuybtntextstate"
+                        android:background="@drawable/bid_buy_btns_home"
+                        android:paddingLeft="@dimen/crampadding12"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="@dimen/crampadding12"
+                        android:paddingTop="@dimen/crammargin2"
+                        android:paddingBottom="@dimen/crammargin2"
+                        android:text="More"
+                        android:elevation="@dimen/button_elevation"
+                        android:textSize="@dimen/bidCardbtntext"
+                        android:textStyle="bold" />
+
+            </RelativeLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerTrendingNow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:minHeight="@dimen/_150sdp"
+                    android:paddingLeft="@dimen/homefragmentpadding"
+                    android:visibility="visible" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/homefragmentmargin"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="Bid &amp; Buy on Courses"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/app_heading_text"
+                        android:textStyle="bold" />
+
+                <TextView
+                        android:id="@+id/bidbuymore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/homefragmentmargin"
+                        android:textColor="@drawable/bidbuybtntextstate"
+                        android:background="@drawable/bid_buy_btns_home"
+                        android:paddingLeft="@dimen/crampadding12"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="@dimen/crampadding12"
+                        android:paddingTop="@dimen/crammargin2"
+                        android:paddingBottom="@dimen/crammargin2"
+                        android:text="More"
+                        android:elevation="@dimen/button_elevation"
+                        android:textSize="@dimen/bidCardbtntext"
+                        android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerBidOn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="@dimen/_150sdp"
+                    android:clipToPadding="false"
+                    android:paddingLeft="@dimen/homefragmentpadding" />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/homefragmentmargin"
+                        android:layout_marginTop="3dp"
+                        android:text="Bid &amp; Buy on Notes"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/app_heading_text"
+                        android:textStyle="bold" />
+
+                <TextView
+                        android:id="@+id/bidbuynotes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/homefragmentmargin"
+                        android:textColor="@drawable/bidbuybtntextstate"
+                        android:background="@drawable/bid_buy_btns_home"
+                        android:paddingLeft="@dimen/crampadding12"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="@dimen/crampadding12"
+                        android:paddingTop="@dimen/crammargin2"
+                        android:paddingBottom="@dimen/crammargin2"
+                        android:text="More"
+                        android:elevation="@dimen/button_elevation"
+                        android:textSize="@dimen/bidCardbtntext"
+                        android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerBidOnNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="@dimen/_150sdp"
+                    android:clipToPadding="false"
+                    android:paddingLeft="@dimen/homefragmentpadding" />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+        android:visibility="gone">
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/homefragmentmargin"
+                        android:layout_marginTop="3dp"
+                        android:text="Bid &amp; Buy on Flash Cards"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/app_heading_text"
+                        android:textStyle="bold" />
+
+                <TextView
+                        android:id="@+id/bidbuyflash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/homefragmentmargin"
+                        android:textColor="@drawable/bidbuybtntextstate"
+                        android:background="@drawable/bid_buy_btns_home"
+                        android:paddingLeft="@dimen/crampadding12"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="@dimen/crampadding12"
+                        android:paddingTop="@dimen/crammargin2"
+                        android:paddingBottom="@dimen/crammargin2"
+                        android:text="More"
+                        android:elevation="@dimen/button_elevation"
+                        android:textSize="@dimen/bidCardbtntext"
+                        android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerBidOnFlashCards"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="@dimen/_150sdp"
+                    android:clipToPadding="false"
+                    android:paddingLeft="@dimen/homefragmentmargin" />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/homefragmentmargin"
+                        android:layout_marginTop="3dp"
+                        android:text="Bid &amp; Buy on Books"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/app_heading_text"
+                        android:textStyle="bold" />
+
+                <TextView
+                        android:id="@+id/mstbookMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/homefragmentmargin"
+                        android:textColor="@drawable/bidbuybtntextstate"
+                        android:background="@drawable/bid_buy_btns_home"
+                        android:paddingLeft="@dimen/crampadding12"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="@dimen/crampadding12"
+                        android:paddingTop="@dimen/crammargin2"
+                        android:paddingBottom="@dimen/crammargin2"
+                        android:text="More"
+                        android:elevation="@dimen/button_elevation"
+                        android:textSize="@dimen/bidCardbtntext"
+                        android:textStyle="bold" />
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerTopRated"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:layout_marginBottom="40dp"
+                    android:minHeight="@dimen/_150sdp"
+                    android:paddingLeft="@dimen/homefragmentpadding" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/homefragmentmargin"
+                        android:layout_marginTop="3dp"
+                        android:text="Top Rated Courses"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/app_heading_text"
+                        android:textStyle="bold" />
+
+                <TextView
+                        android:id="@+id/tpratedMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/homefragmentmargin"
+                        android:textColor="@drawable/bidbuybtntextstate"
+                        android:background="@drawable/bid_buy_btns_home"
+                        android:paddingLeft="@dimen/crampadding12"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="@dimen/crampadding12"
+                        android:paddingTop="@dimen/crammargin2"
+                        android:paddingBottom="@dimen/crammargin2"
+                        android:text="More"
+                        android:elevation="@dimen/button_elevation"
+                        android:textSize="@dimen/bidCardbtntext"
+                        android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerTopCourse"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingLeft="@dimen/homefragmentpadding" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/homefragmentmargin"
+                        android:layout_marginTop="3dp"
+                        android:text="Most popular Courses"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/app_heading_text"
+                        android:textStyle="bold" />
+
+                <TextView
+                        android:id="@+id/mstpopNotesMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/homefragmentmargin"
+                        android:textColor="@drawable/bidbuybtntextstate"
+                        android:background="@drawable/bid_buy_btns_home"
+                        android:paddingLeft="@dimen/crampadding12"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="@dimen/crampadding12"
+                        android:paddingTop="@dimen/crammargin2"
+                        android:paddingBottom="@dimen/crammargin2"
+                        android:text="More"
+                        android:elevation="@dimen/button_elevation"
+                        android:textSize="@dimen/bidCardbtntext"
+                        android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerPopCourses"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+
+                    android:paddingLeft="@dimen/homefragmentpadding" />
+
+        </LinearLayout>
+
+
+        <!--/>-->
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,49 @@
+package com.brainplow.ogrespace.constants
+
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+object StaticFunctions {
+    fun inviteOthers(context: Context?) {
+        val sendIntent = Intent()
+        sendIntent.action = Intent.ACTION_SEND
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Cramfrenzy Invitation")
+        sendIntent.putExtra(
+            Intent.EXTRA_TEXT, "Hi, I want to invite you to join me to give Cramfrenzy, A Super-Cool Bidding App.\n\n" +
+                    "https://play.google.com/store/apps/details?id=com.brainplow.notesgiene&hl=en"
+        )
+        sendIntent.type = "text/plain"
+        context?.startActivity(sendIntent)
+    }
+
+    fun hideKeyboard(view: View?, context: Context?) {
+
+        val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.getWindowToken(), 0)
+    }
+
+    fun emailValidator(email: String?): Boolean {
+        val pattern: Pattern
+        val matcher: Matcher
+        val EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+        pattern = Pattern.compile(EMAIL_PATTERN)
+        matcher = pattern.matcher(email)
+        return matcher.matches()
+    }
+    fun passwordValidator(password: String): Boolean {
+        val pattern: Pattern
+        val matcher: Matcher
+        val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\$&+,:;=?@#|'<>.^*()%!-])(?=\\S+$).{8,}$"
+        //  val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\$&+,:;=?@#|'<>.-^*()%!])(?=\\S+$).{8,}$"
+        // val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+=])(?=\\S+$).{8,}$"
+        pattern = Pattern.compile(PASSWORD_PATTERN)
+        matcher = pattern.matcher(password)
+        return matcher.matches()
+    }
+
+}
