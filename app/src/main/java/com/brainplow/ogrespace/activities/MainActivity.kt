@@ -222,6 +222,14 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
                        // ActivityNavigator<MapsActivity>(this@MainActivity,MapsActivity::class.java)
                        navigateToFragment(ContactUs())
                     }
+                    R.id.nav_terms_condition ->{
+                        ActivityNavigator<TermsOfUseActivity>(this@MainActivity,TermsOfUseActivity::class.java)
+
+                    }
+                    R.id.nav_privacy_policy ->{
+                        ActivityNavigator<PrivacyPolicyActivity>(this@MainActivity,PrivacyPolicyActivity::class.java)
+
+                    }
                 }
                 drawer_layout.closeDrawer(GravityCompat.START)
                 return true
