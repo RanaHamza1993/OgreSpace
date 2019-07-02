@@ -69,6 +69,7 @@ class LoginActivity : BaseActivity(),Communicator.IVolleResult {
     var fblogin: LinearLayout? = null
     var emailLayout: TextInputLayout? = null
     var signInBtn: TextView? = null
+    var forgotPassword: TextView? = null
     var passLayout: TextInputLayout? = null
     var Role = "U"
     var volleyService: VolleyService? = null
@@ -100,6 +101,7 @@ class LoginActivity : BaseActivity(),Communicator.IVolleResult {
         loginButton = findViewById(R.id.fb_login)
         fblogin = socialLayout?.findViewById(R.id.fblinear)
         signInBtn = findViewById(R.id.b_login)
+        forgotPassword=findViewById(R.id.forgot_pwd)
         emailLayout = findViewById(R.id.input_layout_email)
         passLayout = findViewById(R.id.input_layout_password)
         loginRoot=findViewById(R.id.login_root)
@@ -158,6 +160,10 @@ class LoginActivity : BaseActivity(),Communicator.IVolleResult {
         }
         b_register?.setOnClickListener {
             ActivityNavigator<RegisterActivity>(this@LoginActivity,RegisterActivity::class.java)
+
+        }
+        forgotPassword?.setOnClickListener {
+            ActivityNavigator<ForgotPassActivity>(this@LoginActivity,ForgotPassActivity::class.java)
 
         }
     }

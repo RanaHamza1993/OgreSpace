@@ -124,7 +124,7 @@
                             <!--LoginButton-->
 
                             <TextView
-                                    android:id="@+id/tvl_forgot_password"
+                                    android:id="@+id/forgot_pwd"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="0dp"

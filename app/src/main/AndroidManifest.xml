@@ -22,6 +22,8 @@
             android:roundIcon="@mipmap/app_icon"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".activities.ForgotPassActivity">
+        </activity>
         <activity android:name=".activities.RegisterActivity">
         </activity>
         <activity android:name=".baseclasses.BaseActivity">
@@ -32,9 +34,9 @@
         </activity>
         <activity android:name=".activities.TermsOfUseActivity">
         </activity>
-        <activity android:name=".activities.MainActivity"
-                  android:windowSoftInputMode="stateAlwaysHidden">
-
+        <activity
+                android:name=".activities.MainActivity"
+                android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity android:name=".activities.OnBoardScreenActivity">
         </activity>
