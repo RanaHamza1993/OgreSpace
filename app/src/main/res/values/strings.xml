@@ -10,5 +10,6 @@
     <string name="about_ogre_space">
         <font color="#FFFFFF">About OgreSpace</font>
     </string>
-
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

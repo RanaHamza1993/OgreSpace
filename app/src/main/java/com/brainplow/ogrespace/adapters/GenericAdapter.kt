@@ -9,7 +9,9 @@ abstract class GenericAdapter<T>(private val context: Context?, private var item
 
     abstract fun setViewHolder(parent: ViewGroup, layoutInflater: LayoutInflater): RecyclerView.ViewHolder
 
-    abstract fun onBindData(holder: RecyclerView.ViewHolder, value: T)
+    open fun onBindData(holder: RecyclerView.ViewHolder, value: T){}
+    open fun onBindData(holder: RecyclerView.ViewHolder, value: T,position: Int){}
+    open fun onBindData(holder: RecyclerView.ViewHolder,position: Int){}
 
     override  fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return setViewHolder(parent, LayoutInflater.from(parent.context))

@@ -12,4 +12,30 @@ interface Communicator {
         fun notifySuccess(requestType: String?, response: String?,url:String){}
         fun notifyError(requestType: String?, error: VolleyError?, url:String){}
     }
+    interface IActionBar{
+        fun actionBarListener(title: String)
+        fun isBackButtonEnabled(isEnabled:Boolean)
+        fun isSearchVisible(isVisible:Boolean)
+        fun toolbarColor(isWhite:Boolean) {
+
+        }
+
+        fun backArrow(isWhite: Boolean) {
+
+        }
+
+        fun optionMenuVisibility(isVisible: Boolean) {
+
+        }
+        fun searchlogo(isVisible: Boolean) {
+
+        }
+
+        fun toolbarBackground(isWhite: Boolean) {
+
+        }
+    }
+    interface IBottomBar {
+        fun isBottomVisible(isVisible: Boolean)
+    }
 }
