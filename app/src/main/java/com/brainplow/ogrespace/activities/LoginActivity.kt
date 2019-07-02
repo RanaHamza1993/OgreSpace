@@ -37,7 +37,7 @@ import kotlin.math.sign
 class LoginActivity : BaseActivity(),Communicator.IVolleResult {
     override fun notifySuccess(requestType: String?, response: JSONObject?, url: String, netWorkResponse: Int?) {
         if(url.equals(Urls.urlSignIn)){
-            showSuccessMessage("You have successfully logged in to CramFrenzy")
+            showSuccessMessage("You have successfully logged in to OgreSpace")
             val sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             // var user_id=obj.getString("user_id")

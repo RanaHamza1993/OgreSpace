@@ -139,6 +139,10 @@ class OnBoardScreenActivity : AppCompatActivity() {
             ActivityNavigator<LoginActivity>(this@OnBoardScreenActivity,LoginActivity::class.java)
 
         }
+        signup?.setOnClickListener {
+            ActivityNavigator<RegisterActivity>(this@OnBoardScreenActivity,RegisterActivity::class.java)
+
+        }
     }
 
 }

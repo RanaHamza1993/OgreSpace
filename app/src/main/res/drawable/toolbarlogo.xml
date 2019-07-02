@@ -7,6 +7,6 @@
     <item
             android:height="64dp"
             android:width="64dp"
-            android:drawable="@drawable/toologo"
+            android:drawable="@drawable/tologo"
             android:right="10dp"/>
 </layer-list>
