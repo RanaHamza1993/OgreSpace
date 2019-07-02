@@ -8,4 +8,5 @@ object Urls {
     val urlSignUp=                baseUrl+"user/createuser/"
     val urlSignIn=                baseUrl+"login/"
     val urlStates=                baseUrl+"office/state_list/"
+    val urlPropertyByState=       baseUrl+"office/state_properties/"
 }

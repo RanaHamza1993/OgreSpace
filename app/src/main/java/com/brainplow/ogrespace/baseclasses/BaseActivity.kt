@@ -4,7 +4,9 @@ import android.app.ProgressDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.android.volley.error.VolleyError
+import com.brainplow.ogrespace.R
 import es.dmoral.toasty.Toasty
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
@@ -52,6 +54,14 @@ open class BaseActivity : AppCompatActivity() {
             } catch (e: UnsupportedEncodingException) {
                 e.printStackTrace();
             }
+        }
+    }
+    fun navigateToFragment(fragment: Fragment){
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.run{
+            replace(R.id.content_frame, fragment)
+            addToBackStack(null)
+            commit()
         }
     }
 }

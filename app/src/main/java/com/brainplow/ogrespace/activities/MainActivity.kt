@@ -1,5 +1,6 @@
 package com.brainplow.ogrespace.activities
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
@@ -7,14 +8,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.NonNull
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.baseclasses.BaseActivity
 import com.brainplow.ogrespace.constants.StaticFunctions
+import com.brainplow.ogrespace.fragments.ContactUs
 import com.brainplow.ogrespace.fragments.HomeFragment
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.ActivityNavigator
@@ -89,14 +94,15 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
     }
 
     override fun isBackButtonEnabled(isEnabled: Boolean) {
+        this.isBackEnabled = isEnabled
         if (isEnabled) {
 
             // istrue=true
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
             mydrawer?.visibility = View.GONE
             drawer_layout!!.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         } else {
-            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            getSupportActionBar()!!.setDisplayHomeAsUpEnabled(false)
             mydrawer?.visibility = View.VISIBLE
             // toggle!!.setDrawerIndicatorEnabled(true);
             toggle!!.syncState()
@@ -106,6 +112,7 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
     }
 
     override fun isSearchVisible(isVisible: Boolean) {
+        this.isSearchEnable = isVisible
         if (isVisible) {
             searchLinear?.visibility = View.VISIBLE
             //  fragmentName?.visibility=View.GONE
@@ -120,12 +127,15 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
             secondary_linear?.visibility = View.VISIBLE
         }
     }
+    var isBackEnabled: Boolean = false
+    var isBottomEnabled: Boolean = false
+    var isSearchEnable: Boolean = false
     var mydrawer: ImageView? = null
     var searchLinear: LinearLayout? = null
     var secondary_linear: LinearLayout? = null
     var globalInvite: TextView? = null
     var invite: TextView? = null
-
+    var toolbar: Toolbar? = null
     var toggle: ActionBarDrawerToggle? = null
     lateinit var bottomNavigationView: BottomNavigationView
     lateinit var navigationView: NavigationView
@@ -142,6 +152,8 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
     }
 
     fun setIds(){
+
+        toolbar = findViewById(R.id.toolbar)
         bottomNavigationView = findViewById(R.id.navigation)
         navigationView=findViewById(R.id.nav_view)
         rootView = findViewById(R.id.drawer_layout)
@@ -163,6 +175,7 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
         globalInvite = findViewById(R.id.global_invite)
         invite = findViewById(R.id.tv_topbar_invite)
         searchLinear = findViewById(R.id.toolbar_li)
+        setSupportActionBar(toolbar)
     }
 
     fun setListeners(){
@@ -206,7 +219,8 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
                         logOut()
                     }
                     R.id.established_contact ->{
-                        ActivityNavigator<MapsActivity>(this@MainActivity,MapsActivity::class.java)
+                       // ActivityNavigator<MapsActivity>(this@MainActivity,MapsActivity::class.java)
+                       navigateToFragment(ContactUs())
                     }
                 }
                 drawer_layout.closeDrawer(GravityCompat.START)
@@ -215,6 +229,54 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
 
         })
 
+        toolbar?.setNavigationOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+
+                // perform whatever you want on back arrow click
+                if (isBackEnabled) {
+
+                    val r = Rect()
+                    rootView!!.getWindowVisibleDisplayFrame(r)
+                    val screenHeight = rootView!!.getRootView().getHeight()
+
+
+                    // r.bottom is the position above soft keypad or device button.
+                    // if keypad is shown, the r.bottom is smaller than that before.
+                    val keypadHeight = screenHeight - r.bottom;
+
+                    //            Log.d("KeyBoard", "keypadHeight = " + keypadHeight)
+
+                    if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
+                        // keyboard is opened
+
+                        val inputManager = this@MainActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        inputManager.hideSoftInputFromWindow(this@MainActivity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS)
+
+                    } else {
+
+
+                        onBackPressed()
+
+                    }
+
+
+                }
+
+//             else if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+//                 drawer_layout.closeDrawer(GravityCompat.START)
+//
+//
+//             }
+                else {
+                    drawer_layout.openDrawer(Gravity.LEFT)
+
+
+                }
+
+
+            }
+
+        })
         invite?.setOnClickListener(){
             StaticFunctions.inviteOthers(this)
         }
@@ -276,4 +338,44 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
                 }
 
             }
+
+    override fun onBackPressed() {
+
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            drawer_layout.closeDrawer(GravityCompat.START)
+
+
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            if (isBackEnabled) {
+                supportFragmentManager.popBackStack()
+            } else {
+
+                // botomNavigation.setCurrentItem(0, true)
+                bottomNavigationView.menu.findItem(R.id.bottom_home).setChecked(true)
+                bottomNavigationView.selectedItemId = R.id.bottom_home
+
+            }
+        } else {
+//            super.onBackPressed()
+
+            exitingDailogbox()
+
+        }
+    }
+    private fun exitingDailogbox() {
+
+        val builder = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
+        builder.setTitle("Exiting..")
+        builder.setMessage("Do you realy want to exit?")
+        builder.setIcon(R.drawable.tologo)
+        builder.setPositiveButton("Exit") { dialog, which ->
+            finish()
+        }
+        builder.setNegativeButton("Cancel", null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+
+    }
+
+
 }

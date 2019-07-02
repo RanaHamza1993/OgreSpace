@@ -34,11 +34,11 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.HashMap
 
-class HomeFragment : BaseFragment(),Communicator.IVolleResult {
+class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.IStates {
 
     override fun notifySuccess(requestType: String?, response: JSONArray?, url: String) {
-        if(url == Urls.urlStates){
-            setStatesAdapter(volleyParsing!!.getStateData(response,1))
+        if (url == Urls.urlStates) {
+            setStatesAdapter(volleyParsing!!.getStateData(response, 1))
         }
 
     }
@@ -52,33 +52,50 @@ class HomeFragment : BaseFragment(),Communicator.IVolleResult {
     }
 
     override fun notifyError(requestType: String?, error: VolleyError?, url: String) {
-        if(url == Urls.urlStates){
+        if (url == Urls.urlStates) {
             showErrorBody(error)
         }
     }
+
+    override fun onStateItemClick(id: Int?, name: String?) {
+        val args = Bundle()
+        args.putInt("stateId", id!!)
+        args.putString("stateName", name)
+        val fragment = StatesMoreFragment()
+        fragment.arguments = args
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.run {
+            replace(R.id.content_frame, fragment)
+            addToBackStack(fragment.toString())
+            commit()
+
+        }
+    }
+
     var volleyService: VolleyService? = null
     var volleyParsing: VolleyParsing? = null
     var main_search_edit: EditText? = null
     var rootView: LinearLayout? = null
     lateinit var mDemoSlider: SliderLayout
-    var mcontext:Context?=null
-    var acBarListener:Communicator.IActionBar?=null
-    var bottomBarListener:Communicator.IBottomBar?=null
+    var mcontext: Context? = null
+    var acBarListener: Communicator.IActionBar? = null
+    var bottomBarListener: Communicator.IBottomBar? = null
 
     lateinit var recycleStates: RecyclerView
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        this.mcontext=context
-        acBarListener=context as Communicator.IActionBar
-        bottomBarListener=context as Communicator.IBottomBar
+        this.mcontext = context
+        acBarListener = context as Communicator.IActionBar
+        bottomBarListener = context as Communicator.IBottomBar
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        acBotListeners()
+//        acBotListeners()
         setIds(view)
         cursorVisible()
         homeSlider()
@@ -86,7 +103,7 @@ class HomeFragment : BaseFragment(),Communicator.IVolleResult {
         return view
     }
 
-    fun acBotListeners(){
+    fun acBotListeners() {
         acBarListener?.run {
             actionBarListener("Home")
             toolbarBackground(true)
@@ -113,7 +130,8 @@ class HomeFragment : BaseFragment(),Communicator.IVolleResult {
         acBarListener?.toolbarColor(false)
         acBarListener?.toolbarBackground(false)
     }
-    fun cursorVisible(){
+
+    fun cursorVisible() {
         rootView!!.getViewTreeObserver().addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
 
@@ -144,28 +162,29 @@ class HomeFragment : BaseFragment(),Communicator.IVolleResult {
         })
 
     }
-    fun setIds(view:View){
-        volleyParsing= VolleyParsing()
+
+    fun setIds(view: View) {
+        volleyParsing = VolleyParsing()
         volleyService = VolleyService(this, mcontext!!.applicationContext)
         rootView = view.findViewById(R.id.homeFragment)
         main_search_edit = activity?.findViewById(R.id.mainsearch_edittext)
         mDemoSlider = view.findViewById(R.id.banner1);
-        mDemoSlider.getPagerIndicator().setDefaultIndicatorColor(getResources().getColor(R.color.Red), getResources().getColor(R.color.gray));
+        mDemoSlider.getPagerIndicator()
+            .setDefaultIndicatorColor(getResources().getColor(R.color.Red), getResources().getColor(R.color.gray));
         recycleStates = view.findViewById(R.id.recyclerStates)
         recycleStates.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
     }
 
-    fun volleyRequests(){
+    fun volleyRequests() {
         volleyService?.getDataVolley("Array", Urls.urlStates, "")
 
     }
+
     private fun homeSlider() {
-
-
         val url_maps = HashMap<String, Int>()
         url_maps["Electronics"] = R.drawable.slider1
         url_maps["Beats Audio"] = R.drawable.slider2
-        url_maps["Apple Mackbook Pro"] =R.drawable.slider3
+        url_maps["Apple Mackbook Pro"] = R.drawable.slider3
         url_maps["Home Appliances"] = R.drawable.slider4
         url_maps["Sports"] = R.drawable.slider5
 
@@ -192,9 +211,12 @@ class HomeFragment : BaseFragment(),Communicator.IVolleResult {
 
         }
     }
-    fun setStatesAdapter(stateList:ArrayList<StateModel>){
-        val statesAdapter = StatesAdapter(context,stateList,LayoutType.LayoutStatesCat)
+
+    private fun setStatesAdapter(stateList: ArrayList<StateModel>) {
+        val statesAdapter = StatesAdapter(context, stateList, LayoutType.LayoutStatesCat)
         recycleStates.adapter = statesAdapter
-       // statesAdapter.notifyDataSetChanged()
+        statesAdapter.run {
+            setStateListener(this@HomeFragment)
+        }
     }
 }

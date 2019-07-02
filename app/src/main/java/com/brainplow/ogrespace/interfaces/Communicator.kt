@@ -38,4 +38,7 @@ interface Communicator {
     interface IBottomBar {
         fun isBottomVisible(isVisible: Boolean)
     }
+    interface IStates{
+        fun onStateItemClick(id:Int?,name:String?){}
+    }
 }
