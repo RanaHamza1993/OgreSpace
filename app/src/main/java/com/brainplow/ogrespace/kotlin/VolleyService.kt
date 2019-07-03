@@ -34,12 +34,12 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
                 val jsonObj = object : JsonObjectRequest(Request.Method.PUT, url, sendObj, object : Response.Listener<JSONObject> {
                     override fun onResponse(response: JSONObject) {
                         if (mResultCallback != null)
-                            mResultCallback!!.notifySuccess(requestType, response, url)
+                            mResultCallback!!.notifySuccess(requestType, response, url,netWorkResponse)
                     }
                 }, Response.ErrorListener {
 
                     if (mResultCallback != null)
-                        mResultCallback!!.notifyError(requestType, it, url)
+                        mResultCallback!!.notifyError(requestType, it, url,netWorkResponse)
                     Log.d("error",it.toString())
 
 
@@ -82,12 +82,12 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
                 val jsonObj = object : StringRequest(Request.Method.POST, url, object : Response.Listener<String> {
                     override fun onResponse(response: String) {
                         if (mResultCallback != null)
-                            mResultCallback!!.notifySuccess(requestType, response, url)
+                            mResultCallback!!.notifySuccess(requestType, response, url,netWorkResponse)
                     }
                 }, Response.ErrorListener {
 
                     if (mResultCallback != null)
-                        mResultCallback!!.notifyError(requestType, it, url)
+                        mResultCallback!!.notifyError(requestType, it, url,netWorkResponse)
                     Log.d("error",it.toString())
                 }) {
 

@@ -14,4 +14,5 @@ object Urls {
     val urlGetLeaseProperties=             baseUrl+"office/Lease_Proterties_android/"
     val urlGetSaleProperties=              baseUrl+"office/Sale_Property_android/"
     val urlGetUserProfile=                 baseUrl+"user/GetUserDetail/"
+    val urlUpdateUserProfile=              baseUrl+"user/UpdateProfile/"
 }

@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -36,26 +37,35 @@ import com.brainplow.ogrespace.kotlin.MySingleton
 import com.brainplow.ogrespace.kotlin.VolleyService
 import com.mikhaellopez.circularimageview.CircularImageView
 import es.dmoral.toasty.Toasty
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.FileNotFoundException
 import java.io.InputStream
+import java.lang.Exception
 import java.util.HashMap
 
 class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
+        if(url.contains(Urls.urlUpdateUserProfile,true)){
+            if(filePath!=null)
+            imageUpload(filePath)
+        }
 
     }
 
     override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
         if(url==Urls.urlGetUserProfile){
-            val a=response
-            val b=5
+           val obj=JSONArray(response).getJSONObject(0)
+            setUserData(obj)
+
         }
     }
 
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
-
+       // if(url==Urls.urlGetUserProfile){
+            showErrorBody(error)
+       // }else iff(url.contains(Urls.urlUpdateUserProfile,true))
     }
     var filePath: String? = null
     var profilepicname: String? = null
@@ -69,9 +79,12 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
     var userCity:EditText?=null
     var userAddress:EditText?=null
     var editProfile:TextView?=null
+    var updateProfile: Button?=null
     var volleyService: VolleyService? = null
     var token: String? = null
     var mcontext: Context? = null
+    var profileID: Int? = null
+    var userProfileName=""
     lateinit var load: LoadingDialog
     var acBarListener: Communicator.IActionBar? = null
 
@@ -87,8 +100,15 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
         // Inflate the layout for this fragment
         val view= inflater.inflate(R.layout.fragment_profile, container, false)
         setIds(view)
+        setListeners()
         volleyRequests()
         return  view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        acBarListener?.actionBarListener("Profile")
+        acBarListener?.isBackButtonEnabled(true)
     }
     fun setIds(view:View){
         val sharedPreferences = activity?.getSharedPreferences("login", Context.MODE_PRIVATE)
@@ -96,6 +116,7 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
         volleyService = VolleyService(this, mcontext!!.applicationContext)
         load = LoadingDialog("Loading", context)
         userProfile=view.findViewById(R.id.user_profile)
+        updateProfile=view.findViewById(R.id.editpf_save)
         userFirstName=view.findViewById(R.id.user__fname)
         userLastName=view.findViewById(R.id.user_lname)
         userCountry=view.findViewById(R.id.user_country)
@@ -106,13 +127,46 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
         editProfile=view.findViewById(R.id.upload_profile)
     }
     fun setListeners(){
-
+        userProfile?.setOnClickListener {
+            selectPicture()
+        }
+        editProfile?.setOnClickListener {
+            selectPicture()
+        }
+        updateProfile?.setOnClickListener {
+            updateUserData()
+        }
     }
-    fun getUserData(){
-
+    fun setUserData(obj:JSONObject){
+        try {
+            userFirstName?.setText(obj.getString("Fname"))
+            userLastName?.setText(obj.getString("Lname"))
+            userPhoneNo?.setText(obj.getString("Mobile"))
+            userCountry?.setText(obj.getString("Country"))
+            userState?.setText(obj.getString("State"))
+            userAddress?.setText(obj.getString("Address"))
+            userCity?.setText(obj.getString("City"))
+            userProfileName=obj.getString("Pic")
+            profileID=obj.getInt("id")
+        }catch (e:Exception){}
     }
     fun volleyRequests(){
         volleyService?.getDataVolley(RequestType.StringRequest, Urls.urlGetUserProfile, token!!)
+    }
+    fun updateUserData(){
+        val obj=JSONObject()
+        obj.put("Fname",userFirstName?.text?.toString())
+        obj.put("Lname",userLastName?.text?.toString())
+        obj.put("Mobile",userPhoneNo?.text?.toString())
+        obj.put("Country",userCountry?.text?.toString())
+        obj.put("State",userState?.text?.toString())
+        obj.put("Address",userAddress?.text?.toString())
+        obj.put("City",userCity?.text?.toString())
+        if(filePath!=null)
+        obj.put("Pic",profilepicname)
+        else
+            obj.put("Pic",userProfileName)
+        volleyService?.putDataVolley(RequestType.JsonObjectRequest, Urls.urlUpdateUserProfile+profileID+"/",obj, token!!)
     }
     private fun selectPicture(){
         if (ContextCompat.checkSelfPermission(activity as FragmentActivity,
@@ -211,6 +265,7 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
             val selectedImage1 = BitmapFactory.decodeStream(imageStream)
             val filePath1 = selectedImage1
             userProfile?.setImageBitmap(filePath1)
+
         }
     }
     private fun imageUpload(imagePath: String?) {
@@ -221,7 +276,8 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
             Request.Method.PUT, Urls.urlImageUpload,
             Response.Listener { s ->
 
-                val imageName = s.toString();
+                val imageName = s.toString()
+                val a=5
 //                    Toast.makeText(mcontext!!, "https://storage.cramfrenzy.com/upload_image.php" + s.toString(), Toast.LENGTH_LONG).show()
 
                // Toasty.success(mcontext!!,"Image Upload Successfully", Toast.LENGTH_SHORT,true).show()
