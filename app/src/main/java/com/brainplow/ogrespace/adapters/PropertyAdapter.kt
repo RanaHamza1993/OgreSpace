@@ -24,6 +24,8 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) : Ge
         var view:View?=null
         if(layoutType==LayoutType.LayoutProperties) {
             view = layoutInflater.inflate(R.layout.property_item_layout, parent, false)
+        } else if(layoutType==LayoutType.LayoutHorizontalProperties) {
+            view = layoutInflater.inflate(R.layout.property_item_horizontal_layout, parent, false)
         }
         return PropertyHolder(view!!)
     }

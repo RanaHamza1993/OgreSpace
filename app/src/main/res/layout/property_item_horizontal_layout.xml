@@ -30,7 +30,7 @@
 
 
         <ImageView
-                android:id="@+id/timage"
+                android:id="@+id/p_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bidCardImageHeight"
                 android:background="#ffffff"
@@ -45,10 +45,11 @@
                 android:orientation="vertical">
 
             <TextView
-                    android:id="@+id/bidname"
+                    android:id="@+id/p_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
+                    android:ellipsize="end"
                     android:fontFamily="@font/opensans_bold"
                     android:text="machine learning"
                     android:textColor="@color/black"
@@ -59,20 +60,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical">
-
-                <TextView
-                        android:id="@+id/bidAuther"
+                <LinearLayout
                         android:layout_width="wrap_content"
+                        android:gravity="center_vertical"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLength="12"
-                        android:maxLines="1"
-                        android:text="MIT-107"
-                        android:fontFamily="@font/opensans_regular"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/cramnormaltext"
-                        android:textStyle="normal" />
-
+                        android:orientation="horizontal">
+                    <ImageView android:layout_width="@dimen/app_normal_text"
+                               android:layout_gravity="center_vertical"
+                               android:layout_height="@dimen/app_normal_text"
+                               android:src="@drawable/locationplaceholder"/>
+                    <TextView
+                            android:id="@+id/p_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/opensans_regular"
+                            android:maxLines="2"
+                            android:layout_marginLeft="6dp"
+                            android:text="Jhon watson"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/cramnormaltext"
+                            android:textStyle="normal" />
+                </LinearLayout>
 
 
                 <!--<ImageView-->
@@ -90,6 +99,8 @@
 
             <RelativeLayout
                     android:layout_width="match_parent"
+
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical">
 
@@ -115,19 +126,6 @@
 
 
 
-                <RatingBar
-                        android:id="@+id/iv_rating"
-                        style="?android:attr/ratingBarStyleSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:isIndicator="false"
-                        android:numStars="5"
-                        android:rating="3.5"
-                        android:scaleX="1"
-                        android:scaleY="1"
-                        android:theme="@style/RatingBar" />
-
 
             </RelativeLayout>
 
@@ -139,31 +137,15 @@
 
 
                 <TextView
-                        android:id="@+id/bidiscount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/crammargin1"
-                        android:text="$50"
-                        android:ellipsize="end"
-                        android:maxLength="8"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/bidPrize"
-                        android:fontFamily="@font/opensans_bold"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/app_mini_text"
-                        android:textStyle="bold" />
-                <TextView
 
-                        android:id="@+id/bidPrize"
+                        android:id="@+id/p_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:maxLength="8"
                         android:maxLines="1"
                         android:text="$20"
                         android:textColor="@color/holo_green_dark"
-                        android:textSize="@dimen/cramnormaltext"
+                        android:textSize="@dimen/app_normal_text"
                         android:fontFamily="@font/opensans_bold"
                         android:textStyle="bold" />
 
@@ -182,71 +164,44 @@
 
             </RelativeLayout>
 
-            <TextView
-                    android:id="@+id/bidon_accept_offer"
-                    android:layout_width="match_parent"
-                    android:layout_marginBottom="@dimen/button_elevation"
-                    android:layout_height="@dimen/bidCardbtnheight"
-                    android:background="@drawable/bid_buy_btns_home"
-                    android:padding="5dp"
-                    android:layout_marginLeft="@dimen/button_elevation"
-                    android:layout_marginRight="@dimen/button_elevation"
-                    android:text="Accept Offer"
-                    android:visibility="invisible"
-                    android:gravity="center"
-                    android:textAllCaps="false"
-                    android:elevation="@dimen/button_elevation"
-                    android:textColor="@drawable/bidbuybtntextstate"
-                    android:textColorHighlight="@color/white"
-                    android:textSize="@dimen/bidCardbtntext"
-                    android:textStyle="bold" />
 
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="false"
+                    android:layout_below="@id/cart_layout"
+                    android:layout_alignParentBottom="false"
                     android:orientation="horizontal">
 
-
                 <TextView
-                        android:id="@+id/bidnowbuynow"
-                        android:layout_width="0dp"
-                        android:layout_marginBottom="6dp"
+                        android:id="@+id/p_type"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="@dimen/button_elevation"
                         android:layout_marginRight="@dimen/button_elevation"
-                        android:background="@drawable/bid_buy_btns_home"
-                        android:padding="5dp"
-                        android:text="Buy Now"
-                        android:gravity="center"
+                        android:layout_marginLeft="@dimen/button_elevation"
+                        android:layout_marginBottom="6dp"
+                        android:text="For Lease"
+                        android:textColor="@color/black"
                         android:textAllCaps="false"
-                        android:elevation="@dimen/button_elevation"
-                        android:textColor="@drawable/bidbuybtntextstate"
-                        android:textColorHighlight="@color/white"
                         android:textSize="@dimen/bidCardbtntext"
                         android:textStyle="bold" />
 
                 <TextView
-                        android:id="@+id/bidonbidnow"
-                        android:layout_width="0dp"
+                        android:id="@+id/p_area"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/button_elevation"
                         android:layout_marginRight="@dimen/button_elevation"
-                        android:layout_weight="1"
                         android:layout_marginBottom="@dimen/crammargin3"
-                        android:background="@drawable/bid_buy_btns_home"
-                        android:textColor="@drawable/bidbuybtntextstate"
-                        android:padding="5dp"
-                        android:text="Bid Now"
-                        android:elevation="@dimen/button_elevation"
-                        android:gravity="center"
+                        android:text="600 Sqrf"
+                        android:gravity="right"
+                        android:textColor="@color/black"
                         android:textAllCaps="false"
                         android:textSize="@dimen/bidCardbtntext"
                         android:textStyle="bold" />
 
 
             </LinearLayout>
+
 
         </LinearLayout>
 

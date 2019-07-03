@@ -62,9 +62,8 @@
         </LinearLayout>
 
         <LinearLayout
-                android:id="@+id/trending_section"
+                android:id="@+id/properties_for_sale"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
             <RelativeLayout
@@ -77,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/homefragmentmargin"
                         android:layout_marginTop="3dp"
-                        android:text="Trending Now"
+                        android:text="Properties For Sale"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/opensans_bold"
                         android:textColor="@color/black"
@@ -85,7 +84,7 @@
                         android:textStyle="bold" />
 
                 <TextView
-                        android:id="@+id/trendingnowMore"
+                        android:id="@+id/p_sale_more"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -107,7 +106,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerTrendingNow"
+                    android:id="@+id/p_sale_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
@@ -121,8 +120,8 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:layout_marginBottom="50dp"
+                android:orientation="vertical">
 
             <RelativeLayout
                     android:layout_width="match_parent"
@@ -134,14 +133,14 @@
                         android:layout_marginLeft="@dimen/homefragmentmargin"
                         android:layout_marginTop="3dp"
                         android:layout_marginBottom="8dp"
-                        android:text="Bid &amp; Buy on Courses"
+                        android:text="Properties For Lease"
                         android:fontFamily="@font/opensans_bold"
                         android:textColor="@color/black"
                         android:textSize="@dimen/app_heading_text"
                         android:textStyle="bold" />
 
                 <TextView
-                        android:id="@+id/bidbuymore"
+                        android:id="@+id/p_lease_more"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -162,7 +161,7 @@
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerBidOn"
+                    android:id="@+id/p_lease_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:minHeight="@dimen/_150sdp"

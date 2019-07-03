@@ -161,7 +161,7 @@
     <dimen name="catCardHeight">180dp</dimen>
     <dimen name="tutorCardHeight">160dp</dimen>
     <dimen name="tutorImageSize">110dp</dimen>
-    <dimen name="bidCardSize">280dp</dimen>
+    <dimen name="bidCardSize">320dp</dimen>
     <dimen name="moreebidCardSize">250dp</dimen>
     <dimen name="offerCardSize">250dp</dimen>
     <dimen name="tutorimgsize">220dp</dimen>

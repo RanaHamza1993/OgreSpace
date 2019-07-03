@@ -27,6 +27,7 @@ import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.baseclasses.BaseActivity
 import com.brainplow.ogrespace.constants.StaticFunctions
+import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.extesnions.showErrorMessage
 import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
@@ -41,7 +42,7 @@ import java.util.HashMap
 
 class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
 
-    override fun notifySuccess(requestType: String?, response: JSONObject?, url: String, netWorkResponse: Int?) {
+    override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
 
         if(url.equals(Urls.urlSignUp)){
             showSuccessDialog()
@@ -52,7 +53,7 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
         }
     }
 
-    override fun notifyError(requestType: String?, error: VolleyError?, url: String) {
+    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String) {
         if(url.equals(Urls.urlSignUp)){
             showErrorBody(error)
         }
@@ -349,7 +350,7 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
         obj.put("pic","")
         obj.put("address","")
 
-        volleyService?.postDataVolley("Object", Urls.urlSignUp, obj, "")
+        volleyService?.postDataVolley(RequestType.JsonObjectRequest, Urls.urlSignUp, obj, "")
 
     }
     private fun showSuccessDialog() {

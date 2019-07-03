@@ -164,7 +164,7 @@
     <dimen name="tutorImageSize">80dp</dimen>
 
     <dimen name="takeimg_height_adpost">45dp</dimen>
-    <dimen name="bidCardSize">180dp</dimen>
+    <dimen name="bidCardSize">210dp</dimen>
     <dimen name="moreebidCardSize">160dp</dimen>
     <dimen name="offerCardSize">110dp</dimen>
     <dimen name="tutorimgsize">130dp</dimen>

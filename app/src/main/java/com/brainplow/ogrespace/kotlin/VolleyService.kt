@@ -8,6 +8,7 @@ import com.android.volley.Response
 import com.android.volley.request.JsonArrayRequest
 import com.android.volley.request.JsonObjectRequest
 import com.android.volley.request.StringRequest
+import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.interfaces.Communicator
 import org.json.JSONArray
 import org.json.JSONObject
@@ -23,9 +24,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
         mContext = context
     }
 
-    fun putDataVolley(requestType: String, url: String, sendObj: JSONObject, token: String) {
+    fun putDataVolley(requestType: RequestType, url: String, sendObj: JSONObject, token: String) {
 
-        if (requestType.equals("Object", true)) {
+        if (requestType==RequestType.JsonObjectRequest) {
 
             try {
 
@@ -70,7 +71,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
             }
 
-        } else if (requestType.equals("String", true)) {
+        } else if (requestType==RequestType.StringRequest) {
 
             try {
 
@@ -113,9 +114,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
             }
         }
     }
-    fun postDataVolley(requestType: String, url: String, sendObj: JSONObject, token: String) {
+    fun postDataVolley(requestType: RequestType, url: String, sendObj: JSONObject, token: String) {
 
-        if (requestType.equals("Object", true)) {
+        if (requestType==RequestType.JsonObjectRequest) {
 
             try {
 
@@ -160,7 +161,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
             }
 
-        } else if (requestType.equals("String", true)) {
+        } else if (requestType==RequestType.StringRequest) {
 
             try {
 
@@ -204,10 +205,10 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
         }
     }
 
-    fun postDataVolley(requestType: String, url: String, sendObj: JSONObject, token: String, urlflag:String) {
+    fun postDataVolley(requestType: RequestType, url: String, sendObj: JSONObject, token: String, urlflag:String) {
 
         var netWorkResponse=0
-        if (requestType.equals("Object", true)) {
+        if (requestType==RequestType.JsonObjectRequest) {
 
             try {
 
@@ -254,7 +255,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
             }
 
-        } else if (requestType.equals("String", true)) {
+        } else if (requestType==RequestType.StringRequest) {
 
             try {
 
@@ -299,9 +300,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
 
 
-    fun getDataVolley(requestType: String, url: String, token: String) {
+    fun getDataVolley(requestType: RequestType, url: String, token: String) {
 
-        if (requestType.equals("Array", true)) {
+        if (requestType==RequestType.ArrayRequest) {
 
             try {
 
@@ -336,7 +337,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
             }
 
 
-        } else if (requestType.equals("String", true)) {
+        } else if (requestType==RequestType.StringRequest) {
 
             try {
 
@@ -410,7 +411,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
             }
 
 
-        } else if (requestType.equals("Object")) {
+        } else if (requestType==RequestType.JsonObjectRequest) {
             try {
 
                 val jsonObj = object : JsonObjectRequest(Request.Method.GET, url, null, Response.Listener { response ->
@@ -449,9 +450,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
         }
     }
 
-    fun getDataVolley(requestType: String, url: String, token: String, urlflag: String) {
+    fun getDataVolley(requestType: RequestType, url: String, token: String, urlflag: String) {
 
-        if (requestType.equals("Array", true)) {
+        if (requestType==RequestType.ArrayRequest) {
 
             try {
 
@@ -486,7 +487,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
             }
 
 
-        } else if (requestType.equals("String", true)) {
+        } else if (requestType==RequestType.StringRequest) {
 
             try {
 
@@ -558,7 +559,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
             }
 
 
-        } else if (requestType.equals("Object")) {
+        } else if (requestType==RequestType.JsonObjectRequest) {
             try {
 
                 val jsonObj = object : JsonObjectRequest(Request.Method.GET, url, null, Response.Listener { response ->
@@ -593,9 +594,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
     }
 
 
-    fun deleteDataVolley(requestType: String, url: String, token: String) {
+    fun deleteDataVolley(requestType: RequestType, url: String, token: String) {
 
-        if (requestType.equals("String", true)) {
+        if (requestType==RequestType.StringRequest) {
 
             try {
 

@@ -29,7 +29,7 @@
     <dimen name="toolmargin">8dp</dimen>
     <dimen name="loginInnerMargin">20dp</dimen>
     <dimen name="caftCardSize">130dp</dimen>
-    <dimen name="bidCardSize">150dp</dimen>
+    <dimen name="bidCardSize">200dp</dimen>
     <dimen name="tutorimgsize">120dp</dimen>
     <dimen name="bidCardbtnheight">22dp</dimen>
     <dimen name="header_text_padding_left">20dp</dimen>

@@ -20,6 +20,7 @@ import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.baseclasses.BaseActivity
 import com.brainplow.ogrespace.constants.StaticFunctions
+import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.extesnions.showErrorMessage
 import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
@@ -35,7 +36,7 @@ import org.json.JSONObject
 import kotlin.math.sign
 
 class LoginActivity : BaseActivity(),Communicator.IVolleResult {
-    override fun notifySuccess(requestType: String?, response: JSONObject?, url: String, netWorkResponse: Int?) {
+    override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
         if(url.equals(Urls.urlSignIn)){
             showSuccessMessage("You have successfully logged in to OgreSpace")
             val sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE)
@@ -55,7 +56,7 @@ class LoginActivity : BaseActivity(),Communicator.IVolleResult {
         }
     }
 
-    override fun notifyError(requestType: String?, error: VolleyError?, url: String) {
+    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String) {
         if(url.equals(Urls.urlSignIn)){
            // showErrorBody(error)
             showErrorMessage("Invalid username or password")
@@ -184,7 +185,7 @@ class LoginActivity : BaseActivity(),Communicator.IVolleResult {
         val obj=JSONObject()
         obj.put("username",username)
         obj.put("password",password)
-        volleyService?.postDataVolley("Object", Urls.urlSignIn, obj, "")
+        volleyService?.postDataVolley(RequestType.JsonObjectRequest, Urls.urlSignIn, obj, "")
     }
 
 }

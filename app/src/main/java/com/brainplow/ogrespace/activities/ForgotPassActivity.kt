@@ -16,6 +16,7 @@ import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.baseclasses.BaseActivity
 import com.brainplow.ogrespace.constants.StaticFunctions.emailValidator
 import com.brainplow.ogrespace.constants.StaticFunctions.inviteOthers
+import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.extesnions.showErrorMessage
 import com.brainplow.ogrespace.extesnions.showInfoMessage
 import com.brainplow.ogrespace.extesnions.showSuccessMessage
@@ -28,7 +29,7 @@ import org.json.JSONObject
 
 class ForgotPassActivity : BaseActivity(),Communicator.IVolleResult {
 
-    override fun notifySuccess(requestType: String?, response: JSONObject?, url: String, netWorkResponse: Int?) {
+    override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
         if(url.equals(Urls.urlForgotPwd)){
 //          //  val a=response
 //            //val b=5
@@ -36,7 +37,7 @@ class ForgotPassActivity : BaseActivity(),Communicator.IVolleResult {
         }
     }
 
-    override fun notifyError(requestType: String?, error: VolleyError?, url: String) {
+    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String) {
         if(url.equals(Urls.urlForgotPwd)){
             showErrorBody(error)
         }
@@ -94,7 +95,7 @@ class ForgotPassActivity : BaseActivity(),Communicator.IVolleResult {
                 if(isValid) {
                     val obj=JSONObject()
                     obj.put("email",email)
-                    volleyService?.postDataVolley("Object", Urls.urlForgotPwd, obj, "")
+                    volleyService?.postDataVolley(RequestType.JsonObjectRequest, Urls.urlForgotPwd, obj, "")
                 }
                 else
                 {

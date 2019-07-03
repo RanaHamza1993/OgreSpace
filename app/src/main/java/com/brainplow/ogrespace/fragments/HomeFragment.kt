@@ -18,13 +18,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.error.VolleyError
 
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.adapters.PropertyAdapter
 import com.brainplow.ogrespace.adapters.StatesAdapter
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.baseclasses.BaseFragment
 import com.brainplow.ogrespace.enums.LayoutType
+import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.VolleyParsing
 import com.brainplow.ogrespace.kotlin.VolleyService
+import com.brainplow.ogrespace.models.PropertyModel
 import com.brainplow.ogrespace.models.StateModel
 import com.daimajia.slider.library.Animations.DescriptionAnimation
 import com.daimajia.slider.library.SliderLayout
@@ -36,22 +39,27 @@ import java.util.HashMap
 
 class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.IStates {
 
-    override fun notifySuccess(requestType: String?, response: JSONArray?, url: String) {
+    override fun notifySuccess(requestType: RequestType?, response: JSONArray?, url: String) {
         if (url == Urls.urlStates) {
             setStatesAdapter(volleyParsing!!.getStateData(response, 1))
         }
 
     }
 
-    override fun notifySuccess(requestType: String?, response: String?, url: String) {
+    override fun notifySuccess(requestType: RequestType?, response: String?, url: String) {
+        if (url == Urls.urlGetLeaseProperties) {
+            setLeasePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
+        }else  if (url == Urls.urlGetSaleProperties) {
+            setSalePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
+        }
 
     }
 
-    override fun notifySuccess(requestType: String?, response: JSONObject?, url: String, netWorkResponse: Int?) {
+    override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
 
     }
 
-    override fun notifyError(requestType: String?, error: VolleyError?, url: String) {
+    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String) {
         if (url == Urls.urlStates) {
             showErrorBody(error)
         }
@@ -80,8 +88,9 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
     var mcontext: Context? = null
     var acBarListener: Communicator.IActionBar? = null
     var bottomBarListener: Communicator.IBottomBar? = null
-
     lateinit var recycleStates: RecyclerView
+    lateinit var propertiesForSaleRecycler: RecyclerView
+    lateinit var propertiesForLeaseRecycler: RecyclerView
     override fun onAttach(context: Context) {
         super.onAttach(context)
         this.mcontext = context
@@ -172,11 +181,18 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         mDemoSlider.getPagerIndicator()
             .setDefaultIndicatorColor(getResources().getColor(R.color.Red), getResources().getColor(R.color.gray));
         recycleStates = view.findViewById(R.id.recyclerStates)
-        recycleStates.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        propertiesForSaleRecycler = view.findViewById(R.id.p_sale_recycler)
+        propertiesForLeaseRecycler = view.findViewById(R.id.p_lease_recycler)
+        recycleStates.layoutManager =LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        propertiesForSaleRecycler.layoutManager =LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        propertiesForLeaseRecycler.layoutManager =LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+
     }
 
     fun volleyRequests() {
-        volleyService?.getDataVolley("Array", Urls.urlStates, "")
+        volleyService?.getDataVolley(RequestType.ArrayRequest, Urls.urlStates, "")
+        volleyService?.getDataVolley(RequestType.StringRequest, Urls.urlGetSaleProperties, "")
+        volleyService?.getDataVolley(RequestType.StringRequest, Urls.urlGetLeaseProperties, "")
 
     }
 
@@ -218,5 +234,14 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         statesAdapter.run {
             setStateListener(this@HomeFragment)
         }
+
+    }
+    private fun setSalePropertyAdapter(propertyList: ArrayList<PropertyModel>) {
+        val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutHorizontalProperties)
+        propertiesForSaleRecycler.adapter = propertyAdapter
+    }
+    private fun setLeasePropertyAdapter(propertyList: ArrayList<PropertyModel>) {
+        val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutHorizontalProperties)
+        propertiesForLeaseRecycler.adapter = propertyAdapter
     }
 }

@@ -16,6 +16,7 @@ import com.brainplow.ogrespace.adapters.PropertyAdapter
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.baseclasses.BaseFragment
 import com.brainplow.ogrespace.enums.LayoutType
+import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.LoadingDialog
 import com.brainplow.ogrespace.kotlin.VolleyParsing
@@ -27,7 +28,7 @@ import java.lang.Exception
 
 class StatesMoreFragment : BaseFragment(),Communicator.IVolleResult {
 
-    override fun notifySuccess(requestType: String?, response: JSONObject?, url: String, netWorkResponse: Int?) {
+    override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
         if (url.contains(Urls.urlPropertyByState)) {
 
             if (pages == 1) {
@@ -42,11 +43,11 @@ class StatesMoreFragment : BaseFragment(),Communicator.IVolleResult {
         }
     }
 
-    override fun notifySuccess(requestType: String?, response: String?, url: String) {
+    override fun notifySuccess(requestType: RequestType?, response: String?, url: String) {
 
     }
 
-    override fun notifyError(requestType: String?, error: VolleyError?, url: String) {
+    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String) {
         if (url.contains(Urls.urlPropertyByState)) {
             showErrorBody(error)
         }
@@ -105,7 +106,7 @@ class StatesMoreFragment : BaseFragment(),Communicator.IVolleResult {
     }
 
     fun volleyRequests(){
-        volleyService?.getDataVolley("Object", Urls.urlPropertyByState+stateName+"/"+ "?page=" + pages, "")
+        volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlPropertyByState+stateName+"/"+ "?page=" + pages, "")
 
     }
     fun setListeners(){
@@ -130,7 +131,7 @@ class StatesMoreFragment : BaseFragment(),Communicator.IVolleResult {
                         pages++
                         if (!load.ishowingg())
                             load.showdialog()
-                        volleyService!!.getDataVolley("Object", Urls.urlPropertyByState+stateName + "?page=" + pages, "")
+                        volleyService!!.getDataVolley(RequestType.JsonObjectRequest, Urls.urlPropertyByState+stateName + "?page=" + pages, "")
                         flag = 0
                     }
                 }

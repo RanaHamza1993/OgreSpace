@@ -1,16 +1,17 @@
 package com.brainplow.ogrespace.interfaces
 
 import com.android.volley.error.VolleyError
+import com.brainplow.ogrespace.enums.RequestType
 import org.json.JSONArray
 import org.json.JSONObject
 
 interface Communicator {
     interface IVolleResult{
 
-        fun notifySuccess(requestType: String?, response: JSONObject?, url:String, netWorkResponse:Int?=0){}
-        fun notifySuccess(requestType: String?, response: JSONArray?, url:String){}
-        fun notifySuccess(requestType: String?, response: String?,url:String){}
-        fun notifyError(requestType: String?, error: VolleyError?, url:String){}
+        fun notifySuccess(requestType: RequestType?, response: JSONObject?, url:String, netWorkResponse:Int?=0){}
+        fun notifySuccess(requestType: RequestType?, response: JSONArray?, url:String){}
+        fun notifySuccess(requestType: RequestType?, response: String?,url:String){}
+        fun notifyError(requestType: RequestType?, error: VolleyError?, url:String){}
     }
     interface IActionBar{
         fun actionBarListener(title: String)
