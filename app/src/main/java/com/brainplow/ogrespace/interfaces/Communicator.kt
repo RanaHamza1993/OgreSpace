@@ -9,9 +9,9 @@ interface Communicator {
     interface IVolleResult{
 
         fun notifySuccess(requestType: RequestType?, response: JSONObject?, url:String, netWorkResponse:Int?=0){}
-        fun notifySuccess(requestType: RequestType?, response: JSONArray?, url:String){}
-        fun notifySuccess(requestType: RequestType?, response: String?,url:String){}
-        fun notifyError(requestType: RequestType?, error: VolleyError?, url:String){}
+        fun notifySuccess(requestType: RequestType?, response: JSONArray?, url:String, netWorkResponse:Int?=0){}
+        fun notifySuccess(requestType: RequestType?, response: String?,url:String, netWorkResponse:Int?=0){}
+        fun notifyError(requestType: RequestType?, error: VolleyError?, url:String, netWorkResponse:Int?=0){}
     }
     interface IActionBar{
         fun actionBarListener(title: String)

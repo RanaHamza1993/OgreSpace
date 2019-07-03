@@ -37,7 +37,7 @@ class ForgotPassActivity : BaseActivity(),Communicator.IVolleResult {
         }
     }
 
-    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String) {
+    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
         if(url.equals(Urls.urlForgotPwd)){
             showErrorBody(error)
         }

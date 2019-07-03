@@ -23,7 +23,7 @@
                     android:background="@drawable/bg">
 
                 <com.mikhaellopez.circularimageview.CircularImageView
-                        android:id="@+id/edtpf_profilepic"
+                        android:id="@+id/user_profile"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_80sdp"
                         android:layout_gravity="center"
@@ -70,7 +70,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                     <EditText
-                            android:id="@+id/editpf_fname"
+                            android:id="@+id/user__fname"
                             style="@style/CustomTextAppearance"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
 
                     <EditText
                             style="@style/CustomTextAppearance"
-                            android:id="@+id/editpf_lname"
+                            android:id="@+id/user_lname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Last Name*"
@@ -125,12 +125,12 @@
 
                     <EditText
                             style="@style/CustomTextAppearance"
-                            android:id="@+id/mobile_no"
+                            android:id="@+id/user_mobileno"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif"
                             android:hint="Mobile"
-                            android:digits="0123456789"
+                            android:digits="0123456789+"
                             android:singleLine="true"
                             android:inputType="number"
                             android:textColor="@color/black"
@@ -150,11 +150,11 @@
 
                     <EditText
                             style="@style/CustomTextAppearance"
-                            android:id="@+id/zip_code"
+                            android:id="@+id/user_country"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="@dimen/_7sdp"
-                            android:hint="ZipCode"
+                            android:hint="Country"
                             android:paddingBottom="@dimen/_7sdp"
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray" />
@@ -172,10 +172,48 @@
 
                     <EditText
                             style="@style/CustomTextAppearance"
-                            android:id="@+id/city"
+                            android:id="@+id/user_state"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="State"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/text_padding_how_it"
+                        android:layout_marginTop="@dimen/text_padding_how_it"
+                        android:layout_marginRight="@dimen/text_padding_how_it"
+                        android:padding="@dimen/text_padding_how_it"
+                        app:hintTextAppearance="@style/InputTextLayout">
+
+                    <EditText
+                            style="@style/CustomTextAppearance"
+                            android:id="@+id/user_city"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="City"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/text_padding_how_it"
+                        android:layout_marginTop="@dimen/text_padding_how_it"
+                        android:layout_marginRight="@dimen/text_padding_how_it"
+                        android:padding="@dimen/text_padding_how_it"
+                        app:hintTextAppearance="@style/InputTextLayout">
+
+                    <EditText
+                            style="@style/CustomTextAppearance"
+                            android:id="@+id/user_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Address"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray" />

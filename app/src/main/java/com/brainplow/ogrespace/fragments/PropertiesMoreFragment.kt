@@ -26,10 +26,10 @@ import org.json.JSONObject
 import java.lang.Exception
 
 
-class StatesMoreFragment : BaseFragment(),Communicator.IVolleResult {
+class PropertiesMoreFragment : BaseFragment(),Communicator.IVolleResult {
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
-        if (url.contains(Urls.urlPropertyByState)) {
+       // if (url.contains(Urls.urlPropertyByState)) {
 
             if (pages == 1) {
                 try {
@@ -40,14 +40,11 @@ class StatesMoreFragment : BaseFragment(),Communicator.IVolleResult {
             flag = 1
       //      val list=volleyParsing?.getPropertyData(response,pages)
             setPropertyAdapter(volleyParsing?.getPropertyData(response,pages)!!)
-        }
+        //}
     }
 
-    override fun notifySuccess(requestType: RequestType?, response: String?, url: String) {
 
-    }
-
-    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String) {
+    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
         if (url.contains(Urls.urlPropertyByState)) {
             showErrorBody(error)
         }
@@ -62,6 +59,7 @@ class StatesMoreFragment : BaseFragment(),Communicator.IVolleResult {
     var layoutmanger: LinearLayoutManager? = null
     var propertyAdapter:PropertyAdapter?=null
     var flag = 0
+    var mflag:Int?=null
     lateinit var load: LoadingDialog
     lateinit var recycleProperty: RecyclerView
     var stateName:String?=null
@@ -79,11 +77,8 @@ class StatesMoreFragment : BaseFragment(),Communicator.IVolleResult {
         val view= inflater.inflate(R.layout.fragment_states_more, container, false)
         val bundle=arguments
         stateName=bundle?.getString("stateName")
-        acBarListener?.actionBarListener("Properties")
-        acBarListener?.isBackButtonEnabled(true)
-        acBarListener?.toolbarColor(false)
-
-        setIds(view)
+        mflag=bundle?.getInt("mflag")
+                setIds(view)
         setListeners()
         volleyRequests()
         return view
@@ -94,9 +89,18 @@ class StatesMoreFragment : BaseFragment(),Communicator.IVolleResult {
         acBarListener?.run{
             isBackButtonEnabled(true)
             toolbarBackground(false)
+            if(mflag==1)
+            actionBarListener("${stateName} Properties")
+           else if(mflag==2)
+                actionBarListener("Sale Properties")
+           else if(mflag==3)
+                actionBarListener("Lease Properties")
         }
     }
     fun setIds(view:View){
+        var bidPages = 0
+        var bidItems = 0
+        var pages = 1
         load = LoadingDialog("Loading", context)
         volleyParsing= VolleyParsing()
         volleyService = VolleyService(this, mcontext!!.applicationContext)
@@ -106,8 +110,12 @@ class StatesMoreFragment : BaseFragment(),Communicator.IVolleResult {
     }
 
     fun volleyRequests(){
+        if(mflag==1)
         volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlPropertyByState+stateName+"/"+ "?page=" + pages, "")
-
+        else if(mflag==2)
+        volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlGetSaleProperties+ "?page=" + pages, "")
+        else if(mflag==3)
+        volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlGetLeaseProperties+ "?page=" + pages, "")
     }
     fun setListeners(){
 
@@ -131,7 +139,14 @@ class StatesMoreFragment : BaseFragment(),Communicator.IVolleResult {
                         pages++
                         if (!load.ishowingg())
                             load.showdialog()
-                        volleyService!!.getDataVolley(RequestType.JsonObjectRequest, Urls.urlPropertyByState+stateName + "?page=" + pages, "")
+
+                        if(mflag==1)
+                            volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlPropertyByState+stateName+"/"+ "?page=" + pages, "")
+                        else if(mflag==2)
+                            volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlGetSaleProperties+ "?page=" + pages, "")
+                        else if(mflag==3)
+                            volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlGetLeaseProperties+ "?page=" + pages, "")
+
                         flag = 0
                     }
                 }
@@ -143,4 +158,5 @@ class StatesMoreFragment : BaseFragment(),Communicator.IVolleResult {
         if (load.ishowingg())
             load.dismisss()
     }
+
 }

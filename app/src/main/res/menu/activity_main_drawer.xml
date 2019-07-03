@@ -10,6 +10,7 @@
         <item
             android:id="@+id/nav_login"
             android:icon="@drawable/navlogin"
+            android:visible="false"
             android:title="Login" />
         <item
             android:id="@+id/nav_home"
@@ -24,6 +25,10 @@
             android:id="@+id/watch_list"
             android:icon="@drawable/navwishlist"
             android:title="My Watch List" />
+        <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/navaccount"
+                android:title="Profile" />
 
     </group>
         </menu>

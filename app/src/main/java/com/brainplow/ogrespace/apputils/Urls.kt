@@ -5,6 +5,7 @@ object Urls {
     val baseUrl=                                 "https://apis.officedoor.ai/"
     val baseStorageUrl=                          "https://storage.officedoor.ai/"
     val iconStorageUrl=                    baseStorageUrl+"final/"
+    val urlImageUpload=                    baseStorageUrl+"hamzatest.php"
     val urlSignUp=                         baseUrl+"user/createuser/"
     val urlSignIn=                         baseUrl+"login/"
     val urlStates=                         baseUrl+"office/state_list/"
@@ -12,4 +13,5 @@ object Urls {
     val urlForgotPwd=                      baseUrl+"user/ForgetPssword/"
     val urlGetLeaseProperties=             baseUrl+"office/Lease_Proterties_android/"
     val urlGetSaleProperties=              baseUrl+"office/Sale_Property_android/"
+    val urlGetUserProfile=                 baseUrl+"user/GetUserDetail/"
 }

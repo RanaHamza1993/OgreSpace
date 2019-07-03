@@ -21,6 +21,7 @@ import com.brainplow.ogrespace.baseclasses.BaseActivity
 import com.brainplow.ogrespace.constants.StaticFunctions
 import com.brainplow.ogrespace.fragments.ContactUs
 import com.brainplow.ogrespace.fragments.HomeFragment
+import com.brainplow.ogrespace.fragments.ProfileFragment
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.ActivityNavigator
 import com.facebook.login.LoginManager
@@ -143,6 +144,7 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
     var fragmentName: TextView? = null
     var appLogo: ImageView? = null
     var tolLogo: ImageView? = null
+    var headerBack: ImageView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -152,7 +154,8 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
     }
 
     fun setIds(){
-
+        val view: View = nav_view.getHeaderView(0)
+        headerBack = view.findViewById(R.id.header_back)
         toolbar = findViewById(R.id.toolbar)
         bottomNavigationView = findViewById(R.id.navigation)
         navigationView=findViewById(R.id.nav_view)
@@ -168,9 +171,9 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
         toggle?.isDrawerIndicatorEnabled = false
         toggle?.syncState()
         toolbar?.setNavigationIcon(null)
-        mydrawer?.setOnClickListener({
+        mydrawer?.setOnClickListener(){
             drawer_layout.openDrawer(Gravity.LEFT)
-        })
+        }
         secondary_linear = findViewById(R.id.secondry_linear)
         globalInvite = findViewById(R.id.global_invite)
         invite = findViewById(R.id.tv_topbar_invite)
@@ -230,6 +233,9 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
                         ActivityNavigator<PrivacyPolicyActivity>(this@MainActivity,PrivacyPolicyActivity::class.java)
 
                     }
+                    R.id.nav_profile ->{
+                        navigateToFragment(ProfileFragment())
+                }
                 }
                 drawer_layout.closeDrawer(GravityCompat.START)
                 return true
@@ -290,6 +296,9 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
         }
         globalInvite?.setOnClickListener(){
             StaticFunctions.inviteOthers(this)
+        }
+        headerBack?.setOnClickListener(){
+            onBackPressed()
         }
     }
     fun botnav() {

@@ -56,7 +56,7 @@ class LoginActivity : BaseActivity(),Communicator.IVolleResult {
         }
     }
 
-    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String) {
+    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
         if(url.equals(Urls.urlSignIn)){
            // showErrorBody(error)
             showErrorMessage("Invalid username or password")

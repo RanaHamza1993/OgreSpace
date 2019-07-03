@@ -18,7 +18,6 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
     var mResultCallback: Communicator.IVolleResult? = null
     lateinit var mContext: Context
 
-
     init {
         mResultCallback = resultCallback
         mContext = context
@@ -28,6 +27,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
         if (requestType==RequestType.JsonObjectRequest) {
 
+            var netWorkResponse=0
             try {
 
 
@@ -47,6 +47,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
 
                     override fun parseNetworkResponse(response: NetworkResponse?): Response<JSONObject> {
+                        try {
+                            netWorkResponse = response?.statusCode!!
+                        }catch(e:Exception){}
                         return super.parseNetworkResponse(response)
                     }
 
@@ -72,7 +75,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
             }
 
         } else if (requestType==RequestType.StringRequest) {
-
+            var netWorkResponse=0
             try {
 
 
@@ -89,6 +92,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
                 }) {
 
                     override fun parseNetworkResponse(response: NetworkResponse?): Response<String> {
+                        try {
+                            netWorkResponse = response?.statusCode!!
+                        }catch(e:Exception){}
                         return super.parseNetworkResponse(response)
                     }
 
@@ -117,7 +123,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
     fun postDataVolley(requestType: RequestType, url: String, sendObj: JSONObject, token: String) {
 
         if (requestType==RequestType.JsonObjectRequest) {
-
+            var netWorkResponse=0
             try {
 
 
@@ -137,6 +143,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
 
                     override fun parseNetworkResponse(response: NetworkResponse?): Response<JSONObject> {
+                        try {
+                            netWorkResponse = response?.statusCode!!
+                        }catch(e:Exception){}
                         return super.parseNetworkResponse(response)
                     }
 
@@ -162,7 +171,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
             }
 
         } else if (requestType==RequestType.StringRequest) {
-
+            var netWorkResponse=0
             try {
 
 
@@ -179,6 +188,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
                 }) {
 
                     override fun parseNetworkResponse(response: NetworkResponse?): Response<String> {
+                        try {
+                            netWorkResponse = response?.statusCode!!
+                        }catch(e:Exception){}
                         return super.parseNetworkResponse(response)
                     }
 
@@ -256,23 +268,26 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
             }
 
         } else if (requestType==RequestType.StringRequest) {
-
+            var netWorkResponse=0
             try {
 
 
                 val jsonObj = object : StringRequest(Request.Method.POST, url, object : Response.Listener<String> {
                     override fun onResponse(response: String) {
                         if (mResultCallback != null)
-                            mResultCallback!!.notifySuccess(requestType, response, url)
+                            mResultCallback!!.notifySuccess(requestType, response, url,netWorkResponse)
                     }
                 }, Response.ErrorListener {
 
                     if (mResultCallback != null)
-                        mResultCallback!!.notifyError(requestType, it, url)
+                        mResultCallback!!.notifyError(requestType, it, url,netWorkResponse)
                     Log.d("error",it.toString())
                 }) {
 
                     override fun parseNetworkResponse(response: NetworkResponse?): Response<String> {
+                        try {
+                            netWorkResponse = response?.statusCode!!
+                        }catch(e:Exception){}
                         return super.parseNetworkResponse(response)
                     }
 
@@ -301,7 +316,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
 
     fun getDataVolley(requestType: RequestType, url: String, token: String) {
-
+        var netWorkResponse=0
         if (requestType==RequestType.ArrayRequest) {
 
             try {
@@ -317,6 +332,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
 
                     override fun parseNetworkResponse(response: NetworkResponse?): Response<JSONArray> {
+                        try {
+                            netWorkResponse = response?.statusCode!!
+                        }catch(e:Exception){}
                         return super.parseNetworkResponse(response)
                     }
 
@@ -338,7 +356,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
 
         } else if (requestType==RequestType.StringRequest) {
-
+            var netWorkResponse=0
             try {
 
                 val jsonObj = object : StringRequest(Request.Method.GET, url, Response.Listener { response ->
@@ -352,6 +370,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
 
                     override fun parseNetworkResponse(response: NetworkResponse?): Response<String> {
+                        try {
+                            netWorkResponse = response?.statusCode!!
+                        }catch(e:Exception){}
                         return super.parseNetworkResponse(response)
 
 //                        try{
@@ -412,6 +433,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
 
         } else if (requestType==RequestType.JsonObjectRequest) {
+            var netWorkResponse=0
             try {
 
                 val jsonObj = object : JsonObjectRequest(Request.Method.GET, url, null, Response.Listener { response ->
@@ -425,6 +447,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
 
                     override fun parseNetworkResponse(response: NetworkResponse?): Response<JSONObject> {
+                        try {
+                            netWorkResponse = response?.statusCode!!
+                        }catch(e:Exception){}
                         return super.parseNetworkResponse(response)
                     }
 
@@ -453,7 +478,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
     fun getDataVolley(requestType: RequestType, url: String, token: String, urlflag: String) {
 
         if (requestType==RequestType.ArrayRequest) {
-
+            var netWorkResponse=0
             try {
 
                 val jsonObj = object : JsonArrayRequest(Request.Method.GET, url, null, Response.Listener { response ->
@@ -467,6 +492,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
 
                     override fun parseNetworkResponse(response: NetworkResponse?): Response<JSONArray> {
+                        try {
+                            netWorkResponse = response?.statusCode!!
+                        }catch(e:Exception){}
                         return super.parseNetworkResponse(response)
                     }
 
@@ -488,7 +516,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
 
         } else if (requestType==RequestType.StringRequest) {
-
+            var netWorkResponse=0
             try {
 
                 val jsonObj = object : StringRequest(Request.Method.GET, url, Response.Listener { response ->
@@ -501,6 +529,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
 
                     override fun parseNetworkResponse(response: NetworkResponse?): Response<String> {
+                        try {
+                            netWorkResponse = response?.statusCode!!
+                        }catch(e:Exception){}
                         return super.parseNetworkResponse(response)
 //
 //                        try{
@@ -560,6 +591,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
 
         } else if (requestType==RequestType.JsonObjectRequest) {
+            var netWorkResponse=0
             try {
 
                 val jsonObj = object : JsonObjectRequest(Request.Method.GET, url, null, Response.Listener { response ->
@@ -573,6 +605,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
 
                     override fun parseNetworkResponse(response: NetworkResponse?): Response<JSONObject> {
+                        try {
+                            netWorkResponse = response?.statusCode!!
+                        }catch(e:Exception){}
                         return super.parseNetworkResponse(response)
                     }
 
@@ -597,7 +632,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
     fun deleteDataVolley(requestType: RequestType, url: String, token: String) {
 
         if (requestType==RequestType.StringRequest) {
-
+            var netWorkResponse=0
             try {
 
 
@@ -615,6 +650,9 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
 
                     override fun parseNetworkResponse(response: NetworkResponse?): Response<String> {
+                        try {
+                            netWorkResponse = response?.statusCode!!
+                        }catch(e:Exception){}
                         return super.parseNetworkResponse(response)
                     }
 

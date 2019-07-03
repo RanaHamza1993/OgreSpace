@@ -5,14 +5,13 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.EditText
 import android.widget.LinearLayout
-import androidx.drawerlayout.widget.DrawerLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.error.VolleyError
@@ -39,14 +38,14 @@ import java.util.HashMap
 
 class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.IStates {
 
-    override fun notifySuccess(requestType: RequestType?, response: JSONArray?, url: String) {
+    override fun notifySuccess(requestType: RequestType?, response: JSONArray?, url: String, netWorkResponse: Int?) {
         if (url == Urls.urlStates) {
             setStatesAdapter(volleyParsing!!.getStateData(response, 1))
         }
 
     }
 
-    override fun notifySuccess(requestType: RequestType?, response: String?, url: String) {
+    override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
         if (url == Urls.urlGetLeaseProperties) {
             setLeasePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
         }else  if (url == Urls.urlGetSaleProperties) {
@@ -59,30 +58,22 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
 
     }
 
-    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String) {
+    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
         if (url == Urls.urlStates) {
             showErrorBody(error)
         }
     }
 
     override fun onStateItemClick(id: Int?, name: String?) {
-        val args = Bundle()
-        args.putInt("stateId", id!!)
-        args.putString("stateName", name)
-        val fragment = StatesMoreFragment()
-        fragment.arguments = args
-        val fragmentTransaction = fragmentManager?.beginTransaction()
-        fragmentTransaction?.run {
-            replace(R.id.content_frame, fragment)
-            addToBackStack(fragment.toString())
-            commit()
+        navigateToMoreProperties(id,name,1)
 
-        }
     }
 
     var volleyService: VolleyService? = null
     var volleyParsing: VolleyParsing? = null
     var main_search_edit: EditText? = null
+    var saleMoreText:TextView?=null
+    var leaseMoreText:TextView?=null
     var rootView: LinearLayout? = null
     lateinit var mDemoSlider: SliderLayout
     var mcontext: Context? = null
@@ -108,6 +99,7 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         setIds(view)
         cursorVisible()
         homeSlider()
+        setListeners()
         volleyRequests()
         return view
     }
@@ -177,6 +169,8 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         volleyService = VolleyService(this, mcontext!!.applicationContext)
         rootView = view.findViewById(R.id.homeFragment)
         main_search_edit = activity?.findViewById(R.id.mainsearch_edittext)
+        saleMoreText=view.findViewById(R.id.p_sale_more)
+        leaseMoreText=view.findViewById(R.id.p_lease_more)
         mDemoSlider = view.findViewById(R.id.banner1);
         mDemoSlider.getPagerIndicator()
             .setDefaultIndicatorColor(getResources().getColor(R.color.Red), getResources().getColor(R.color.gray));
@@ -243,5 +237,28 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
     private fun setLeasePropertyAdapter(propertyList: ArrayList<PropertyModel>) {
         val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutHorizontalProperties)
         propertiesForLeaseRecycler.adapter = propertyAdapter
+    }
+    fun navigateToMoreProperties(id: Int?, name: String?,mflag:Int){
+        val args = Bundle()
+        args.putInt("mflag", mflag)
+        args.putInt("stateId", id!!)
+        args.putString("stateName", name)
+        val fragment = PropertiesMoreFragment()
+        fragment.arguments = args
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.run {
+            replace(R.id.content_frame, fragment)
+            addToBackStack(fragment.toString())
+            commit()
+
+        }
+    }
+    fun setListeners(){
+        saleMoreText?.setOnClickListener(){
+            navigateToMoreProperties(0,"",2)
+        }
+        leaseMoreText?.setOnClickListener(){
+            navigateToMoreProperties(0,"",3)
+        }
     }
 }
