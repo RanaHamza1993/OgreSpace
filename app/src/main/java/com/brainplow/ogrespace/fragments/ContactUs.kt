@@ -133,7 +133,7 @@ class ContactUs : BaseFragment() {
 
                 val sydney = LatLng(32.9480465, -96.8270723)
                 googleMap?.addMarker(MarkerOptions().position(sydney).title("Marker in Dallas"))
-                googleMap?.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+                googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,10f))
 
             }
 

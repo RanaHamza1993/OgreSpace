@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <LinearLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_180sdp">
+
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/edtpf_profilepic"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/cplaceholder" />
+
+                <TextView
+                        android:id="@+id/upload_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|bottom"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="Upload Photo"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/_20sdp"
+                        android:textStyle="bold" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_first"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/text_padding_how_it"
+                        android:layout_marginTop="@dimen/text_padding_how_it"
+                        android:layout_marginRight="@dimen/text_padding_how_it"
+                        android:padding="@dimen/text_padding_how_it"
+                        app:hintTextAppearance="@style/InputTextLayout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    <EditText
+                            android:id="@+id/editpf_fname"
+                            style="@style/CustomTextAppearance"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="First Name*"
+                            android:inputType="textCapWords"
+                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray"
+                            android:windowSoftInputMode="stateVisible" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_last"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/text_padding_how_it"
+                        android:layout_marginTop="@dimen/text_padding_how_it"
+                        android:layout_marginRight="@dimen/text_padding_how_it"
+                        android:padding="@dimen/text_padding_how_it"
+                        app:hintTextAppearance="@style/InputTextLayout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintVertical_bias="0.0">
+
+                    <EditText
+                            style="@style/CustomTextAppearance"
+                            android:id="@+id/editpf_lname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Last Name*"
+                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                            android:singleLine="true"
+                            android:inputType="textCapWords"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_headline"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/text_padding_how_it"
+                        android:layout_marginTop="@dimen/text_padding_how_it"
+                        android:layout_marginRight="@dimen/text_padding_how_it"
+                        android:padding="@dimen/text_padding_how_it"
+                        app:hintTextAppearance="@style/InputTextLayout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintVertical_bias="0.0">
+
+                    <EditText
+                            style="@style/CustomTextAppearance"
+                            android:id="@+id/mobile_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:hint="Mobile"
+                            android:digits="0123456789"
+                            android:singleLine="true"
+                            android:inputType="number"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray"
+                    />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_bio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/text_padding_how_it"
+                        android:layout_marginTop="@dimen/text_padding_how_it"
+                        android:layout_marginRight="@dimen/text_padding_how_it"
+                        android:padding="@dimen/text_padding_how_it"
+                        app:hintTextAppearance="@style/InputTextLayout">
+
+                    <EditText
+                            style="@style/CustomTextAppearance"
+                            android:id="@+id/zip_code"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/_7sdp"
+                            android:hint="ZipCode"
+                            android:paddingBottom="@dimen/_7sdp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_language"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/text_padding_how_it"
+                        android:layout_marginTop="@dimen/text_padding_how_it"
+                        android:layout_marginRight="@dimen/text_padding_how_it"
+                        android:padding="@dimen/text_padding_how_it"
+                        app:hintTextAppearance="@style/InputTextLayout">
+
+                    <EditText
+                            style="@style/CustomTextAppearance"
+                            android:id="@+id/city"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="City"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+            <Button
+                    android:id="@+id/editpf_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/text_padding_how_it"
+                    android:layout_marginTop="@dimen/text_padding_how_it"
+                    android:layout_marginRight="@dimen/text_padding_how_it"
+                    android:layout_marginBottom="@dimen/button_margin_addpost"
+                    android:background="@drawable/bid_buy_btns_home"
+                    android:padding="@dimen/text_padding_how_it"
+                    android:text="Save"
+                    android:textAllCaps="false"
+                    android:textColor="@drawable/bidbuybtntextstate"
+                    android:textSize="@dimen/tv_heading3_fontsize"
+                    android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
