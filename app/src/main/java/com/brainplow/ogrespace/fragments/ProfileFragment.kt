@@ -30,7 +30,10 @@ import com.android.volley.toolbox.Volley
 import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.baseclasses.BaseFragment
+import com.brainplow.ogrespace.constants.StaticFunctions
 import com.brainplow.ogrespace.enums.RequestType
+import com.brainplow.ogrespace.extesnions.showErrorMessage
+import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.LoadingDialog
 import com.brainplow.ogrespace.kotlin.MySingleton
@@ -43,6 +46,7 @@ import java.io.FileNotFoundException
 import java.io.InputStream
 import java.lang.Exception
 import java.util.HashMap
+import kotlin.math.ln
 
 class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
 
@@ -50,6 +54,7 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
         if(url.contains(Urls.urlUpdateUserProfile,true)){
             if(filePath!=null)
             imageUpload(filePath)
+            mcontext?.showSuccessMessage("Profile updated successfully")
         }
 
     }
@@ -147,6 +152,7 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
             userAddress?.setText(obj.getString("Address"))
             userCity?.setText(obj.getString("City"))
             userProfileName=obj.getString("Pic")
+            StaticFunctions.loadImage(context,userProfileName,userProfile,Urls.iconStorageUrl)
             profileID=obj.getInt("id")
         }catch (e:Exception){}
     }
@@ -154,19 +160,66 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
         volleyService?.getDataVolley(RequestType.StringRequest, Urls.urlGetUserProfile, token!!)
     }
     fun updateUserData(){
-        val obj=JSONObject()
-        obj.put("Fname",userFirstName?.text?.toString())
-        obj.put("Lname",userLastName?.text?.toString())
-        obj.put("Mobile",userPhoneNo?.text?.toString())
-        obj.put("Country",userCountry?.text?.toString())
-        obj.put("State",userState?.text?.toString())
-        obj.put("Address",userAddress?.text?.toString())
-        obj.put("City",userCity?.text?.toString())
-        if(filePath!=null)
-        obj.put("Pic",profilepicname)
-        else
-            obj.put("Pic",userProfileName)
-        volleyService?.putDataVolley(RequestType.JsonObjectRequest, Urls.urlUpdateUserProfile+profileID+"/",obj, token!!)
+        val isValid=checkValidation()
+        if(isValid) {
+            val obj = JSONObject()
+            obj.put("Fname", userFirstName?.text?.toString())
+            obj.put("Lname", userLastName?.text?.toString())
+            obj.put("Mobile", userPhoneNo?.text?.toString())
+            obj.put("Country", userCountry?.text?.toString())
+            obj.put("State", userState?.text?.toString())
+            obj.put("Address", userAddress?.text?.toString())
+            obj.put("City", userCity?.text?.toString())
+            if (filePath != null)
+                obj.put("Pic", profilepicname)
+            else
+                obj.put("Pic", userProfileName)
+            volleyService?.putDataVolley(
+                RequestType.JsonObjectRequest,
+                Urls.urlUpdateUserProfile + profileID + "/",
+                obj,
+                token!!
+            )
+        }
+    }
+
+    fun  checkValidation():Boolean{
+        val ufname=userFirstName?.text?.toString()
+        val ulname=userLastName?.text?.toString()
+        val unum=userPhoneNo?.text?.toString()
+        val ucountry=userCountry?.text?.toString()
+        val ustate=userState?.text?.toString()
+        val uaddress=userAddress?.text?.toString()
+        val ucity=userCity?.text?.toString()
+        if(ufname.equals("")){
+            mcontext?.showErrorMessage("Enter first name")
+            return false
+        }
+        if(ulname.equals("")){
+            mcontext?.showErrorMessage("Enter last name")
+            return false
+        }
+        if(unum.equals("")){
+            mcontext?.showErrorMessage("Enter phone number")
+            return false
+        }
+        if(ucountry.equals("")){
+            mcontext?.showErrorMessage("Enter country")
+            return false
+        }
+        if(ustate.equals("")){
+            mcontext?.showErrorMessage("Enter state")
+            return false
+        }
+        if(ucity.equals("")){
+            mcontext?.showErrorMessage("Enter city")
+            return false
+        }
+        if(uaddress.equals("")){
+            mcontext?.showErrorMessage("Enter address")
+            return false
+        }else
+            return true
     }
     private fun selectPicture(){
         if (ContextCompat.checkSelfPermission(activity as FragmentActivity,

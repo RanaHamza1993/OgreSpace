@@ -4,6 +4,7 @@ object Urls {
 
     val baseUrl=                                 "https://apis.officedoor.ai/"
     val baseStorageUrl=                          "https://storage.officedoor.ai/"
+    //val baseImageStorageUrl=               baseStorageUrl+"OfficeImages/"
     val iconStorageUrl=                    baseStorageUrl+"final/"
     val urlImageUpload=                    baseStorageUrl+"hamzatest.php"
     val urlSignUp=                         baseUrl+"user/createuser/"

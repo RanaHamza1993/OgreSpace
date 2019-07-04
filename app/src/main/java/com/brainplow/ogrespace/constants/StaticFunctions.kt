@@ -5,6 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
+import com.brainplow.ogrespace.R
+import com.bumptech.glide.Glide
+import com.mikhaellopez.circularimageview.CircularImageView
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -44,6 +48,21 @@ object StaticFunctions {
         pattern = Pattern.compile(PASSWORD_PATTERN)
         matcher = pattern.matcher(password)
         return matcher.matches()
+    }
+    fun loadImage(context:Context?,image:String?,imageView: ImageView?,storage:String){
+        Glide.with(context!!)
+            .load(storage+image).placeholder(R.drawable.cplaceholder)
+            .into(imageView!!)
+    }
+    fun loadImage(context:Context?,image:String?,imageView: CircularImageView?){
+        Glide.with(context!!)
+            .load(image).placeholder(R.drawable.cplaceholder)
+            .into(imageView!!)
+    }
+    fun loadImage(context:Context?,image:String?,imageView: CircularImageView?,storage:String){
+        Glide.with(context!!)
+            .load(storage+image).placeholder(R.drawable.cplaceholder)
+            .into(imageView!!)
     }
 
 }
