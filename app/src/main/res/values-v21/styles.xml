@@ -1,0 +1,31 @@
+<resources>
+
+    <style name="navstyle">
+    <item name="android:windowTranslucentNavigation">true</item>
+     <item name="android:fitsSystemWindows">true</item>
+
+    </style>
+    <style name="custom_bottom_text">
+        <!--<item name="android:textSize">14dp</item>-->
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    </style>
+    <style name="TextInputLayoutHintText">
+        <item name="android:textColor">@color/colorPrimaryDark4</item>
+        <item name="android:textSize">@dimen/textsize</item>
+
+    </style>
+    <style name="Collapse">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/textsize</item>
+
+    </style>
+    <style name="EditTextTheme">
+        <item name="colorControlNormal">@color/grey</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+</resources>

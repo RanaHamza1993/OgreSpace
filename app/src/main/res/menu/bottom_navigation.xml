@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_home"
+        android:icon="@drawable/botnavhome"
+        android:title="Home" />
+    <item
+        android:id="@+id/bottom_search"
+        android:icon="@drawable/bottom_search_home"
+        android:title="Search" />
+    <item
+        android:id="@+id/bot_save"
+        android:icon="@drawable/bottom_heart_home"
+        android:title="Save" />
+
+    <item
+        android:id="@+id/bot_notification"
+        android:icon="@drawable/bottom_bell_home"
+        android:title="Notifications" />
+    <item
+            android:id="@+id/bot_profile"
+            android:icon="@drawable/bottom_profile_home"
+            android:title="Profile" />
+
+
+
+
+
+
+</menu>

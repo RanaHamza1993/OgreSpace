@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">OgreSpace</string>
+    <string name="aboutogrespace">About OgreSpace</string>
+    <string name="facebook_app_id">2249887752002229</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ogre_space">
+        <font color="#FFFFFF">OgreSpace</font>
+    </string>
+    <string name="about_ogre_space">
+        <font color="#FFFFFF">About OgreSpace</font>
+    </string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+</resources>

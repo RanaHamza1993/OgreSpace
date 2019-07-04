@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/card2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:orientation="vertical"
+    app:cardElevation="8dp"
+    android:elevation="8dp"
+     app:cardCornerRadius="10dp">
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:paddingBottom="5dp">
+      <TextView
+          android:id="@+id/success_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Success"
+          android:layout_toRightOf="@+id/icon"
+          android:textSize="@dimen/default_large_textsize"
+          android:textColor="@color/black"
+          android:textStyle="bold"/>
+      <TextView android:id="@+id/description"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_toRightOf="@+id/icon"
+          android:layout_toLeftOf="@+id/ok_button"
+          android:layout_below="@+id/success_title"
+          android:text="Your Account has been created. Please check your inbox for account activation instructions."
+          android:textStyle="bold"
+          android:textSize="@dimen/default_small_textsize"
+          android:textColor="@color/black"/>
+      <TextView android:id="@+id/ok_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:padding="10dp"
+          android:text="OK"
+          android:visibility="gone"
+          android:textStyle="bold"
+          android:textSize="@dimen/default_small_textsize"
+          android:textColor="@color/green_300"
+          android:layout_alignParentRight="true"
+          android:layout_marginRight="5dp"
+          android:background="@drawable/square_shape"
+          android:layout_centerVertical="true"/>
+      <ImageView
+          android:id="@+id/icon"
+          android:layout_width="64dp"
+          android:layout_height="64dp"
+          android:layout_marginLeft="5dp"
+          android:src="@drawable/tologo"
+          android:layout_marginRight="@dimen/margintop_medium"
+          android:layout_centerVertical="true" />
+  </RelativeLayout>
+
+ </androidx.cardview.widget.CardView>

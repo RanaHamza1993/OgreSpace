@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/crampadding20"
+                android:paddingLeft="@dimen/crammargin20"
+                android:paddingRight="@dimen/crampadding20">
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:layout_width="250dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="@dimen/crammargin20"
+                        android:layout_centerHorizontal="true"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/ogrelogo" />
+            </RelativeLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/crammargin25"
+                    android:layout_marginBottom="15dp"
+                    android:gravity="center"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="Get in touch with us"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/input_text" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/crammargin10"
+                    android:padding="@dimen/crampadding5"
+                    android:hint="Name*"
+                    app:hintTextAppearance="@style/InputTextLayout">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/contact_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        android:inputType="textPersonName"
+                        android:singleLine="true"
+                        android:fontFamily="@font/opensans_bold"
+                        android:maxLength="46"
+                        android:textAppearance="@style/CustomTextAppearance" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+           <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/crammargin10"
+            android:padding="@dimen/crampadding5"
+            android:hint="Email*"
+            app:hintTextAppearance="@style/InputTextLayout">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/contact_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:fontFamily="@font/opensans_bold"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@._1234567890"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="320"
+                    android:textAppearance="@style/CustomTextAppearance" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/crammargin10"
+                    android:padding="@dimen/crampadding5"
+                    android:hint="Phone*"
+                    app:hintTextAppearance="@style/InputTextLayout">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/contact_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:singleLine="true"
+                        android:digits="1234567890"
+                        android:inputType="number"
+                        android:maxLength="15"
+                        android:textAppearance="@style/CustomTextAppearance" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/crammargin10"
+                    android:padding="@dimen/crampadding5"
+                    android:hint="Subject*"
+                    app:hintTextAppearance="@style/InputTextLayout">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/contact_subject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        android:inputType="textPersonName"
+                        android:maxLength="46"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textAppearance="@style/CustomTextAppearance" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/crammargin10"
+                    android:padding="@dimen/crampadding5"
+                    android:hint="Your Feedback*"
+                    app:hintTextAppearance="@style/InputTextLayout">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/contact_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:maxLength="200"
+                        android:fontFamily="@font/opensans_bold"
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.,"
+                        android:inputType="text"
+                        android:singleLine="false"
+                        android:textAppearance="@style/CustomTextAppearance" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                    android:id="@+id/contact_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/crammargin10"
+                    android:background="@drawable/bid_buy_btns_home"
+                    android:textColor="@drawable/bidbuybtntextstate"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:elevation="@dimen/button_elevation"
+                    android:text="Submit"
+                    android:fontFamily="@font/opensans_bold"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:textSize="@dimen/button_text"
+                    android:textStyle="bold" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="HEADQUARTER"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textSize="25sp"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="5050 Quorum Drive Ste 700 Dallas TX 75254
++1-214-302-7330"
+                    android:maxLines="3"
+                    android:padding="5dp"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textSize="@dimen/app_heading_text"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@color/grey">
+                <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:id="@+id/mappp"
+                ></FrameLayout>
+            </LinearLayout>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="contact AT OgreSpace DOT com"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textSize="@dimen/app_normal_text"
+                    android:gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="EMAIL"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_weight="0.7"
+                        android:padding="5dp"
+                        android:textSize="@dimen/app_heading_text"
+                        android:fontFamily="@font/opensans_bold"
+                />
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="ogrespace.com"
+                        android:textColor="@color/grey"
+                        android:layout_weight="1.3"
+                        android:padding="5dp"
+                        android:textSize="@dimen/app_normal_text"
+                        android:fontFamily="@font/opensans_regular"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="TOLL"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_weight="0.7"
+                        android:padding="5dp"
+                        android:textSize="@dimen/app_heading_text"
+                        android:fontFamily="@font/opensans_bold"
+                />
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="+1-214-302-7330"
+                        android:textColor="@color/grey"
+                        android:layout_weight="1.3"
+                        android:padding="5dp"
+                        android:textSize="@dimen/app_normal_text"
+                        android:fontFamily="@font/opensans_regular"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="FAX"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_weight="0.7"
+                        android:padding="5dp"
+                        android:textSize="@dimen/app_heading_text"
+                        android:fontFamily="@font/opensans_bold"
+                />
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="+1-(496)-250-6600"
+                        android:textColor="@color/grey"
+                        android:layout_weight="1.3"
+                        android:padding="5dp"
+                        android:textSize="@dimen/app_normal_text"
+                        android:fontFamily="@font/opensans_regular"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    <!---->
+
+</androidx.core.widget.NestedScrollView>
