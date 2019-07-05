@@ -19,7 +19,7 @@
         android:layout_height="24dp"
         android:layout_gravity="center"
         android:scaleType="centerInside"
-        android:src="@drawable/icon_search_gray" />
+        android:src="@drawable/place_search" />
 
     <TextView
         android:id="@+id/text"

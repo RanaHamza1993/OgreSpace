@@ -15,6 +15,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.error.VolleyError
+import com.badoo.mobile.util.WeakHandler
 
 import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.adapters.SearchKeyWordsAdapter
@@ -30,8 +31,16 @@ class SearchFragment : BaseFragment(),Communicator.IVolleResult {
 
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
-        val a=response
-        val b=5
+      //  val a=response
+      //  val b=5
+       // if (!searchQuery.equals(""))
+            searchIcon?.visibility = View.GONE
+        keyWordsList.clear()
+        val predictions=response?.getJSONArray("predictions")
+        for(i in 0 until predictions!!.length()){
+            keyWordsList.add(predictions.getJSONObject(i).getString("description"))
+        }
+        setAdapter()
     }
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
         showErrorBody(error)
@@ -81,6 +90,7 @@ class SearchFragment : BaseFragment(),Communicator.IVolleResult {
         isRunning=false
     }
     private fun setIds(view: View?) {
+        searchIcon = view?.findViewById(R.id.search_icon)
         volleyService = VolleyService(this, mcontext!!.applicationContext)
         suggestionRecycler = view?.findViewById(R.id.suggestions_recycler)
         suggestionRecycler?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -91,6 +101,8 @@ class SearchFragment : BaseFragment(),Communicator.IVolleResult {
 
     fun setListeners() {
 
+        if (!searchQuery.equals(""))
+            searchIcon?.visibility = View.GONE
         main_search_edit!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -106,9 +118,9 @@ class SearchFragment : BaseFragment(),Communicator.IVolleResult {
 
                 main_edit_cross.setOnClickListener {
                     main_search_edit?.setText("")
-//                    handler?.postDelayed({
-//                        searchIcon?.visibility = View.VISIBLE
-//                    }, 160)
+                    WeakHandler().postDelayed({
+                        searchIcon?.visibility = View.VISIBLE
+                    }, 160)
 
                 }
             }
@@ -129,7 +141,7 @@ class SearchFragment : BaseFragment(),Communicator.IVolleResult {
     }
 
     private fun getSearchResult(value: String) {
-        volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlGooglePlaceSearch+value+"&key=AIzaSyCwFuBLNlN0azRUJ80g93QJ_RJLGRXVCCc","")
+        volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlGooglePlaceSearch+value+"&key=AIzaSyBvtXUC9gCiJTPRwX-tCHsOgTiLo2H8P6Q","")
 
     }
 

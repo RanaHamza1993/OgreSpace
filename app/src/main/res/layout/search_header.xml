@@ -13,20 +13,4 @@
         android:paddingRight="12dp"
         android:paddingTop="12dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
-    <TextView
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:text="Hello brother"/>
-    <TextView
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/black"
-
-            android:text="Hello brother"/>
-    <TextView
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:text="Hello brother"/>
-</LinearLayout>
+   </LinearLayout>
