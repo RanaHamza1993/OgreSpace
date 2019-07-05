@@ -87,12 +87,12 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
     var updateProfile: Button?=null
     var volleyService: VolleyService? = null
     var token: String? = null
-    var mcontext: Context? = null
+
     var profileID: Int? = null
     var userProfileName=""
     lateinit var load: LoadingDialog
     var acBarListener: Communicator.IActionBar? = null
-
+    var mcontext: Context? = null
     override fun onAttach(context: Context) {
         super.onAttach(context)
         this.mcontext = context

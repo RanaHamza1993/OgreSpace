@@ -1,14 +1,12 @@
 package com.brainplow.ogrespace.fragments
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
+import android.view.*
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -17,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.error.VolleyError
 
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.activities.SearchActivity
 import com.brainplow.ogrespace.adapters.PropertyAdapter
 import com.brainplow.ogrespace.adapters.StatesAdapter
 import com.brainplow.ogrespace.apputils.Urls
@@ -24,6 +23,7 @@ import com.brainplow.ogrespace.baseclasses.BaseFragment
 import com.brainplow.ogrespace.enums.LayoutType
 import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.interfaces.Communicator
+import com.brainplow.ogrespace.kotlin.ActivityNavigator
 import com.brainplow.ogrespace.kotlin.VolleyParsing
 import com.brainplow.ogrespace.kotlin.VolleyService
 import com.brainplow.ogrespace.models.PropertyModel
@@ -253,6 +253,7 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
 
         }
     }
+    @SuppressLint("ClickableViewAccessibility")
     fun setListeners(){
         saleMoreText?.setOnClickListener(){
             navigateToMoreProperties(0,"",2)
@@ -260,5 +261,16 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         leaseMoreText?.setOnClickListener(){
             navigateToMoreProperties(0,"",3)
         }
+        main_search_edit!!.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View, event: MotionEvent): Boolean {
+
+                if (event.action == MotionEvent.ACTION_DOWN) {
+
+                     ActivityNavigator<SearchActivity>(mcontext!!,SearchActivity::class.java)
+                }
+                return false
+            }
+        })
+
     }
 }
