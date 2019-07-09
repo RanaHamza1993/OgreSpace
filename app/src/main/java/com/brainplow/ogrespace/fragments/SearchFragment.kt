@@ -10,8 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.error.VolleyError
@@ -25,30 +24,30 @@ import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.MySingleton
 import com.brainplow.ogrespace.kotlin.VolleyService
+import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-class SearchFragment : BaseFragment(),Communicator.IVolleResult {
+class SearchFragment : BaseFragment(), Communicator.IVolleResult {
 
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
-      //  val a=response
-      //  val b=5
-       // if (!searchQuery.equals(""))
-            searchIcon?.visibility = View.GONE
+        spinner_layout?.visibility = View.GONE
+      //  searchIcon?.visibility = View.GONE
         keyWordsList.clear()
-        val predictions=response?.getJSONArray("predictions")
-        for(i in 0 until predictions!!.length()){
+        val predictions = response?.getJSONArray("predictions")
+        for (i in 0 until predictions!!.length()) {
             keyWordsList.add(predictions.getJSONObject(i).getString("description"))
         }
         setAdapter()
     }
+
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
         showErrorBody(error)
     }
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        this.mcontext = context
-    }
+
+    var typeSpinner: Spinner? = null
+    var typeList = arrayOf("Please select property type", "Sale", "Lease")
     var keyWordsList = ArrayList<String>()
     var searchAdapter: SearchKeyWordsAdapter? = null
     var main_search_edit: EditText? = null
@@ -61,14 +60,31 @@ class SearchFragment : BaseFragment(),Communicator.IVolleResult {
     var mcontext: Context? = null
     var volleyService: VolleyService? = null
     var suggestionRecycler: RecyclerView? = null
+    var type = ""
     val searchListener = object : SearchKeyWordsAdapter.ISearchListener {
         override fun onItemClick(position: Int, keyWord: String) {
-            //  val f = fragmentManager?.findFragmentByTag("Search")
-            //navigateToSearch(position,keyWord)
+            val args = Bundle()
+            args.putString("keyword", keyWord)
+            args.putString("type", type)
+            val fragment = SearchResult()
+            fragment.arguments = args
+            val fragmentTransaction = fragmentManager?.beginTransaction()
+            fragmentTransaction?.run {
+                replace(R.id.content_frame, fragment)
+                addToBackStack(null)
+                commit()
+            }
 
         }
 
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mcontext = context
+        acBarListener = context as Communicator.IActionBar
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -82,13 +98,22 @@ class SearchFragment : BaseFragment(),Communicator.IVolleResult {
 
     override fun onResume() {
         super.onResume()
-        isRunning=true
+        isRunning = true
+        //acBarListener?.actionBarListener("Home")
+        acBarListener?.isSearchVisible(true)
+        acBarListener?.toolbarBackground(true)
+        acBarListener?.isBackButtonEnabled(false)
     }
 
     override fun onStop() {
         super.onStop()
-        isRunning=false
+        isRunning = false
+        acBarListener?.isSearchVisible(false)
+        acBarListener?.toolbarColor(false)
+        acBarListener?.toolbarBackground(false)
+
     }
+
     private fun setIds(view: View?) {
         searchIcon = view?.findViewById(R.id.search_icon)
         volleyService = VolleyService(this, mcontext!!.applicationContext)
@@ -97,12 +122,14 @@ class SearchFragment : BaseFragment(),Communicator.IVolleResult {
         main_search_edit = activity?.findViewById(R.id.mainsearch_edittext)
         main_edit_cross = activity!!.findViewById(R.id.edit_cross)
         main_edit_mic = activity!!.findViewById(R.id.edit_mic)
+        typeSpinner=view?.findViewById(R.id.spinner_type)
     }
 
     fun setListeners() {
 
-        if (!searchQuery.equals(""))
-            searchIcon?.visibility = View.GONE
+       // if (!searchQuery.equals(""))
+          //  searchIcon?.visibility = View.GONE
+
         main_search_edit!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -111,16 +138,18 @@ class SearchFragment : BaseFragment(),Communicator.IVolleResult {
                 MySingleton.getInstance(mcontext!!).requestQueue.cancelAll("searchRequest")
                 var value = main_search_edit?.text.toString()
                 value = value.replace(" ", "%20")
-                if (isRunning)
+                if (isRunning&&!value.equals(""))
                     getSearchResult(value)
+                else {
+                    keyWordsList.clear()
+                    setAdapter()
+                }
                 main_edit_cross.visibility = View.VISIBLE
                 main_edit_mic.visibility = View.GONE
 
                 main_edit_cross.setOnClickListener {
                     main_search_edit?.setText("")
-                    WeakHandler().postDelayed({
-                        searchIcon?.visibility = View.VISIBLE
-                    }, 160)
+
 
                 }
             }
@@ -131,6 +160,8 @@ class SearchFragment : BaseFragment(),Communicator.IVolleResult {
 
                     main_edit_cross.visibility = View.GONE
                     main_edit_mic.visibility = View.VISIBLE
+                 //   searchIcon?.visibility = View.VISIBLE
+                    spinner_layout?.visibility = View.VISIBLE
 
 
                 }
@@ -138,21 +169,47 @@ class SearchFragment : BaseFragment(),Communicator.IVolleResult {
 
         })
 
+
+        val typeAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, typeList)
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        typeSpinner?.adapter=typeAdapter
+        typeSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                if (position == 0)
+                    type = ""
+                else if (position == 1)
+                    type = "Sale"
+                else if (position == 2)
+                    type = "lease"
+
+            }
+        }
     }
 
     private fun getSearchResult(value: String) {
-        volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlGooglePlaceSearch+value+"&key=AIzaSyBvtXUC9gCiJTPRwX-tCHsOgTiLo2H8P6Q","")
+        volleyService?.getDataVolley(
+            RequestType.JsonObjectRequest,
+            Urls.urlGooglePlaceSearch + value + "&key=AIzaSyBvtXUC9gCiJTPRwX-tCHsOgTiLo2H8P6Q",
+            ""
+        )
 
     }
 
     fun setAdapter() {
-        if(!keyWordsList.isEmpty()) {
+        if (!keyWordsList.isEmpty()) {
             val list: List<String> = keyWordsList.distinct()
             searchAdapter = SearchKeyWordsAdapter(list, searchListener)
-        }else
+        } else
             searchAdapter = SearchKeyWordsAdapter(keyWordsList, searchListener)
         suggestionRecycler?.adapter = searchAdapter
         searchAdapter?.notifyDataSetChanged()
     }
+
 
 }

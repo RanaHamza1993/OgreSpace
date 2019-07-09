@@ -349,6 +349,7 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
         obj.put("zip","")
         obj.put("pic","")
         obj.put("address","")
+        obj.put("user_role","U")
 
         volleyService?.postDataVolley(RequestType.JsonObjectRequest, Urls.urlSignUp, obj, "")
 

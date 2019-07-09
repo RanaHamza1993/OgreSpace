@@ -1,14 +1,12 @@
 package com.brainplow.ogrespace.fragments
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
+import android.view.*
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -25,6 +23,7 @@ import com.brainplow.ogrespace.baseclasses.BaseFragment
 import com.brainplow.ogrespace.enums.LayoutType
 import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.interfaces.Communicator
+import com.brainplow.ogrespace.kotlin.ActivityNavigator
 import com.brainplow.ogrespace.kotlin.VolleyParsing
 import com.brainplow.ogrespace.kotlin.VolleyService
 import com.brainplow.ogrespace.models.PropertyModel
@@ -256,7 +255,7 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
 
         }
     }
-     @android.annotation.SuppressLint("ClickableViewAccessibility")
+     @SuppressLint("ClickableViewAccessibility")
     fun setListeners(){
         saleMoreText?.setOnClickListener(){
             navigateToMoreProperties(0,"",2)
@@ -265,11 +264,11 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
             navigateToMoreProperties(0,"",3)
         }
         main_search_edit!!.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View, event: android.view.MotionEvent): Boolean {
+            override fun onTouch(v: View, event: MotionEvent): Boolean {
 
                 if (event.action == android.view.MotionEvent.ACTION_DOWN) {
 
-                    com.brainplow.ogrespace.kotlin.ActivityNavigator<SearchActivity>(
+                    ActivityNavigator<SearchActivity>(
                         mcontext!!,
                         SearchActivity::class.java
                     )
