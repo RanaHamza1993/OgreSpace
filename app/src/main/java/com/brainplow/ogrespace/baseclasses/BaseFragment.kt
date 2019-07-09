@@ -123,11 +123,12 @@ open class BaseFragment : Fragment() {
 
     }
 
-    fun navigateToFragment(fragment: Fragment){
+    fun navigateToFragment(fragment: Fragment,addToBackStack:Boolean=true){
         val fragmentTransaction = fragmentManager?.beginTransaction()
         fragmentTransaction?.run{
             replace(R.id.content_frame, fragment)
-            addToBackStack(null)
+            if(addToBackStack)
+                addToBackStack(null)
             commit()
         }
     }

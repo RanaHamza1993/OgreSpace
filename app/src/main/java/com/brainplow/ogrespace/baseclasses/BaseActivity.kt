@@ -56,11 +56,13 @@ open class BaseActivity : AppCompatActivity() {
             }
         }
     }
-    fun navigateToFragment(fragment: Fragment){
+    fun navigateToFragment(fragment: Fragment,addToBackStack:Boolean=true){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.run{
             replace(R.id.content_frame, fragment)
+            if(addToBackStack)
             addToBackStack(null)
+
             commit()
         }
     }

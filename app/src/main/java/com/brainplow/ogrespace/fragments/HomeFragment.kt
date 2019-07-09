@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.error.VolleyError
 
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.activities.SearchActivity
 import com.brainplow.ogrespace.adapters.PropertyAdapter
 import com.brainplow.ogrespace.adapters.StatesAdapter
 import com.brainplow.ogrespace.apputils.Urls
@@ -183,8 +184,6 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         propertiesForSaleRecycler.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         propertiesForLeaseRecycler.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         recycleStates.layoutManager =LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        propertiesForSaleRecycler.layoutManager =LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        propertiesForLeaseRecycler.layoutManager =LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
 
     }
 
@@ -243,30 +242,42 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutHorizontalProperties)
         propertiesForLeaseRecycler.adapter = propertyAdapter
     }
+    fun navigateToMoreProperties(id: Int?, name: String?,mflag:Int){
+        val args = Bundle()
+        args.putInt("mflag", mflag)
+        args.putInt("stateId", id!!)
+        args.putString("stateName", name)
+        val fragment = PropertiesMoreFragment()
+        fragment.arguments = args
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.run {
+            replace(R.id.content_frame, fragment)
+            addToBackStack(fragment.toString())
+            commit()
 
-
-        fun navigateToMoreProperties(id: Int?, name: String?, mflag: Int) {
-            val args = Bundle()
-            args.putInt("mflag", mflag)
-            args.putInt("stateId", id!!)
-            args.putString("stateName", name)
-            val fragment = PropertiesMoreFragment()
-            fragment.arguments = args
-            val fragmentTransaction = fragmentManager?.beginTransaction()
-            fragmentTransaction?.run {
-                replace(R.id.content_frame, fragment)
-                addToBackStack(fragment.toString())
-                commit()
-
-            }
-        }
-
-        fun setListeners() {
-            saleMoreText?.setOnClickListener() {
-                navigateToMoreProperties(0, "", 2)
-            }
-            leaseMoreText?.setOnClickListener() {
-                navigateToMoreProperties(0, "", 3)
-            }
         }
     }
+     @android.annotation.SuppressLint("ClickableViewAccessibility")
+    fun setListeners(){
+        saleMoreText?.setOnClickListener(){
+            navigateToMoreProperties(0,"",2)
+        }
+        leaseMoreText?.setOnClickListener(){
+            navigateToMoreProperties(0,"",3)
+        }
+        main_search_edit!!.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View, event: android.view.MotionEvent): Boolean {
+
+                if (event.action == android.view.MotionEvent.ACTION_DOWN) {
+
+                    com.brainplow.ogrespace.kotlin.ActivityNavigator<SearchActivity>(
+                        mcontext!!,
+                        SearchActivity::class.java
+                    )
+                }
+                return false
+            }
+        })
+
+    }
+}

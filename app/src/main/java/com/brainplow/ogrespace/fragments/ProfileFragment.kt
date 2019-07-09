@@ -92,7 +92,6 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
     var userProfileName=""
     lateinit var load: LoadingDialog
     var acBarListener: Communicator.IActionBar? = null
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         this.mcontext = context

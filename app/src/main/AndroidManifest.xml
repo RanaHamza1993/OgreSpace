@@ -22,6 +22,8 @@
             android:roundIcon="@mipmap/app_icon"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".activities.SearchActivity">
+        </activity>
         <activity android:name=".activities.ForgotPassActivity">
         </activity>
         <activity android:name=".activities.RegisterActivity">
