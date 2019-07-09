@@ -49,10 +49,10 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
     override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
         if (url == Urls.urlGetLeaseProperties) {
             setLeasePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
-        } else if (url == Urls.urlGetSaleProperties) {
-        }else  if (url == Urls.urlGetSaleProperties) {
-            setSalePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
         }
+        else  if (url == Urls.urlGetSaleProperties)
+            setSalePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
+
 
     }
 
@@ -180,7 +180,6 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         recycleStates = view.findViewById(R.id.recyclerStates)
         propertiesForSaleRecycler = view.findViewById(R.id.p_sale_recycler)
         propertiesForLeaseRecycler = view.findViewById(R.id.p_lease_recycler)
-        recycleStates.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         propertiesForSaleRecycler.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         propertiesForLeaseRecycler.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         recycleStates.layoutManager =LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
