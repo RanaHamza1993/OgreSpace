@@ -19,6 +19,7 @@
     <dimen name="fblogsize">32dp</dimen>
     <dimen name="logincardmargin">15dp</dimen>
     <dimen name="home_card_width">230dp</dimen>
+
     <dimen name="fblogpadtop">8dp</dimen>
     <dimen name="fblogpadRight">4dp</dimen>
     <dimen name="toolmargin">8dp</dimen>

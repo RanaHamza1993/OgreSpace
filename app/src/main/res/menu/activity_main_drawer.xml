@@ -26,6 +26,10 @@
             android:icon="@drawable/bottom_heart_home"
             android:title="My Favorites" />
         <item
+            android:id="@+id/watch_list"
+            android:icon="@drawable/navwishlist"
+            android:title="My Watch List" />
+        <item
                 android:id="@+id/nav_profile"
                 android:icon="@drawable/navaccount"
                 android:title="Profile" />

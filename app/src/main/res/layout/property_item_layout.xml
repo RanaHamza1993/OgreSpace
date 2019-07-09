@@ -9,8 +9,13 @@
                                                    android:background="@color/white"
                                                    android:orientation="vertical"
                                                    app:ignore="NamespaceTypo">
+<<<<<<< HEAD
     
     
+=======
+
+
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
     <RelativeLayout
             android:id="@+id/leftLayout"
             android:layout_width="@dimen/moreebidCardSize"
@@ -22,8 +27,13 @@
             app1:layout_constraintLeft_toLeftOf="parent"
             app1:layout_constraintRight_toLeftOf="@id/barrier"
             app1:layout_constraintTop_toTopOf="parent">
+<<<<<<< HEAD
         
         
+=======
+
+
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
         <ImageView
                 android:id="@+id/p_image"
                 android:layout_width="match_parent"
@@ -33,10 +43,17 @@
                 android:layout_marginBottom="6dp"
                 android:background="#ffffff"
                 android:scaleType="fitXY"
+<<<<<<< HEAD
                 android:src="@drawable/placeholder"/>
     
     </RelativeLayout>
     
+=======
+                android:src="@drawable/placeholder" />
+
+    </RelativeLayout>
+
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
     <RelativeLayout
             android:id="@+id/right_layout"
             android:layout_width="0dp"
@@ -47,15 +64,24 @@
             app1:layout_constraintLeft_toRightOf="@id/barrier"
             app1:layout_constraintRight_toRightOf="parent"
             app1:layout_constraintTop_toTopOf="parent">
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
         <LinearLayout
                 android:id="@+id/cart_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/text_padding_how_it">
+<<<<<<< HEAD
             
             
+=======
+
+
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
             <TextView
                     android:id="@+id/p_title"
                     android:layout_width="match_parent"
@@ -67,12 +93,18 @@
                     android:text="machine learning"
                     android:textColor="@color/black"
                     android:textSize="@dimen/cramnormaltext"
+<<<<<<< HEAD
                     android:textStyle="bold"/>
             
+=======
+                    android:textStyle="bold" />
+
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
             <LinearLayout
                     android:layout_width="wrap_content"
                     android:gravity="center_vertical"
                     android:layout_height="wrap_content"
+<<<<<<< HEAD
                     android:orientation="horizontal">
                 <ImageView android:layout_width="@dimen/app_normal_text"
                            android:layout_gravity="center_vertical"
@@ -90,6 +122,25 @@
                         android:textColor="@color/gray"
                         android:textSize="@dimen/cramnormaltext"
                         android:textStyle="normal"/>
+=======
+            android:orientation="horizontal">
+                <ImageView android:layout_width="@dimen/app_normal_text"
+                           android:layout_gravity="center_vertical"
+                           android:layout_height="@dimen/app_normal_text"
+                    android:src="@drawable/locationplaceholder"/>
+            <TextView
+                    android:id="@+id/p_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/opensans_regular"
+                    android:maxLines="2"
+                    android:layout_marginLeft="6dp"
+                    android:text="Jhon watson"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/cramnormaltext"
+                    android:textStyle="normal" />
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
             </LinearLayout>
             <RelativeLayout
                     android:id="@+id/rting"
@@ -97,8 +148,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/crammargin1">
+<<<<<<< HEAD
                 
                 
+=======
+
+
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
                 <ImageView
                         android:id="@+id/more_heart"
                         android:layout_width="@dimen/morebidCardheartSize"
@@ -109,15 +165,25 @@
                         android:layout_marginRight="8dp"
                         android:src="@mipmap/add_cart"
                         android:tag="moremptyheart"></ImageView>
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
             </RelativeLayout>
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+<<<<<<< HEAD
                 
                 <TextView
                         android:layout_weight="1"
+=======
+
+                <TextView
+
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
                         android:id="@+id/p_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -128,6 +194,7 @@
                         android:textColor="@color/holo_green_dark"
                         android:textSize="@dimen/app_heading_text"
                         android:fontFamily="@font/opensans_bold"
+<<<<<<< HEAD
                         android:textStyle="bold"/>
     
                 <ImageView
@@ -147,13 +214,42 @@
         
         </LinearLayout>
         
+=======
+                        android:textStyle="bold" />
+
+                <TextView
+                        android:id="@+id/bdiscPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="@dimen/crammargin1"
+                        android:text="$50"
+                        android:visibility="gone"
+                        android:ellipsize="end"
+                        android:maxLength="8"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/app_mini_text"
+                        android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cart_layout"
                 android:layout_alignParentBottom="false"
                 android:orientation="horizontal">
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
             <TextView
                     android:id="@+id/p_type"
                     android:layout_width="wrap_content"
@@ -165,8 +261,13 @@
                     android:textColor="@color/black"
                     android:textAllCaps="false"
                     android:textSize="@dimen/bidCardbtntext"
+<<<<<<< HEAD
                     android:textStyle="bold"/>
             
+=======
+                    android:textStyle="bold" />
+
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
             <TextView
                     android:id="@+id/p_area"
                     android:layout_width="match_parent"
@@ -179,6 +280,7 @@
                     android:textColor="@color/black"
                     android:textAllCaps="false"
                     android:textSize="@dimen/bidCardbtntext"
+<<<<<<< HEAD
                     android:textStyle="bold"/>
         
         
@@ -187,6 +289,16 @@
     </RelativeLayout>
     
     
+=======
+                    android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
     <View
             android:id="@+id/view"
             android:layout_width="match_parent"
@@ -196,13 +308,22 @@
             app1:layout_constraintBottom_toBottomOf="parent"
             app1:layout_constraintLeft_toLeftOf="parent"
             app1:layout_constraintRight_toRightOf="parent"
+<<<<<<< HEAD
             app1:layout_constraintTop_toBottomOf="@id/right_layout"/>
     
+=======
+            app1:layout_constraintTop_toBottomOf="@id/right_layout" />
+
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
     <androidx.constraintlayout.widget.Barrier
             android:id="@+id/barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app1:barrierDirection="right"
             app1:constraint_referenced_ids="leftLayout,right_layout"
+<<<<<<< HEAD
             app:layout_editor_absoluteX="411dp"/>
+=======
+            app:layout_editor_absoluteX="411dp" />
+>>>>>>> 4809adfaafc7e6c40cabaffcde76abe6e3d57bbb
 </androidx.constraintlayout.widget.ConstraintLayout>

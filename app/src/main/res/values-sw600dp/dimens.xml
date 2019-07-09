@@ -56,6 +56,7 @@
     <dimen name="dialog_img_height">150dp</dimen>
     <dimen name="app_spacing_small">10dp</dimen>
     <dimen name="width_iv_home">55dp</dimen>
+
     <dimen name="app_spacing_smallest">5dp</dimen>
     <dimen name="app_elevation">3dp</dimen>
     <dimen name="button_elevation">4dp</dimen>

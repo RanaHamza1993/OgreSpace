@@ -20,6 +20,9 @@ import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.baseclasses.BaseActivity
 import com.brainplow.ogrespace.constants.StaticFunctions
 import com.brainplow.ogrespace.fragments.*
+import com.brainplow.ogrespace.fragments.ContactUs
+import com.brainplow.ogrespace.fragments.HomeFragment
+import com.brainplow.ogrespace.fragments.ProfileFragment
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.ActivityNavigator
 import com.facebook.login.LoginManager

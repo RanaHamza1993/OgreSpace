@@ -36,4 +36,6 @@ data class PropertyModel(
     var subspace_status: Boolean? = null,
     var user_id: Int? = null,
     var zipcode: String? = null
-)
+){
+
+}

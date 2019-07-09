@@ -36,6 +36,7 @@
                 android:background="#ffffff"
                 android:scaleType="centerCrop"
                 android:src="@drawable/placeholder"/>
+        
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -125,12 +126,15 @@
                         android:tag="addcart"/>
 
 
+
+
             </RelativeLayout>
 
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/text_padding_how_it"
+                    android:id="@+id/cart_layout"
                     android:gravity="center_vertical">
 
 
@@ -158,6 +162,20 @@
                         android:tag="bidonemptyheart"
 
                 />
+                
+
+
+
+                <!--<ImageView-->
+                <!--android:id="@+id/bidonheart"-->
+                <!--android:layout_width="@dimen/bidheartsize"-->
+                <!--android:layout_height="@dimen/bidheartsize"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:scaleType="centerCrop"-->
+                <!--android:src="@drawable/emptyheart"-->
+                <!--android:tag="bidonemptyheart"-->
+
+                <!--/>-->
 
             </RelativeLayout>
 
@@ -195,8 +213,6 @@
                         android:textAllCaps="false"
                         android:textSize="@dimen/bidCardbtntext"
                         android:textStyle="bold"/>
-
-
             </LinearLayout>
 
 

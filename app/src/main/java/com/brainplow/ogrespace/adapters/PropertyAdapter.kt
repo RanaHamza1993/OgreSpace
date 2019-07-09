@@ -13,6 +13,7 @@ import com.android.volley.Response
 import com.android.volley.request.StringRequest
 import com.android.volley.toolbox.Volley
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.apputils.Urls.urlAddToFav
 import com.brainplow.ogrespace.apputils.Urls.urlDelFav
 import com.brainplow.ogrespace.enums.LayoutType
@@ -26,22 +27,18 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
     private var layoutType: LayoutType? = null
     private var process: String? = null
 
-    constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType) : this(context, items) {
-        this.context = context
-        this.layoutType = layoutType
 
-    }
-
-    constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType, process: String) : this(
-        context,
-        items
-    ) {
+    constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType, process : String) : this(context, items) {
         this.context = context
         this.layoutType = layoutType
         this.process = process
 
     }
+    constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType) : this(context, items) {
+        this.context = context
+        this.layoutType = layoutType
 
+    }
 
     override fun setViewHolder(parent: ViewGroup, layoutInflater: LayoutInflater): RecyclerView.ViewHolder {
         var view: View? = null
@@ -116,7 +113,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
                 var pref = context?.getSharedPreferences("login", Context.MODE_PRIVATE)
                 var token = pref?.getString("token", "abc")
                 var map = HashMap<String, String>()
-                map.put("Authorization", "JWT "+token)
+                map.put("Authorization", "JWT " + token)
                 return map
             }
         }
@@ -130,7 +127,8 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
                 var obj = JSONObject(response)
                 var results = obj.getString("results")
                 var favourite = obj.getBoolean("favourite")
-                Toast.makeText(context, "Property added to favourites successfully"+ id + results, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Property added to favourites successfully" + id + results, Toast.LENGTH_SHORT)
+                    .show()
 
             }, Response.ErrorListener {
                 Toast.makeText(context, "failed", Toast.LENGTH_SHORT).show()
@@ -139,7 +137,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
                     var pref = context?.getSharedPreferences("login", Context.MODE_PRIVATE)
                     var token = pref?.getString("token", "abc")
                     var map = HashMap<String, String>()
-                    map.put("Authorization", "JWT "+token)
+                    map.put("Authorization", "JWT " + token)
                     return map
                 }
             }

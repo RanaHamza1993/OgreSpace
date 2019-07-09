@@ -49,6 +49,7 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         if (url == Urls.urlGetLeaseProperties) {
             setLeasePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
         } else if (url == Urls.urlGetSaleProperties) {
+        }else  if (url == Urls.urlGetSaleProperties) {
             setSalePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
         }
 
@@ -72,8 +73,8 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
     var volleyService: VolleyService? = null
     var volleyParsing: VolleyParsing? = null
     var main_search_edit: EditText? = null
-    var saleMoreText: TextView? = null
-    var leaseMoreText: TextView? = null
+    var saleMoreText:TextView?=null
+    var leaseMoreText:TextView?=null
     var rootView: LinearLayout? = null
     lateinit var mDemoSlider: SliderLayout
     var mcontext: Context? = null
@@ -169,8 +170,9 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         volleyService = VolleyService(this, mcontext!!.applicationContext)
         rootView = view.findViewById(R.id.homeFragment)
         main_search_edit = activity?.findViewById(R.id.mainsearch_edittext)
-        saleMoreText = view.findViewById(R.id.p_sale_more)
-        leaseMoreText = view.findViewById(R.id.p_lease_more)
+
+        saleMoreText=view.findViewById(R.id.p_sale_more)
+        leaseMoreText=view.findViewById(R.id.p_lease_more)
         mDemoSlider = view.findViewById(R.id.banner1);
         mDemoSlider.getPagerIndicator()
             .setDefaultIndicatorColor(getResources().getColor(R.color.Red), getResources().getColor(R.color.gray));
@@ -180,6 +182,9 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         recycleStates.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         propertiesForSaleRecycler.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         propertiesForLeaseRecycler.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        recycleStates.layoutManager =LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        propertiesForSaleRecycler.layoutManager =LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        propertiesForLeaseRecycler.layoutManager =LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
 
     }
 
@@ -230,39 +235,38 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         }
 
     }
-
     private fun setSalePropertyAdapter(propertyList: ArrayList<PropertyModel>) {
         val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutHorizontalProperties)
         propertiesForSaleRecycler.adapter = propertyAdapter
     }
-
     private fun setLeasePropertyAdapter(propertyList: ArrayList<PropertyModel>) {
         val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutHorizontalProperties)
         propertiesForLeaseRecycler.adapter = propertyAdapter
     }
 
-    fun navigateToMoreProperties(id: Int?, name: String?, mflag: Int) {
-        val args = Bundle()
-        args.putInt("mflag", mflag)
-        args.putInt("stateId", id!!)
-        args.putString("stateName", name)
-        val fragment = PropertiesMoreFragment()
-        fragment.arguments = args
-        val fragmentTransaction = fragmentManager?.beginTransaction()
-        fragmentTransaction?.run {
-            replace(R.id.content_frame, fragment)
-            addToBackStack(fragment.toString())
-            commit()
 
+        fun navigateToMoreProperties(id: Int?, name: String?, mflag: Int) {
+            val args = Bundle()
+            args.putInt("mflag", mflag)
+            args.putInt("stateId", id!!)
+            args.putString("stateName", name)
+            val fragment = PropertiesMoreFragment()
+            fragment.arguments = args
+            val fragmentTransaction = fragmentManager?.beginTransaction()
+            fragmentTransaction?.run {
+                replace(R.id.content_frame, fragment)
+                addToBackStack(fragment.toString())
+                commit()
+
+            }
+        }
+
+        fun setListeners() {
+            saleMoreText?.setOnClickListener() {
+                navigateToMoreProperties(0, "", 2)
+            }
+            leaseMoreText?.setOnClickListener() {
+                navigateToMoreProperties(0, "", 3)
+            }
         }
     }
-
-    fun setListeners() {
-        saleMoreText?.setOnClickListener() {
-            navigateToMoreProperties(0, "", 2)
-        }
-        leaseMoreText?.setOnClickListener() {
-            navigateToMoreProperties(0, "", 3)
-        }
-    }
-}
