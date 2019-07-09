@@ -1,0 +1,461 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:card_view="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#fff"
+>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/s4b_padding">
+            <!-- header -->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dialog_width"
+                    android:layout_gravity="center"
+                    android:background="@drawable/service"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/app_spacing">
+
+
+            </LinearLayout>
+
+
+            <HorizontalScrollView
+                    android:id="@+id/bottom_scroll_view"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="@dimen/app_spacing"
+                    android:elevation="@dimen/app_spacing_small"
+                    android:scrollbars="none">
+
+                <LinearLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/white"
+                        android:elevation="@dimen/app_spacing_small"
+                        android:orientation="horizontal">
+
+
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shape_border"
+                            android:orientation="vertical"
+                            android:padding="1dp">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@color/black"
+                                android:gravity="center"
+                                android:lines="2"
+                                android:maxWidth="@dimen/catCardHeight"
+
+                                android:paddingBottom="@dimen/app_spacing_small"
+                                android:paddingLeft="@dimen/app_spacing_smallest"
+                                android:paddingRight="@dimen/app_spacing_smallest"
+                                android:paddingTop="@dimen/app_spacing_small"
+                                android:text="Basic RFP Template Design"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/app_heading_text"
+                                android:textStyle="bold"/>
+
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+
+                                android:background="@color/gray_lightest"
+                                android:gravity="center"
+                                android:paddingBottom="@dimen/app_spacing_small"
+                                android:paddingTop="@dimen/app_spacing_small"
+                                android:text="$599"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/creditcard_heading"
+                                android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <!--Standard RFP Template Design-->
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shape_border"
+                            android:orientation="vertical"
+                            android:padding="1dp">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@color/black"
+                                android:gravity="center"
+                                android:lines="2"
+                                android:maxWidth="@dimen/catCardHeight"
+
+                                android:paddingBottom="@dimen/app_spacing_small"
+                                android:paddingLeft="@dimen/app_spacing_smallest"
+                                android:paddingRight="@dimen/app_spacing_smallest"
+                                android:paddingTop="@dimen/app_spacing_small"
+                                android:text="Standard RFP Template Design"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/app_heading_text"
+                                android:textStyle="bold"/>
+
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+
+                                android:background="@color/gray_lightest"
+                                android:gravity="center"
+                                android:paddingBottom="@dimen/app_spacing_small"
+                                android:paddingTop="@dimen/app_spacing_small"
+                                android:text="$599"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/creditcard_heading"
+                                android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <!--Platinum RFP Template Design-->
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shape_border"
+                            android:orientation="vertical"
+                            android:padding="1dp">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@color/black"
+                                android:gravity="center"
+                                android:lines="2"
+                                android:maxWidth="@dimen/catCardHeight"
+
+                                android:paddingBottom="@dimen/app_spacing_small"
+                                android:paddingLeft="@dimen/app_spacing_smallest"
+                                android:paddingRight="@dimen/app_spacing_smallest"
+                                android:paddingTop="@dimen/app_spacing_small"
+                                android:text="Platinum RFP Template Design"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/app_heading_text"
+                                android:textStyle="bold"/>
+
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+
+                                android:background="@color/gray_lightest"
+                                android:gravity="center"
+                                android:paddingBottom="@dimen/app_spacing_small"
+                                android:paddingTop="@dimen/app_spacing_small"
+                                android:text="$799"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/creditcard_heading"
+                                android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <!--Basic RFP Bid Submission(40 Pages)-->
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shape_border"
+                            android:orientation="vertical"
+                            android:padding="1dp">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@color/black"
+                                android:gravity="center"
+                                android:lines="2"
+                                android:maxWidth="@dimen/home_card_width"
+
+                                android:paddingBottom="@dimen/app_spacing_small"
+                                android:paddingTop="@dimen/app_spacing_small"
+                                android:text="Basic RFP Bid Submission (40 Pages)"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/app_heading_text"
+                                android:textStyle="bold"/>
+
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+
+                                android:background="@color/gray_lightest"
+                                android:gravity="center"
+                                android:paddingBottom="@dimen/app_spacing_small"
+                                android:paddingTop="@dimen/app_spacing_small"
+                                android:text="$399"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/creditcard_heading"
+                                android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <!--Standard RFP Bid Submission(65 Pages)-->
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shape_border"
+                            android:orientation="vertical"
+                            android:padding="1dp">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@color/black"
+                                android:gravity="center"
+                                android:lines="2"
+                                android:maxWidth="@dimen/home_card_width"
+
+                                android:paddingBottom="@dimen/app_spacing_small"
+                                android:paddingLeft="@dimen/app_spacing_smallest"
+                                android:paddingRight="@dimen/app_spacing_smallest"
+                                android:paddingTop="@dimen/app_spacing_small"
+                                android:text="Standard RFP Bid Submission (65 Pages)"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/app_heading_text"
+                                android:textStyle="bold"/>
+
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+
+                                android:background="@color/gray_lightest"
+                                android:gravity="center"
+                                android:padding="@dimen/app_spacing_small"
+                                android:text="$599"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/creditcard_heading"
+                                android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <!--Platinum RFP Bid Submission(100 Pages)-->
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shape_border"
+                            android:orientation="vertical"
+                            android:padding="1dp">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@color/black"
+                                android:gravity="center"
+                                android:lines="2"
+                                android:maxWidth="@dimen/home_card_width"
+
+                                android:paddingBottom="@dimen/app_spacing_small"
+                                android:paddingLeft="@dimen/app_spacing_smallest"
+                                android:paddingRight="@dimen/app_spacing_smallest"
+                                android:paddingTop="@dimen/app_spacing_small"
+                                android:text="Platinum RFP Bid Submission (100 Pages)"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/app_heading_text"
+                                android:textStyle="bold"/>
+
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+
+                                android:background="@color/gray_lightest"
+                                android:gravity="center"
+                                android:paddingBottom="@dimen/app_spacing_small"
+                                android:paddingTop="@dimen/app_spacing_small"
+                                android:text="$999"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/creditcard_heading"
+                                android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <!--Custom Done for You-->
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/shape_border"
+                            android:orientation="vertical"
+                            android:padding="1dp">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@color/black"
+                                android:gravity="center"
+                                android:lines="2"
+
+                                android:paddingBottom="@dimen/app_spacing_small"
+                                android:paddingLeft="@dimen/app_spacing_smallest"
+                                android:paddingRight="@dimen/app_spacing_smallest"
+                                android:paddingTop="@dimen/app_spacing_small"
+                                android:text="Custom Done for You"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/app_heading_text"
+                                android:textStyle="bold"/>
+
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:id="@+id/establish_con"
+                                android:background="@color/gray_lightest"
+                                android:gravity="center"
+                                android:paddingBottom="@dimen/app_spacing_small"
+                                android:paddingTop="@dimen/app_spacing_small"
+                                android:text="Establish Contact"
+                                android:textColor="@color/blue"
+                                android:textSize="@dimen/app_normal_text"
+                                android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_spacing"
+                    android:text="@string/rfp_as_paragraph_one"
+
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/app_small_text"/>
+
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/app_spacing"
+                    android:text="@string/rfp_as_heading_two"
+
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/tv_heading1_fontsize"
+                    android:textStyle="bold"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_spacing"
+
+                    android:text="@string/rfp_as_paragraph_two"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/app_small_text"
+                    android:textStyle="bold"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_spacing_small"
+
+                    android:text="@string/rfp_as_paragraph_three"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/app_small_text"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_spacing_small"
+
+                    android:text="@string/rfp_as_paragraph_four"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/app_small_text"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_spacing_small"
+
+                    android:text="@string/rfp_as_paragraph_five"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/app_small_text"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_spacing_small"
+
+                    android:text="@string/rfp_as_paragraph_six"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/app_small_text"/>
+
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_spacing"
+
+                    android:text="@string/rfp_as_paragraph_seven"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/app_normal_text"/>
+
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/app_spacing_small"
+                    android:layout_marginTop="@dimen/app_spacing"
+                    android:background="@color/gray_lightest">
+
+            </LinearLayout>
+
+            <TextView
+                    android:id="@+id/b_help_mail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/button_elevation"
+                    android:layout_marginTop="@dimen/crammargin10"
+                    android:layout_marginRight="@dimen/button_elevation"
+                    android:background="@drawable/bid_buy_btns_home"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textColor="@drawable/bidbuybtntextstate"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:elevation="@dimen/button_elevation"
+                    android:text="Email Us"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/app_button_text"
+                    android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

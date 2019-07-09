@@ -18,6 +18,7 @@
     <dimen name="fblogmargin">0dp</dimen>
     <dimen name="fblogsize">32dp</dimen>
     <dimen name="logincardmargin">15dp</dimen>
+    <dimen name="home_card_width">230dp</dimen>
     <dimen name="fblogpadtop">8dp</dimen>
     <dimen name="fblogpadRight">4dp</dimen>
     <dimen name="toolmargin">8dp</dimen>
@@ -215,6 +216,7 @@
     <dimen name="rangebar_width">250dp</dimen>
     <dimen name="rating_height">12dp</dimen>
     <dimen name="rating_width">110dp</dimen>
+    <dimen name="width_iv_home">40dp</dimen>
 
     <dimen name="home_cat_width">120dp</dimen>
     <dimen name="home_cat_height">100dp</dimen>

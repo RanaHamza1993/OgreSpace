@@ -25,6 +25,7 @@
     <dimen name="app_heading_text">30sp</dimen>
     <dimen name="app_input_text">28sp</dimen>
     <dimen name="app_upper_hint">28sp</dimen>
+    <dimen name="home_card_width">400dp</dimen>
     <dimen name="app_input_hint">20sp</dimen>
     <dimen name="app_button_text">26sp</dimen>
     <dimen name="app_spinner_text">34sp</dimen>
@@ -46,6 +47,7 @@
     <dimen name="col6_width">100dp</dimen>
     <dimen name="ask_question_grid_img_height">150dp</dimen>
     <dimen name="app_spacing">20dp</dimen>
+    <dimen name="width_iv_home">75dp</dimen>
     <dimen name="app_spacing_small">10dp</dimen>
     <dimen name="seller_img_height_bid_now">200dp</dimen>
     <dimen name="heart_size_img">45dp</dimen>

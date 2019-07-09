@@ -19,9 +19,7 @@ import androidx.fragment.app.Fragment
 import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.baseclasses.BaseActivity
 import com.brainplow.ogrespace.constants.StaticFunctions
-import com.brainplow.ogrespace.fragments.ContactUs
-import com.brainplow.ogrespace.fragments.HomeFragment
-import com.brainplow.ogrespace.fragments.ProfileFragment
+import com.brainplow.ogrespace.fragments.*
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.ActivityNavigator
 import com.facebook.login.LoginManager
@@ -208,6 +206,15 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
                         }
 
                     }
+                    R.id.bot_save ->{
+                        val fragment = MyFavFragment()
+                        val fragmentTransaction = supportFragmentManager.beginTransaction()
+                        fragmentTransaction.run{
+                            replace(R.id.content_frame, fragment).addToBackStack(null)
+                            //  isBackButtonEnabled(false)
+                            commit()
+                        }
+                    }
 
                 }
                 return true
@@ -225,6 +232,10 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
                        // ActivityNavigator<MapsActivity>(this@MainActivity,MapsActivity::class.java)
                        navigateToFragment(ContactUs())
                     }
+                    R.id.nav_service -> {
+                        // ActivityNavigator<MapsActivity>(this@MainActivity,MapsActivity::class.java)
+                        navigateToFragment(OgreasService())
+                    }
                     R.id.nav_terms_condition ->{
                         ActivityNavigator<TermsOfUseActivity>(this@MainActivity,TermsOfUseActivity::class.java)
 
@@ -236,6 +247,9 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
                     R.id.nav_profile ->{
                         navigateToFragment(ProfileFragment())
                 }
+                    R.id.nav_fav -> {
+                        navigateToFragment(MyFavFragment())
+                    }
                 }
                 drawer_layout.closeDrawer(GravityCompat.START)
                 return true

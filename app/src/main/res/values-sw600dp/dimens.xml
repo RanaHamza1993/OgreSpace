@@ -24,6 +24,7 @@
     <dimen name="loginInnerMargin">50dp</dimen>
     <dimen name="app_heading_text">26sp</dimen>
     <dimen name="app_input_text">24sp</dimen>
+    <dimen name="home_card_width">350dp</dimen>
     <dimen name="app_upper_hint">25sp</dimen>
     <dimen name="app_input_hint">18sp</dimen>
     <dimen name="app_button_text">24sp</dimen>
@@ -54,6 +55,7 @@
     <dimen name="heart_size_img">40dp</dimen>
     <dimen name="dialog_img_height">150dp</dimen>
     <dimen name="app_spacing_small">10dp</dimen>
+    <dimen name="width_iv_home">55dp</dimen>
     <dimen name="app_spacing_smallest">5dp</dimen>
     <dimen name="app_elevation">3dp</dimen>
     <dimen name="button_elevation">4dp</dimen>

@@ -22,9 +22,9 @@
             <!--android:icon="@drawable/navaddflash"-->
             <!--android:title="Add Flash Cards" />-->
         <item
-            android:id="@+id/watch_list"
-            android:icon="@drawable/navwishlist"
-            android:title="My Watch List" />
+            android:id="@+id/nav_fav"
+            android:icon="@drawable/bottom_heart_home"
+            android:title="My Favorites" />
         <item
                 android:id="@+id/nav_profile"
                 android:icon="@drawable/navaccount"
@@ -57,6 +57,11 @@
                     android:id="@+id/nav_faqs"
                     android:icon="@drawable/navfaqimg"
                     android:title="FAQs" />
+
+                <item
+                        android:id="@+id/nav_service"
+                        android:icon="@drawable/ic_collections_black_24dp"
+                        android:title="Ogre as a Service"/>
 
                 <item
                     android:id="@+id/established_contact"

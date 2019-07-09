@@ -35,7 +35,7 @@
                 android:layout_height="@dimen/bidCardImageHeight"
                 android:background="#ffffff"
                 android:scaleType="centerCrop"
-                android:src="@drawable/placeholder" />
+                android:src="@drawable/placeholder"/>
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                     android:text="machine learning"
                     android:textColor="@color/black"
                     android:textSize="@dimen/cramnormaltext"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
             <RelativeLayout
                     android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                             android:text="Jhon watson"
                             android:textColor="@color/gray"
                             android:textSize="@dimen/cramnormaltext"
-                            android:textStyle="normal" />
+                            android:textStyle="normal"/>
                 </LinearLayout>
 
 
@@ -122,9 +122,7 @@
                         android:layout_toLeftOf="@+id/bidonheart"
                         android:padding="@dimen/crammargin3"
                         android:src="@mipmap/add_cart"
-                        android:tag="addcart" />
-
-
+                        android:tag="addcart"/>
 
 
             </RelativeLayout>
@@ -147,20 +145,19 @@
                         android:textColor="@color/holo_green_dark"
                         android:textSize="@dimen/app_normal_text"
                         android:fontFamily="@font/opensans_bold"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
 
+                <ImageView
+                        android:id="@+id/img_fav"
+                        android:layout_width="@dimen/bidheartsize"
+                        android:layout_height="@dimen/bidheartsize"
+                        android:layout_alignParentRight="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/bottom_heart_home"
+                        android:tag="bidonemptyheart"
 
-                <!--<ImageView-->
-                <!--android:id="@+id/bidonheart"-->
-                <!--android:layout_width="@dimen/bidheartsize"-->
-                <!--android:layout_height="@dimen/bidheartsize"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:scaleType="centerCrop"-->
-                <!--android:src="@drawable/emptyheart"-->
-                <!--android:tag="bidonemptyheart"-->
-
-                <!--/>-->
+                />
 
             </RelativeLayout>
 
@@ -183,7 +180,7 @@
                         android:textColor="@color/black"
                         android:textAllCaps="false"
                         android:textSize="@dimen/bidCardbtntext"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                 <TextView
                         android:id="@+id/p_area"
@@ -197,7 +194,7 @@
                         android:textColor="@color/black"
                         android:textAllCaps="false"
                         android:textSize="@dimen/bidCardbtntext"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
 
             </LinearLayout>

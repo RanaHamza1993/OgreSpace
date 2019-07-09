@@ -20,6 +20,7 @@
     <dimen name="logincardmargin">22dp</dimen>
     <dimen name="fblogpadtop">8dp</dimen>
     <dimen name="fblogpadRight">8dp</dimen>
+    <dimen name="home_card_width">280dp</dimen>
     <dimen name="toolmargin">12dp</dimen>
     <dimen name="loginInnerMargin">40dp</dimen>
     <dimen name="app_heading_text">22sp</dimen>
@@ -52,6 +53,7 @@
     <dimen name="app_spacing">15dp</dimen>
     <dimen name="app_spacing_small">8dp</dimen>
     <dimen name="dialog_img_height">130dp</dimen>
+    <dimen name="width_iv_home">55dp</dimen>
     <dimen name="seller_img_height_bid_now">160dp</dimen>
     <dimen name="heart_size_img">35dp</dimen>
     <dimen name="app_spacing_smallest">5dp</dimen>
