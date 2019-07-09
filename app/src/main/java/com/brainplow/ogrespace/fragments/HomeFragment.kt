@@ -73,13 +73,14 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
 
     var volleyService: VolleyService? = null
     var volleyParsing: VolleyParsing? = null
+    var mcontext: Context? = null
+    var acBarListener: Communicator.IActionBar? = null
     var main_search_edit: EditText? = null
     var saleMoreText:TextView?=null
     var leaseMoreText:TextView?=null
     var rootView: LinearLayout? = null
     lateinit var mDemoSlider: SliderLayout
-    var mcontext: Context? = null
-    var acBarListener: Communicator.IActionBar? = null
+
     var bottomBarListener: Communicator.IBottomBar? = null
     lateinit var recycleStates: RecyclerView
     lateinit var propertiesForSaleRecycler: RecyclerView

@@ -30,7 +30,12 @@ class VolleyParsing {
             propertyList.clear()
         try {
             //   val array = JSONObject(response)
-             val marry: JSONArray = response?.get("Results") as JSONArray
+            var marry: JSONArray?=null
+            try {
+                marry = response?.get("Results") as JSONArray
+            }catch (e:Exception){
+                marry = response?.get("results") as JSONArray
+            }
             propertyList.addAll(GsonBuilder().serializeNulls().create().fromJson(marry.toString(),propertyType))
         } catch (e:Exception) {
             Log.d("error",e.toString())

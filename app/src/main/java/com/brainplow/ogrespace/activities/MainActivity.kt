@@ -210,13 +210,10 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
 
                     }
                     R.id.bot_save ->{
-                        val fragment = MyFavFragment()
-                        val fragmentTransaction = supportFragmentManager.beginTransaction()
-                        fragmentTransaction.run{
-                            replace(R.id.content_frame, fragment).addToBackStack(null)
-                            //  isBackButtonEnabled(false)
-                            commit()
-                        }
+                        navigateToFragment(MyFavFragment())
+                    }
+                    R.id.bot_profile -> {
+                        navigateToFragment(ProfileFragment())
                     }
 
                 }

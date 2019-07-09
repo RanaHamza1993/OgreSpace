@@ -24,13 +24,14 @@
                 android:layout_height="wrap_content">
 
             <ImageView
+                    android:padding="@dimen/signup_verifyicon_height"
                     android:layout_width="250dp"
                     android:layout_height="100dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/crammargin20"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ogrelogo" />
+                    app:srcCompat="@drawable/logo_main" />
         </RelativeLayout>
 
         <LinearLayout
@@ -67,6 +68,7 @@
                                 android:paddingRight="@dimen/crampadding15">
 
                             <TextView
+                                    android:visibility="gone"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -85,7 +87,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/crammargin10"
                                     android:padding="@dimen/crampadding5"
-                                    android:hint="Username"
+                                    android:hint="Username*"
                                     app:hintTextAppearance="@style/InputTextLayout">
 
                                 <androidx.appcompat.widget.AppCompatEditText
@@ -106,7 +108,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:padding="@dimen/crampadding5"
-                                    android:hint="Password"
+                                    android:hint="Password*"
                                     app:hintTextAppearance="@style/InputTextLayout"
                                     app:passwordToggleEnabled="true">
 
