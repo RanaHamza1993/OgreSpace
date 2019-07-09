@@ -113,13 +113,14 @@
                         android:layout_height="wrap_content">
 
                     <ImageView
+                            android:padding="@dimen/signup_verifyicon_height"
                             android:layout_width="250dp"
                             android:layout_height="100dp"
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/crammargin10"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/ogrelogo" />
+                            app:srcCompat="@drawable/logo_main" />
                 </RelativeLayout>
 
                 <TextView

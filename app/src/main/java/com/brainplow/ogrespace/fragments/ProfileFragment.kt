@@ -48,48 +48,49 @@ import java.lang.Exception
 import java.util.HashMap
 import kotlin.math.ln
 
-class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
+class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
-        if(url.contains(Urls.urlUpdateUserProfile,true)){
-            if(filePath!=null)
-            imageUpload(filePath)
+        if (url.contains(Urls.urlUpdateUserProfile, true)) {
+            if (filePath != null)
+                imageUpload(filePath)
             mcontext?.showSuccessMessage("Profile updated successfully")
         }
 
     }
 
     override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
-        if(url==Urls.urlGetUserProfile){
-           val obj=JSONArray(response).getJSONObject(0)
+        if (url == Urls.urlGetUserProfile) {
+            val obj = JSONArray(response).getJSONObject(0)
             setUserData(obj)
 
         }
     }
 
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
-       // if(url==Urls.urlGetUserProfile){
-            showErrorBody(error)
-       // }else iff(url.contains(Urls.urlUpdateUserProfile,true))
+        // if(url==Urls.urlGetUserProfile){
+        showErrorBody(error)
+        // }else iff(url.contains(Urls.urlUpdateUserProfile,true))
     }
+
     var filePath: String? = null
     var profilepicname: String? = null
     private val PICK_IMAGE_REQUEST: Int = 123
-    var userProfile:CircularImageView?=null
-    var userFirstName:EditText?=null
-    var userLastName:EditText?=null
-    var userCountry:EditText?=null
-    var userPhoneNo:EditText?=null
-    var userState:EditText?=null
-    var userCity:EditText?=null
-    var userAddress:EditText?=null
-    var editProfile:TextView?=null
-    var updateProfile: Button?=null
+    var userProfile: CircularImageView? = null
+    var userFirstName: EditText? = null
+    var userLastName: EditText? = null
+    var userCountry: EditText? = null
+    var userPhoneNo: EditText? = null
+    var userState: EditText? = null
+    var userCity: EditText? = null
+    var userAddress: EditText? = null
+    var editProfile: TextView? = null
+    var updateProfile: Button? = null
     var volleyService: VolleyService? = null
     var token: String? = null
     var mcontext: Context? = null
     var profileID: Int? = null
-    var userProfileName=""
+    var userProfileName = ""
     lateinit var load: LoadingDialog
     var acBarListener: Communicator.IActionBar? = null
     override fun onAttach(context: Context) {
@@ -97,16 +98,17 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
         this.mcontext = context
         acBarListener = context as Communicator.IActionBar
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view= inflater.inflate(R.layout.fragment_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
         setIds(view)
         setListeners()
         volleyRequests()
-        return  view
+        return view
     }
 
     override fun onResume() {
@@ -114,23 +116,25 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
         acBarListener?.actionBarListener("Profile")
         acBarListener?.isBackButtonEnabled(true)
     }
-    fun setIds(view:View){
+
+    fun setIds(view: View) {
         val sharedPreferences = activity?.getSharedPreferences("login", Context.MODE_PRIVATE)
         token = sharedPreferences?.getString("token", "")
         volleyService = VolleyService(this, mcontext!!.applicationContext)
         load = LoadingDialog("Loading", context)
-        userProfile=view.findViewById(R.id.user_profile)
-        updateProfile=view.findViewById(R.id.editpf_save)
-        userFirstName=view.findViewById(R.id.user__fname)
-        userLastName=view.findViewById(R.id.user_lname)
-        userCountry=view.findViewById(R.id.user_country)
-        userPhoneNo=view.findViewById(R.id.user_mobileno)
-        userState=view.findViewById(R.id.user_state)
-        userCity=view.findViewById(R.id.user_city)
-        userAddress=view.findViewById(R.id.user_address)
-        editProfile=view.findViewById(R.id.upload_profile)
+        userProfile = view.findViewById(R.id.user_profile)
+        updateProfile = view.findViewById(R.id.editpf_save)
+        userFirstName = view.findViewById(R.id.user__fname)
+        userLastName = view.findViewById(R.id.user_lname)
+        userCountry = view.findViewById(R.id.user_country)
+        userPhoneNo = view.findViewById(R.id.user_mobileno)
+        userState = view.findViewById(R.id.user_state)
+        userCity = view.findViewById(R.id.user_city)
+        userAddress = view.findViewById(R.id.user_address)
+        editProfile = view.findViewById(R.id.upload_profile)
     }
-    fun setListeners(){
+
+    fun setListeners() {
         userProfile?.setOnClickListener {
             selectPicture()
         }
@@ -141,7 +145,8 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
             updateUserData()
         }
     }
-    fun setUserData(obj:JSONObject){
+
+    fun setUserData(obj: JSONObject) {
         try {
             userFirstName?.setText(obj.getString("Fname"))
             userLastName?.setText(obj.getString("Lname"))
@@ -150,17 +155,20 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
             userState?.setText(obj.getString("State"))
             userAddress?.setText(obj.getString("Address"))
             userCity?.setText(obj.getString("City"))
-            userProfileName=obj.getString("Pic")
-            StaticFunctions.loadImage(context,userProfileName,userProfile,Urls.iconStorageUrl)
-            profileID=obj.getInt("id")
-        }catch (e:Exception){}
+            userProfileName = obj.getString("Pic")
+            StaticFunctions.loadImage(context, userProfileName, userProfile, Urls.iconStorageUrl)
+            profileID = obj.getInt("id")
+        } catch (e: Exception) {
+        }
     }
-    fun volleyRequests(){
+
+    fun volleyRequests() {
         volleyService?.getDataVolley(RequestType.StringRequest, Urls.urlGetUserProfile, token!!)
     }
-    fun updateUserData(){
-        val isValid=checkValidation()
-        if(isValid) {
+
+    fun updateUserData() {
+        val isValid = checkValidation()
+        if (isValid) {
             val obj = JSONObject()
             obj.put("Fname", userFirstName?.text?.toString())
             obj.put("Lname", userLastName?.text?.toString())
@@ -182,65 +190,76 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
         }
     }
 
-    fun  checkValidation():Boolean{
-        val ufname=userFirstName?.text?.toString()
-        val ulname=userLastName?.text?.toString()
-        val unum=userPhoneNo?.text?.toString()
-        val ucountry=userCountry?.text?.toString()
-        val ustate=userState?.text?.toString()
-        val uaddress=userAddress?.text?.toString()
-        val ucity=userCity?.text?.toString()
-        if(ufname.equals("")){
+    fun checkValidation(): Boolean {
+        val ufname = userFirstName?.text?.toString()
+        val ulname = userLastName?.text?.toString()
+        val unum = userPhoneNo?.text?.toString()
+        val ucountry = userCountry?.text?.toString()
+        val ustate = userState?.text?.toString()
+        val uaddress = userAddress?.text?.toString()
+        val ucity = userCity?.text?.toString()
+        if (ufname.equals("")) {
             mcontext?.showErrorMessage("Enter first name")
             return false
         }
-        if(ulname.equals("")){
+        if (ulname.equals("")) {
             mcontext?.showErrorMessage("Enter last name")
             return false
         }
-        if(unum.equals("")){
+        if (unum.equals("")) {
             mcontext?.showErrorMessage("Enter phone number")
             return false
         }
-        if(ucountry.equals("")){
+        if (ucountry.equals("")) {
             mcontext?.showErrorMessage("Enter country")
             return false
         }
-        if(ustate.equals("")){
+        if (ustate.equals("")) {
             mcontext?.showErrorMessage("Enter state")
             return false
         }
-        if(ucity.equals("")){
+        if (ucity.equals("")) {
             mcontext?.showErrorMessage("Enter city")
             return false
         }
-        if(uaddress.equals("")){
+        if (uaddress.equals("")) {
             mcontext?.showErrorMessage("Enter address")
             return false
-        }else
+        } else
             return true
     }
-    private fun selectPicture(){
-        if (ContextCompat.checkSelfPermission(activity as FragmentActivity,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-            != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(activity as FragmentActivity,
+    private fun selectPicture() {
+        if (ContextCompat.checkSelfPermission(
+                activity as FragmentActivity,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            ActivityCompat.requestPermissions(
+                activity as FragmentActivity,
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                1)
+                1
+            )
             // Permission is not granted
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity as FragmentActivity,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    activity as FragmentActivity,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            ) {
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
 
             } else {
                 // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(activity as FragmentActivity,
+                ActivityCompat.requestPermissions(
+                    activity as FragmentActivity,
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    1)
+                    1
+                )
 
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                 // app-defined int constant. The callback method gets the
@@ -252,6 +271,7 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
         }
 
     }
+
     private fun imageBrowse() {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         galleryIntent.setType("image/*");
@@ -259,8 +279,11 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
         // Start the Intent
         startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST)
     }
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray) {
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>, grantResults: IntArray
+    ) {
         when (requestCode) {
             1 -> {
                 // If request is cancelled, the result arrays are empty.
@@ -272,9 +295,11 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
 
-                    ActivityCompat.requestPermissions(activity as FragmentActivity,
+                    ActivityCompat.requestPermissions(
+                        activity as FragmentActivity,
                         arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                        1)
+                        1
+                    )
                 }
                 return
             }
@@ -284,12 +309,15 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
             else -> {
                 // Ignore all other requests.
 
-                ActivityCompat.requestPermissions(activity as FragmentActivity,
+                ActivityCompat.requestPermissions(
+                    activity as FragmentActivity,
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    1)
+                    1
+                )
             }
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE_REQUEST) {
@@ -320,6 +348,7 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
 
         }
     }
+
     private fun imageUpload(imagePath: String?) {
 
 //        if (!load.ishowingg())
@@ -329,10 +358,10 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
             Response.Listener { s ->
 
                 val imageName = s.toString()
-                val a=5
+                val a = 5
 //                    Toast.makeText(mcontext!!, "https://storage.cramfrenzy.com/upload_image.php" + s.toString(), Toast.LENGTH_LONG).show()
 
-               // Toasty.success(mcontext!!,"Image Upload Successfully", Toast.LENGTH_SHORT,true).show()
+                // Toasty.success(mcontext!!,"Image Upload Successfully", Toast.LENGTH_SHORT,true).show()
                 // profilepicname=s.toString()
 //                if (load.ishowingg())
 //                    load.dismisss()
@@ -367,7 +396,8 @@ class ProfileFragment : BaseFragment(),Communicator.IVolleResult {
             DefaultRetryPolicy(
                 0,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            )
         )
         MySingleton.getInstance(mcontext!!).requestQueue.add(request)
     }

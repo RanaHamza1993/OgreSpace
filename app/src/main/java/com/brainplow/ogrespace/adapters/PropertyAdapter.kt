@@ -28,12 +28,16 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
     private var process: String? = null
 
 
-    constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType, process : String) : this(context, items) {
+    constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType, process: String) : this(
+        context,
+        items
+    ) {
         this.context = context
         this.layoutType = layoutType
         this.process = process
 
     }
+
     constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType) : this(context, items) {
         this.context = context
         this.layoutType = layoutType
@@ -122,7 +126,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
     }
 
     private fun addToFav(id: Int?) {
-        var request: StringRequest =
+        var request =
             object : StringRequest(Request.Method.GET, urlAddToFav + id, Response.Listener { response ->
                 var obj = JSONObject(response)
                 var results = obj.getString("results")

@@ -12,23 +12,40 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.error.VolleyError
 import com.android.volley.request.StringRequest
 import com.android.volley.toolbox.Volley
 import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.adapters.PropertyAdapter
+import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.apputils.Urls.urlGetFav
+import com.brainplow.ogrespace.baseclasses.BaseFragment
 import com.brainplow.ogrespace.enums.LayoutType
+import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.interfaces.Communicator
+import com.brainplow.ogrespace.kotlin.VolleyParsing
+import com.brainplow.ogrespace.kotlin.VolleyService
 import com.brainplow.ogrespace.models.PropertyModel
 import com.facebook.share.Share
 import org.json.JSONObject
 
-class MyFavFragment : Fragment() {
+class MyFavFragment : BaseFragment(),Communicator.IVolleResult {
+
+    override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
+        val response=JSONObject(response)
+        setSalePropertyAdapter(volleyParsing?.getPropertyData(response,1)!!)
+    }
+    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
+
+    }
     var propertyList: ArrayList<PropertyModel>? = null
     var recycle_states_more: RecyclerView? = null
     var layoutManager: LinearLayoutManager? = null
     var propertyAdapter: PropertyAdapter? = null
     var sharedPreferences: SharedPreferences? = null
+    var volleyService: VolleyService? = null
+    var volleyParsing: VolleyParsing? = null
+
     var token: String? = null
 
 
@@ -57,74 +74,7 @@ class MyFavFragment : Fragment() {
 
     private fun getData() {
         propertyList?.clear()
-        var request = object : StringRequest(Request.Method.GET, urlGetFav, Response.Listener { response ->
-
-            var baseObj = JSONObject(response)
-            var result = baseObj.getJSONArray("rersults")
-            for (i in 0 until result!!.length()) {
-                var propertyModel = PropertyModel()
-
-                var innerObj: JSONObject = result.getJSONObject(i)
-                var id = innerObj.getInt("id")
-                propertyModel.id = id
-
-                var created_at = innerObj.getString("created_at")
-                propertyModel.created_at = created_at
-
-                var user = innerObj.getInt("user")
-                propertyModel.user = user
-
-                var Property_id = innerObj.getJSONObject("Property_id")
-                var pId = Property_id.getInt("id")
-                propertyModel.property_id = pId
-
-                var property_title = Property_id.getString("property_title")
-                propertyModel.property_title = property_title
-
-                var property_type = Property_id.getString("property_type")
-                propertyModel.property_type = property_type
-
-                var one_pic = Property_id.getString("one_pic")
-                propertyModel.one_pic = one_pic
-
-                var price = Property_id.getDouble("price")
-                propertyModel.price = price
-
-                var property_area = Property_id.getDouble("property_area")
-                propertyModel.property_area = property_area
-
-                var address = Property_id.getString("address")
-                propertyModel.address = address
-
-                var post_type = Property_id.getString("post_type")
-                propertyModel.post_type = post_type
-
-                var latitude = Property_id.getDouble("latitude")
-                propertyModel.latitude = latitude
-
-                var longitude = Property_id.getDouble("longitude")
-                propertyModel.longitude = longitude
-
-                propertyList?.add(propertyModel)
-                propertyAdapter = PropertyAdapter(activity, propertyList!!, LayoutType.LayoutProperties, "delete")
-
-                recycle_states_more!!.layoutManager = layoutManager
-                recycle_states_more!!.adapter = propertyAdapter
-            }
-
-
-        }, Response.ErrorListener {
-
-
-        }) {
-            override fun getHeaders(): MutableMap<String, String> {
-                var map = HashMap<String, String>()
-                map.put("Authorization", "JWT "+token)
-                return map
-            }
-        }
-        var queue = Volley.newRequestQueue(activity)
-        queue?.add(request)
+        volleyService?.getDataVolley(RequestType.StringRequest, Urls.urlGetFav, token!!)
     }
 
     private fun createObjects() {
@@ -139,7 +89,14 @@ class MyFavFragment : Fragment() {
     }
 
     private fun findViews(view: View?) {
+        volleyParsing = VolleyParsing()
+        volleyService = VolleyService(this, mcontext!!.applicationContext)
         recycle_states_more = view?.findViewById(R.id.recycle_states_more)
 
+    }
+
+    private fun setSalePropertyAdapter(propertyList: ArrayList<PropertyModel>) {
+        val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutHorizontalProperties)
+        recycle_states_more?.adapter = propertyAdapter
     }
 }
