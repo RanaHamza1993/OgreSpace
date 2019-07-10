@@ -97,7 +97,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
 
             img_fav?.setOnClickListener(View.OnClickListener {
                 if (process.equals("delete")) {
-                    deleteFromFav(value.id)
+
                 } else {
                     favouriteListener?.addToFav(value.id)
                 }
@@ -106,24 +106,4 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
 
     }
 
-    private fun deleteFromFav(id: Int?) {
-        var request = object : StringRequest(Request.Method.DELETE, urlDelFav + id, Response.Listener { response ->
-
-            Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
-
-
-        }, Response.ErrorListener {
-            Toast.makeText(context, "failed", Toast.LENGTH_SHORT).show()
-        }) {
-            override fun getHeaders(): MutableMap<String, String> {
-                var pref = context?.getSharedPreferences("login", Context.MODE_PRIVATE)
-                var token = pref?.getString("token", "abc")
-                var map = HashMap<String, String>()
-                map.put("Authorization", "JWT " + token)
-                return map
-            }
-        }
-        var queue = Volley.newRequestQueue(context)
-        queue?.add(request)
-    }
 }

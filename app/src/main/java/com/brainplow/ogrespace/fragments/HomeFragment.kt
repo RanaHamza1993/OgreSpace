@@ -54,7 +54,9 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
         }
         else  if (url == Urls.urlGetSaleProperties)
             setSalePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
-
+        else if(url.contains(Urls.urlDelFav,true)){
+            context?.showSuccessMessage("Item deleted from favourite successfully")
+        }
     }
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
@@ -70,6 +72,9 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
         }  else if(!url.equals(Urls.urlAddToFav)){
             showErrorBody(error)
             context?.showErrorMessage("Item not added to favourite")
+        }
+        else if(url.equals(Urls.urlDelFav)){
+            context?.showSuccessMessage("Item not deleted from favourite")
         }
     }
 

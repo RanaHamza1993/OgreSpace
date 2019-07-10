@@ -24,6 +24,11 @@ open class PropertyBaseFragment : BaseFragment(),Communicator.IFavourites {
             volleyService?.postDataVolley(RequestType.JsonObjectRequest, Urls.urlAddToFav,obj, token!!)
     }
 
+    override fun deleteFromFav(id: Int?) {
+
+        volleyService?.deleteDataVolley(RequestType.StringRequest, Urls.urlDelFav+id, token!!)
+    }
+
     private var token: String? = null
     private var volleyService: VolleyService? = null
     private var volleyResult: Communicator.IVolleResult? = null
