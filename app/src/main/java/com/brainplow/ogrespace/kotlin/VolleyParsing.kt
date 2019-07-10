@@ -1,6 +1,7 @@
 package com.brainplow.ogrespace.kotlin
 
 import android.util.Log
+import com.brainplow.ogrespace.models.MyFavModel
 import com.brainplow.ogrespace.models.PropertyModel
 import com.brainplow.ogrespace.models.StateModel
 import com.google.gson.GsonBuilder
@@ -11,36 +12,50 @@ import org.json.JSONObject
 class VolleyParsing {
     var stateList = ArrayList<StateModel>()
     var propertyList = ArrayList<PropertyModel>()
-    val stateType=object: TypeToken<ArrayList<StateModel>>(){}.type
-    val propertyType=object: TypeToken<ArrayList<PropertyModel>>(){}.type
+    var favModel = ArrayList<MyFavModel>()
+    val stateType = object : TypeToken<ArrayList<StateModel>>() {}.type
+    val propertyType = object : TypeToken<ArrayList<PropertyModel>>() {}.type
+    val favType = object : TypeToken<ArrayList<MyFavModel>>() {}.type
     fun getStateData(response: JSONArray?, pageNo: Int): ArrayList<StateModel> {
         if (pageNo == 1)
             stateList.clear()
         try {
             //   val array = JSONObject(response)
             // val marry: JSONArray = array.get("courses") as JSONArray
-            stateList.addAll(GsonBuilder().serializeNulls().create().fromJson(response.toString(),stateType))
-        } catch (e:Exception) {
-            Log.d("error",e.toString())
+            stateList.addAll(GsonBuilder().serializeNulls().create().fromJson(response.toString(), stateType))
+        } catch (e: Exception) {
+            Log.d("error", e.toString())
         }
         return stateList
     }
+
     fun getPropertyData(response: JSONObject?, pageNo: Int): ArrayList<PropertyModel> {
         if (pageNo == 1)
             propertyList.clear()
+
+        //   val array = JSONObject(response)
+        var marry: JSONArray? = null
         try {
-            //   val array = JSONObject(response)
-            var marry: JSONArray?=null
-            try {
-                marry = response?.get("Results") as JSONArray
-            }catch (e:Exception){
-                marry = response?.get("results") as JSONArray
-            }
-            propertyList.addAll(GsonBuilder().serializeNulls().create().fromJson(marry.toString(),propertyType))
-        } catch (e:Exception) {
-            Log.d("error",e.toString())
+            marry = response?.get("results") as JSONArray
+            propertyList.addAll(GsonBuilder().serializeNulls().create().fromJson(marry.toString(), propertyType))
+        } catch (e: Exception) {
+            Log.d("error", e.toString())
         }
         return propertyList
     }
 
+    fun getFavPropertyData(response: JSONObject?, pageNo: Int): ArrayList<MyFavModel> {
+        if (pageNo == 1)
+            favModel.clear()
+
+        //   val array = JSONObject(response)
+        var marry: JSONArray? = null
+        try {
+            marry = response?.get("results") as JSONArray
+            favModel.addAll(GsonBuilder().serializeNulls().create().fromJson(marry.toString(), favType))
+        } catch (e: Exception) {
+            Log.d("error", e.toString())
+        }
+        return favModel
+    }
 }

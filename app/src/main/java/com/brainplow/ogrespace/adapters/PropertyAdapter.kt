@@ -32,7 +32,6 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
     public fun setFavouriteListener(favouriteListener: Communicator.IFavourites) {
         this.favouriteListener = favouriteListener
     }
-
     constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType, process: String) : this(
         context,
         items
@@ -40,13 +39,11 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
         this.context = context
         this.layoutType = layoutType
         this.process = process
-
     }
 
     constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType) : this(context, items) {
         this.context = context
         this.layoutType = layoutType
-
     }
 
     override fun setViewHolder(parent: ViewGroup, layoutInflater: LayoutInflater): RecyclerView.ViewHolder {

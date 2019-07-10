@@ -28,8 +28,10 @@ import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.VolleyParsing
 import com.brainplow.ogrespace.kotlin.VolleyService
+import com.brainplow.ogrespace.models.MyFavModel
 import com.brainplow.ogrespace.models.PropertyModel
 import com.facebook.share.Share
+import org.json.JSONArray
 import org.json.JSONObject
 
 class MyFavFragment : PropertyBaseFragment(),Communicator.IVolleResult {
@@ -43,8 +45,9 @@ class MyFavFragment : PropertyBaseFragment(),Communicator.IVolleResult {
     override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
 
         if(url.equals(urlGetFav)) {
-            val response = JSONObject(response)
-            setSalePropertyAdapter(volleyParsing?.getPropertyData(response, 1)!!)
+          //  val response = JSONObject(response)
+            parseData(JSONObject(response))
+           // setSalePropertyAdapter(volleyParsing?.getFavPropertyData(response, 1)!!)
         }
     }
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
@@ -52,7 +55,7 @@ class MyFavFragment : PropertyBaseFragment(),Communicator.IVolleResult {
             context?.showSuccessMessage("Item not added to favourite")
         }
     }
-    var propertyList: ArrayList<PropertyModel>? = null
+    var propertyList: ArrayList<PropertyModel>? = ArrayList<PropertyModel>()
     var recycle_states_more: RecyclerView? = null
     var layoutManager: LinearLayoutManager? = null
     var propertyAdapter: PropertyAdapter? = null
@@ -96,11 +99,7 @@ class MyFavFragment : PropertyBaseFragment(),Communicator.IVolleResult {
 
         sharedPreferences = activity?.getSharedPreferences("login", Context.MODE_PRIVATE)
         token = sharedPreferences!!.getString("token", "JWT")
-
-        propertyList = ArrayList()
-        layoutManager = LinearLayoutManager(activity)
-
-
+        recycle_states_more?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
     }
 
     private fun findViews(view: View?) {
@@ -110,8 +109,41 @@ class MyFavFragment : PropertyBaseFragment(),Communicator.IVolleResult {
 
     }
 
+    private fun parseData(response: JSONObject?){
+
+        val array=response?.getJSONArray("results")
+        try {
+            for (i in 0 until array!!.length()) {
+
+                var jsonObject = array.getJSONObject(i)
+                val Id = jsonObject?.getString("id")
+                jsonObject=jsonObject?.getJSONObject("Property_id")
+                val Address = jsonObject?.getString("address")
+                val property_id = jsonObject?.getString("id")
+                val title = jsonObject?.getString("property_title")
+                val type = jsonObject?.getString("property_type")
+                val pic = jsonObject?.getString("one_pic")
+                val Price = jsonObject?.getString("price")
+                val area = jsonObject?.getString("property_area")
+                val postType = jsonObject?.getString("post_type")
+                val lat = jsonObject?.getString("latitude")
+                val long = jsonObject?.getString("longitude")
+
+                val favourite = PropertyModel(address = Address, id = Id?.toInt(),property_id = property_id?.toInt(), property_title = title,
+                    property_type = type, one_pic = pic, price = Price?.toDouble(),property_area = area?.toDouble(),post_type = postType,
+                    latitude = lat?.toDouble(), longitude = long?.toDouble())
+
+                propertyList?.add(favourite)
+            }
+            setSalePropertyAdapter(propertyList!!)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
     private fun setSalePropertyAdapter(propertyList: ArrayList<PropertyModel>) {
-        val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutHorizontalProperties)
+        val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutProperties)
         recycle_states_more?.adapter = propertyAdapter
     }
 }
