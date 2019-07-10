@@ -16,22 +16,39 @@ import com.bumptech.glide.Glide
 
 
 class StatesAdapter(context: Context?, itemss: ArrayList<StateModel>?) : GenericAdapter<StateModel>(context, itemss) {
-    private  var context:Context?=null
-    private var layoutType:LayoutType?=null
-    private var stateListener:Communicator.IStates?=null
+    private var context: Context? = null
+    private var layoutType: LayoutType? = null
+    private var type: String? = null
+    private var stateListener: Communicator.IStates? = null
 
-    fun setStateListener(stateListener:Communicator.IStates){
-        this.stateListener=stateListener
+    fun setStateListener(stateListener: Communicator.IStates) {
+        this.stateListener = stateListener
     }
-    constructor(context: Context?,items:ArrayList<StateModel>,layoutType:LayoutType):this(context,items){
-        this.context=context
-        this.layoutType=layoutType
+
+    constructor(context: Context?, items: ArrayList<StateModel>, layoutType: LayoutType, type: String) : this(
+        context,
+        items
+    ) {
+        this.context = context
+        this.layoutType = layoutType
+        this.type = type
 
     }
+
+    constructor(context: Context?, items: ArrayList<StateModel>, layoutType: LayoutType) : this(
+        context,
+        items
+    ) {
+        this.context = context
+        this.layoutType = layoutType
+
+
+    }
+
     override fun setViewHolder(parent: ViewGroup, layoutInflater: LayoutInflater): RecyclerView.ViewHolder {
-       var view:View?=null
-        if(layoutType==LayoutType.LayoutStatesCat) {
-             view = layoutInflater.inflate(R.layout.carditems, parent, false)
+        var view: View? = null
+        if (layoutType == LayoutType.LayoutStatesCat) {
+            view = layoutInflater.inflate(R.layout.carditems, parent, false)
         }
         return StatesHolder(view!!)
     }
@@ -39,20 +56,31 @@ class StatesAdapter(context: Context?, itemss: ArrayList<StateModel>?) : Generic
     override fun onBindData(holder: RecyclerView.ViewHolder, value: StateModel) {
         (holder as StatesHolder).setData(value)
     }
-   inner class StatesHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private var stateImage: ImageView?=null
+
+    inner class StatesHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private var stateImage: ImageView? = null
         private var stateName: TextView? = null
+
         init {
-            stateImage=itemView.findViewById(R.id.state_image)
-            stateName=itemView.findViewById(R.id.state_name)
+            stateImage = itemView.findViewById(R.id.state_image)
+            stateName = itemView.findViewById(R.id.state_name)
         }
-        fun setData(state:StateModel){
+
+        fun setData(state: StateModel) {
             stateName?.setText(state.state)
-            Glide.with(context!!)
-                .load(Urls.iconStorageUrl + state.icon_image).placeholder(R.drawable.cplaceholder)
-                .into(stateImage!!)
-            itemView.setOnClickListener(){
-                stateListener?.onStateItemClick(state.id,state.state)
+            if (type.equals("features")){
+                Glide.with(context!!)
+                    .load(state.icon_image).placeholder(R.drawable.cplaceholder)
+                    .into(stateImage!!)
+            }
+            else{
+                Glide.with(context!!)
+                    .load(Urls.iconStorageUrl + state.icon_image).placeholder(R.drawable.cplaceholder)
+                    .into(stateImage!!)
+            }
+
+            itemView.setOnClickListener() {
+                stateListener?.onStateItemClick(state.id, state.state)
             }
         }
     }

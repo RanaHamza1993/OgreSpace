@@ -7,27 +7,32 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.request.StringRequest
 import com.android.volley.toolbox.Volley
 import com.brainplow.ogrespace.R
-import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.apputils.Urls.urlAddToFav
 import com.brainplow.ogrespace.apputils.Urls.urlDelFav
 import com.brainplow.ogrespace.enums.LayoutType
+import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.models.PropertyModel
 import com.bumptech.glide.Glide
 import org.json.JSONObject
+
+
 
 class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
     GenericAdapter<PropertyModel>(context, itemss) {
     private var context: Context? = null
     private var layoutType: LayoutType? = null
     private var process: String? = null
-
-
+    private var itemClickListener:Communicator.IItemDetail?=null
+    public fun setItemClickListener(itemClickListener:Communicator.IItemDetail){
+        this.itemClickListener=itemClickListener
+    }
     constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType, process: String) : this(
         context,
         items
@@ -68,6 +73,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
         private var propertyType: TextView? = null
         private var propertArea: TextView? = null
         private var img_fav: ImageView? = null
+        private var top_card_view: CardView? = null
 
         init {
             propertyImage = itemView.findViewById(R.id.p_image)
@@ -77,6 +83,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
             propertyType = itemView.findViewById(R.id.p_type)
             propertArea = itemView.findViewById(R.id.p_area)
             img_fav = itemView.findViewById(R.id.img_fav)
+            top_card_view = itemView.findViewById(R.id.top_card_view)
         }
 
         fun setData(property: PropertyModel) {
@@ -93,14 +100,17 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
         fun setClicks(value: PropertyModel) {
 
 
-            img_fav?.setOnClickListener(View.OnClickListener {
+            img_fav?.setOnClickListener {
                 if (process.equals("delete")) {
                     deleteFromFav(value.id)
                 } else {
                     addToFav(value.id)
                 }
-            })
-        }
+            }
+
+            itemView?.setOnClickListener {
+                itemClickListener?.onItemClick(value.id)
+            }
 
     }
 
@@ -149,4 +159,4 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
         queue?.add(request)
     }
 
-}
+}}

@@ -17,6 +17,7 @@
         android:dividerHeight="0.0px"
         android:elevation="@dimen/app_elevation"
         app:cardElevation="@dimen/app_elevation"
+        android:id="@+id/top_card_view"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="@dimen/app_elevation"
         app:ignore="NamespaceTypo"
