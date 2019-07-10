@@ -17,6 +17,7 @@ import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.apputils.Urls.urlAddToFav
 import com.brainplow.ogrespace.apputils.Urls.urlDelFav
 import com.brainplow.ogrespace.enums.LayoutType
+import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.models.PropertyModel
 import com.bumptech.glide.Glide
 import org.json.JSONObject
@@ -26,7 +27,11 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
     private var context: Context? = null
     private var layoutType: LayoutType? = null
     private var process: String? = null
+    private var favouriteListener: Communicator.IFavourites? = null
 
+    public fun setFavouriteListener(favouriteListener: Communicator.IFavourites) {
+        this.favouriteListener = favouriteListener
+    }
 
     constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType, process: String) : this(
         context,
@@ -97,7 +102,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
                 if (process.equals("delete")) {
                     deleteFromFav(value.id)
                 } else {
-                    addToFav(value.id)
+                    favouriteListener?.addToFav(value.id)
                 }
             })
         }
@@ -124,29 +129,4 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
         var queue = Volley.newRequestQueue(context)
         queue?.add(request)
     }
-
-    private fun addToFav(id: Int?) {
-        var request =
-            object : StringRequest(Request.Method.GET, urlAddToFav + id, Response.Listener { response ->
-                var obj = JSONObject(response)
-                var results = obj.getString("results")
-                var favourite = obj.getBoolean("favourite")
-                Toast.makeText(context, "Property added to favourites successfully" + id + results, Toast.LENGTH_SHORT)
-                    .show()
-
-            }, Response.ErrorListener {
-                Toast.makeText(context, "failed", Toast.LENGTH_SHORT).show()
-            }) {
-                override fun getHeaders(): MutableMap<String, String> {
-                    var pref = context?.getSharedPreferences("login", Context.MODE_PRIVATE)
-                    var token = pref?.getString("token", "abc")
-                    var map = HashMap<String, String>()
-                    map.put("Authorization", "JWT " + token)
-                    return map
-                }
-            }
-        var queue = Volley.newRequestQueue(context)
-        queue?.add(request)
-    }
-
 }

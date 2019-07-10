@@ -120,7 +120,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
             }
         }
     }
-    fun postDataVolley(requestType: RequestType, url: String, sendObj: JSONObject, token: String) {
+    fun postDataVolley(requestType: RequestType, url: String, sendObj: JSONObject?, token: String) {
 
         if (requestType==RequestType.JsonObjectRequest) {
             var netWorkResponse=0
@@ -130,12 +130,12 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
                 val jsonObj = object : JsonObjectRequest(Request.Method.POST, url, sendObj, object : Response.Listener<JSONObject> {
                     override fun onResponse(response: JSONObject) {
                         if (mResultCallback != null)
-                            mResultCallback!!.notifySuccess(requestType, response, url)
+                            mResultCallback!!.notifySuccess(requestType, response, url,netWorkResponse)
                     }
                 }, Response.ErrorListener {
 
                     if (mResultCallback != null)
-                        mResultCallback!!.notifyError(requestType, it, url)
+                        mResultCallback!!.notifyError(requestType, it, url,netWorkResponse)
                     Log.d("error",it.toString())
 
 

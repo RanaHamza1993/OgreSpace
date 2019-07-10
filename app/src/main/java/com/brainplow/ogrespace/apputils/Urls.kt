@@ -4,7 +4,7 @@ object Urls {
 
     val baseUrl=                                 "https://apis.officedoor.ai/"
     val baseStorageUrl=                          "https://storage.officedoor.ai/"
-    val urlAddToFav =                      baseUrl + "office/user_favourite/"
+    val urlAddToFav =                      baseUrl + "office/user_favourite_android/"
     val urlGetFav =                        baseUrl + "office/get_user_favourite/"
     val urlDelFav =                        baseUrl + "office/delete_user_favourite/"
 

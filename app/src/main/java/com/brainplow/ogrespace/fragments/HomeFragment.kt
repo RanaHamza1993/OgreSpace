@@ -20,8 +20,11 @@ import com.brainplow.ogrespace.adapters.PropertyAdapter
 import com.brainplow.ogrespace.adapters.StatesAdapter
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.baseclasses.BaseFragment
+import com.brainplow.ogrespace.baseclasses.PropertyBaseFragment
 import com.brainplow.ogrespace.enums.LayoutType
 import com.brainplow.ogrespace.enums.RequestType
+import com.brainplow.ogrespace.extesnions.showErrorMessage
+import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.ActivityNavigator
 import com.brainplow.ogrespace.kotlin.VolleyParsing
@@ -36,7 +39,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.HashMap
 
-class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.IStates {
+class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communicator.IStates,Communicator.IFavourites {
 
     override fun notifySuccess(requestType: RequestType?, response: JSONArray?, url: String, netWorkResponse: Int?) {
         if (url == Urls.urlStates) {
@@ -47,21 +50,26 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
 
     override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
         if (url == Urls.urlGetLeaseProperties) {
-            setLeasePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
+            setLeasePropertyAdapter(leaseParsing!!.getPropertyData(JSONObject(response), 1))
         }
         else  if (url == Urls.urlGetSaleProperties)
             setSalePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
 
-
     }
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
+         if(url.equals(Urls.urlAddToFav)){
+            context?.showSuccessMessage("Item added to favourite successfully")
+        }
 
     }
 
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
         if (url == Urls.urlStates) {
             showErrorBody(error)
+        }  else if(!url.equals(Urls.urlAddToFav)){
+            showErrorBody(error)
+            context?.showErrorMessage("Item not added to favourite")
         }
     }
 
@@ -72,6 +80,7 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
 
     var volleyService: VolleyService? = null
     var volleyParsing: VolleyParsing? = null
+    var leaseParsing: VolleyParsing? = null
     var mcontext: Context? = null
     var acBarListener: Communicator.IActionBar? = null
     var main_search_edit: EditText? = null
@@ -96,6 +105,7 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        super.setIVolleyResult(this)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 //        acBotListeners()
         setIds(view)
@@ -168,6 +178,7 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
 
     fun setIds(view: View) {
         volleyParsing = VolleyParsing()
+        leaseParsing = VolleyParsing()
         volleyService = VolleyService(this, mcontext!!.applicationContext)
         rootView = view.findViewById(R.id.homeFragment)
         main_search_edit = activity?.findViewById(R.id.mainsearch_edittext)
@@ -235,10 +246,16 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
     }
     private fun setSalePropertyAdapter(propertyList: ArrayList<PropertyModel>) {
         val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutHorizontalProperties)
+        propertyAdapter.run{
+            setFavouriteListener(this@HomeFragment)
+        }
         propertiesForSaleRecycler.adapter = propertyAdapter
     }
     private fun setLeasePropertyAdapter(propertyList: ArrayList<PropertyModel>) {
         val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutHorizontalProperties)
+        propertyAdapter.run{
+            setFavouriteListener(this@HomeFragment)
+        }
         propertiesForLeaseRecycler.adapter = propertyAdapter
     }
     fun navigateToMoreProperties(id: Int?, name: String?,mflag:Int){

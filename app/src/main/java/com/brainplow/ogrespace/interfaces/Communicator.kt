@@ -42,4 +42,8 @@ interface Communicator {
     interface IStates{
         fun onStateItemClick(id:Int?,name:String?){}
     }
+    interface IFavourites{
+        fun addToFav(id:Int?){}
+        fun deleteFromFav(id:Int?){}
+    }
 }

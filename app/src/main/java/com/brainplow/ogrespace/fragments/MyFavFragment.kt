@@ -18,10 +18,13 @@ import com.android.volley.toolbox.Volley
 import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.adapters.PropertyAdapter
 import com.brainplow.ogrespace.apputils.Urls
+import com.brainplow.ogrespace.apputils.Urls.urlAddToFav
 import com.brainplow.ogrespace.apputils.Urls.urlGetFav
 import com.brainplow.ogrespace.baseclasses.BaseFragment
+import com.brainplow.ogrespace.baseclasses.PropertyBaseFragment
 import com.brainplow.ogrespace.enums.LayoutType
 import com.brainplow.ogrespace.enums.RequestType
+import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.VolleyParsing
 import com.brainplow.ogrespace.kotlin.VolleyService
@@ -29,14 +32,25 @@ import com.brainplow.ogrespace.models.PropertyModel
 import com.facebook.share.Share
 import org.json.JSONObject
 
-class MyFavFragment : BaseFragment(),Communicator.IVolleResult {
+class MyFavFragment : PropertyBaseFragment(),Communicator.IVolleResult {
 
+
+    override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
+        if(url.equals(Urls.urlAddToFav)){
+            context?.showSuccessMessage("Item added to favourite successfully")
+        }
+    }
     override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
-        val response=JSONObject(response)
-        setSalePropertyAdapter(volleyParsing?.getPropertyData(response,1)!!)
+
+        if(url.equals(urlGetFav)) {
+            val response = JSONObject(response)
+            setSalePropertyAdapter(volleyParsing?.getPropertyData(response, 1)!!)
+        }
     }
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
-
+        if(url.equals(urlAddToFav)){
+            context?.showSuccessMessage("Item not added to favourite")
+        }
     }
     var propertyList: ArrayList<PropertyModel>? = null
     var recycle_states_more: RecyclerView? = null
@@ -64,7 +78,8 @@ class MyFavFragment : BaseFragment(),Communicator.IVolleResult {
     var acBarListener: Communicator.IActionBar? = null
     var mcontext: Context? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.fragment_states_more, container, false)
+        super.setIVolleyResult(this)
+        val view = inflater.inflate(R.layout.fragment_states_more, container, false)
         findViews(view)
         createObjects()
         getData()
