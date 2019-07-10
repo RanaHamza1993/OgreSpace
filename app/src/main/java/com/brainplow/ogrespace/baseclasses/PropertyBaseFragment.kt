@@ -17,23 +17,25 @@ import com.brainplow.ogrespace.kotlin.JWTUtils
 import com.brainplow.ogrespace.kotlin.VolleyService
 import org.json.JSONObject
 
-open class PropertyBaseFragment : BaseFragment(),Communicator.IFavourites {
+open class PropertyBaseFragment : BaseFragment(), Communicator.IFavourites {
 
     override fun addToFav(id: Int?) {
-            val obj=JSONObject().put("property_id",id)
-            volleyService?.postDataVolley(RequestType.JsonObjectRequest, Urls.urlAddToFav,obj, token!!)
+        favId = id
+        val obj = JSONObject().put("property_id", id)
+        volleyService?.postDataVolley(RequestType.JsonObjectRequest, Urls.urlAddToFav, obj, token!!)
     }
 
     override fun deleteFromFav(id: Int?) {
-
-        volleyService?.deleteDataVolley(RequestType.StringRequest, Urls.urlDelFav+id, token!!)
+        favId = id
+        volleyService?.deleteDataVolley(RequestType.StringRequest, Urls.urlDelFav + id, token!!)
     }
 
     private var token: String? = null
     private var volleyService: VolleyService? = null
     private var volleyResult: Communicator.IVolleResult? = null
     private var mcontext: Context? = null
-    private var sharedPreferences:SharedPreferences?=null
+    private var sharedPreferences: SharedPreferences? = null
+    var favId: Int? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,6 +49,7 @@ open class PropertyBaseFragment : BaseFragment(),Communicator.IFavourites {
         mcontext = context;
 
     }
+
     fun setIVolleyResult(volleyResult: Communicator.IVolleResult?) {
         sharedPreferences = activity?.getSharedPreferences("login", Context.MODE_PRIVATE)
         token = sharedPreferences?.getString("token", "")

@@ -138,7 +138,7 @@
                         android:layout_alignParentRight="true"
                         android:scaleType="centerCrop"
                         android:src="@drawable/bottom_heart_home"
-                        android:tag="bidonemptyheart"
+                        android:tag="emptyheart"
     
                 />
             

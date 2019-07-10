@@ -7,6 +7,7 @@ object Urls {
     val urlAddToFav =                      baseUrl + "office/user_favourite_android/"
     val urlGetFav =                        baseUrl + "office/get_user_favourite/"
     val urlDelFav =                        baseUrl + "office/delete_user_favourite/"
+    val urlGetFavItems =                   baseUrl +"office/favourite_properties_id"
 
     //val baseImageStorageUrl=               baseStorageUrl+"OfficeImages/"
     val iconStorageUrl=                    baseStorageUrl+"final/"

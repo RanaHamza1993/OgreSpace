@@ -15,8 +15,11 @@ import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.adapters.PropertyAdapter
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.baseclasses.BaseFragment
+import com.brainplow.ogrespace.baseclasses.PropertyBaseFragment
 import com.brainplow.ogrespace.enums.LayoutType
 import com.brainplow.ogrespace.enums.RequestType
+import com.brainplow.ogrespace.extesnions.showInfoMessage
+import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.LoadingDialog
 import com.brainplow.ogrespace.kotlin.VolleyParsing
@@ -26,20 +29,29 @@ import org.json.JSONObject
 import java.lang.Exception
 
 
-class PropertiesMoreFragment : BaseFragment(),Communicator.IVolleResult {
+class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communicator.IFavourites {
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
-       // if (url.contains(Urls.urlPropertyByState)) {
-
+        // if (url.contains(Urls.urlPropertyByState)) {
+        if (url.equals(Urls.urlAddToFav)) {
+            if (netWorkResponse == 200)
+                context?.showSuccessMessage("Item added to favourite successfully")
+            else if (netWorkResponse == 202)
+                deleteFromFav(favId)
+        } else {
             if (pages == 1) {
                 try {
                     bidItems = response!!.getInt("totalItems")
                     bidPages = response.getInt("totalPages")
-                }catch (e:Exception){}
+                } catch (e: Exception) {
+                }
             }
             flag = 1
-      //      val list=volleyParsing?.getPropertyData(response,pages)
-            setPropertyAdapter(volleyParsing?.getPropertyData(response,pages)!!)
+            //      val list=volleyParsing?.getPropertyData(response,pages)
+            setPropertyAdapter(volleyParsing?.getPropertyData(response, pages)!!)
+        }
+
+
         //}
     }
 
@@ -49,36 +61,45 @@ class PropertiesMoreFragment : BaseFragment(),Communicator.IVolleResult {
             showErrorBody(error)
         }
     }
+
+    override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
+        if (url.contains(Urls.urlDelFav, true)) {
+            context?.showInfoMessage("Item deleted from favourite successfully")
+        }
+    }
+
     var bidPages = 0
     var bidItems = 0
     var pages = 1
     var acBarListener: Communicator.IActionBar? = null
-    var mcontext:Context?=null
+    var mcontext: Context? = null
     var volleyService: VolleyService? = null
     var volleyParsing: VolleyParsing? = null
     var layoutmanger: LinearLayoutManager? = null
-    var propertyAdapter:PropertyAdapter?=null
+    var propertyAdapter: PropertyAdapter? = null
     var flag = 0
-    var mflag:Int?=null
+    var mflag: Int? = null
     lateinit var load: LoadingDialog
     lateinit var recycleProperty: RecyclerView
-    var stateName:String?=null
+    var stateName: String? = null
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mcontext=context
-        acBarListener=context as Communicator.IActionBar
+        mcontext = context
+        acBarListener = context as Communicator.IActionBar
 
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view= inflater.inflate(R.layout.fragment_states_more, container, false)
-        val bundle=arguments
-        stateName=bundle?.getString("stateName")
-        mflag=bundle?.getInt("mflag")
-                setIds(view)
+        super.setIVolleyResult(this)
+        val view = inflater.inflate(R.layout.fragment_states_more, container, false)
+        val bundle = arguments
+        stateName = bundle?.getString("stateName")
+        mflag = bundle?.getInt("mflag")
+        setIds(view)
         setListeners()
         volleyRequests()
         return view
@@ -86,45 +107,59 @@ class PropertiesMoreFragment : BaseFragment(),Communicator.IVolleResult {
 
     override fun onResume() {
         super.onResume()
-        acBarListener?.run{
+        acBarListener?.run {
             isBackButtonEnabled(true)
             toolbarBackground(false)
-            if(mflag==1)
-            actionBarListener("${stateName} Properties")
-           else if(mflag==2)
+            if (mflag == 1)
+                actionBarListener("${stateName} Properties")
+            else if (mflag == 2)
                 actionBarListener("Sale Properties")
-           else if(mflag==3)
+            else if (mflag == 3)
                 actionBarListener("Lease Properties")
         }
     }
-    fun setIds(view:View){
+
+    fun setIds(view: View) {
         var bidPages = 0
         var bidItems = 0
         var pages = 1
         load = LoadingDialog("Loading", context)
-        volleyParsing= VolleyParsing()
+        volleyParsing = VolleyParsing()
         volleyService = VolleyService(this, mcontext!!.applicationContext)
-        recycleProperty=view.findViewById(R.id.recycle_states_more)
-        layoutmanger=LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        recycleProperty = view.findViewById(R.id.recycle_states_more)
+        layoutmanger = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         recycleProperty.layoutManager = layoutmanger
     }
 
-    fun volleyRequests(){
-        if(mflag==1)
-        volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlPropertyByState+stateName+"/"+ "?page=" + pages, "")
-        else if(mflag==2)
-        volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlGetSaleProperties+ "?page=" + pages, "")
-        else if(mflag==3)
-        volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlGetLeaseProperties+ "?page=" + pages, "")
+    fun volleyRequests() {
+        if (mflag == 1)
+            volleyService?.getDataVolley(
+                RequestType.JsonObjectRequest,
+                Urls.urlPropertyByState + stateName + "/" + "?page=" + pages,
+                ""
+            )
+        else if (mflag == 2)
+            volleyService?.getDataVolley(
+                RequestType.JsonObjectRequest,
+                Urls.urlGetSaleProperties + "?page=" + pages,
+                ""
+            )
+        else if (mflag == 3)
+            volleyService?.getDataVolley(
+                RequestType.JsonObjectRequest,
+                Urls.urlGetLeaseProperties + "?page=" + pages,
+                ""
+            )
     }
-    fun setListeners(){
+
+    fun setListeners() {
 
     }
 
-    fun setPropertyAdapter(propertyList:ArrayList<PropertyModel>){
+    fun setPropertyAdapter(propertyList: ArrayList<PropertyModel>) {
 
         if (pages == 1) {
-            propertyAdapter = PropertyAdapter(context,propertyList,LayoutType.LayoutProperties)
+            propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutProperties)
             recycleProperty.adapter = propertyAdapter
         }
 
@@ -140,12 +175,24 @@ class PropertiesMoreFragment : BaseFragment(),Communicator.IVolleResult {
                         if (!load.ishowingg())
                             load.showdialog()
 
-                        if(mflag==1)
-                            volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlPropertyByState+stateName+"/"+ "?page=" + pages, "")
-                        else if(mflag==2)
-                            volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlGetSaleProperties+ "?page=" + pages, "")
-                        else if(mflag==3)
-                            volleyService?.getDataVolley(RequestType.JsonObjectRequest, Urls.urlGetLeaseProperties+ "?page=" + pages, "")
+                        if (mflag == 1)
+                            volleyService?.getDataVolley(
+                                RequestType.JsonObjectRequest,
+                                Urls.urlPropertyByState + stateName + "/" + "?page=" + pages,
+                                ""
+                            )
+                        else if (mflag == 2)
+                            volleyService?.getDataVolley(
+                                RequestType.JsonObjectRequest,
+                                Urls.urlGetSaleProperties + "?page=" + pages,
+                                ""
+                            )
+                        else if (mflag == 3)
+                            volleyService?.getDataVolley(
+                                RequestType.JsonObjectRequest,
+                                Urls.urlGetLeaseProperties + "?page=" + pages,
+                                ""
+                            )
 
                         flag = 0
                     }
@@ -153,8 +200,10 @@ class PropertiesMoreFragment : BaseFragment(),Communicator.IVolleResult {
                 super.onScrolled(recyclerView, dx, dy);
             }
         })
-
-            propertyAdapter?.notifyDataSetChanged()
+        propertyAdapter?.run {
+            setFavouriteListener(this@PropertiesMoreFragment)
+            notifyDataSetChanged()
+        }
         if (load.ishowingg())
             load.dismisss()
     }

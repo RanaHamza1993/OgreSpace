@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.error.VolleyError
 
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.activities.MainActivity
 import com.brainplow.ogrespace.activities.SearchActivity
 import com.brainplow.ogrespace.adapters.PropertyAdapter
 import com.brainplow.ogrespace.adapters.StatesAdapter
@@ -24,6 +25,7 @@ import com.brainplow.ogrespace.baseclasses.PropertyBaseFragment
 import com.brainplow.ogrespace.enums.LayoutType
 import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.extesnions.showErrorMessage
+import com.brainplow.ogrespace.extesnions.showInfoMessage
 import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.ActivityNavigator
@@ -35,6 +37,7 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation
 import com.daimajia.slider.library.SliderLayout
 import com.daimajia.slider.library.SliderTypes.BaseSliderView
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.HashMap
@@ -55,13 +58,20 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
         else  if (url == Urls.urlGetSaleProperties)
             setSalePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
         else if(url.contains(Urls.urlDelFav,true)){
-            context?.showSuccessMessage("Item deleted from favourite successfully")
+            MainActivity.favItemsMap.remove(favId.toString())
+            context?.showInfoMessage("Item deleted from favourite successfully")
         }
     }
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
          if(url.equals(Urls.urlAddToFav)){
-            context?.showSuccessMessage("Item added to favourite successfully")
+             if(netWorkResponse==200) {
+                 MainActivity.favItemsMap.put(favId.toString(),favId!!)
+                 context?.showSuccessMessage("Item added to favourite successfully")
+             }
+             else if(netWorkResponse==202)
+                 deleteFromFav(favId)
+
         }
 
     }
@@ -74,7 +84,7 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
             context?.showErrorMessage("Item not added to favourite")
         }
         else if(url.equals(Urls.urlDelFav)){
-            context?.showSuccessMessage("Item not deleted from favourite")
+            context?.showErrorMessage("Item not deleted from favourite")
         }
     }
 
@@ -93,7 +103,7 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
     var leaseMoreText:TextView?=null
     var rootView: LinearLayout? = null
     lateinit var mDemoSlider: SliderLayout
-
+    lateinit var bottomNavigation: BottomNavigationView
     var bottomBarListener: Communicator.IBottomBar? = null
     lateinit var recycleStates: RecyclerView
     lateinit var propertiesForSaleRecycler: RecyclerView
@@ -139,6 +149,7 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
     override fun onResume() {
         super.onResume()
         acBotListeners()
+        bottomNavigation.menu.findItem(R.id.bottom_home).setChecked(true)
     }
 
     override fun onStop() {
@@ -187,7 +198,7 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
         volleyService = VolleyService(this, mcontext!!.applicationContext)
         rootView = view.findViewById(R.id.homeFragment)
         main_search_edit = activity?.findViewById(R.id.mainsearch_edittext)
-
+        bottomNavigation = activity!!.findViewById(R.id.navigation)
         saleMoreText=view.findViewById(R.id.p_sale_more)
         leaseMoreText=view.findViewById(R.id.p_lease_more)
         mDemoSlider = view.findViewById(R.id.banner1);

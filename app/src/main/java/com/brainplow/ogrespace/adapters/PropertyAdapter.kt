@@ -13,6 +13,7 @@ import com.android.volley.Response
 import com.android.volley.request.StringRequest
 import com.android.volley.toolbox.Volley
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.activities.MainActivity
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.apputils.Urls.urlAddToFav
 import com.brainplow.ogrespace.apputils.Urls.urlDelFav
@@ -28,10 +29,12 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
     private var layoutType: LayoutType? = null
     private var process: String? = null
     private var favouriteListener: Communicator.IFavourites? = null
+    private var favMap = HashMap<String, Int>()
 
     public fun setFavouriteListener(favouriteListener: Communicator.IFavourites) {
         this.favouriteListener = favouriteListener
     }
+
     constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType, process: String) : this(
         context,
         items
@@ -44,6 +47,17 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
     constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType) : this(context, items) {
         this.context = context
         this.layoutType = layoutType
+    }
+
+    constructor(
+        context: Context?,
+        items: ArrayList<PropertyModel>,
+        layoutType: LayoutType,
+        favMap: HashMap<String, Int>
+    ) : this(context, items) {
+        this.context = context
+        this.layoutType = layoutType
+        this.favMap = favMap
     }
 
     override fun setViewHolder(parent: ViewGroup, layoutInflater: LayoutInflater): RecyclerView.ViewHolder {
@@ -93,15 +107,39 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
         }
 
         fun setClicks(value: PropertyModel) {
+            checkFavItems(value)
+            img_fav?.setOnClickListener {
+                val backgroundImageName = img_fav?.getTag().toString()
+
+                if (backgroundImageName === "emptyheart") {
+                    img_fav?.setImageResource(R.drawable.fillheart)
+                    img_fav?.setTag("fillheart")
 
 
-            img_fav?.setOnClickListener(View.OnClickListener {
-                if (process.equals("delete")) {
+                } else if (backgroundImageName === "fillheart") {
+                    img_fav?.setImageResource(R.drawable.bottom_heart_home)
+                    img_fav?.setTag("emptyheart")
 
-                } else {
-                    favouriteListener?.addToFav(value.id)
+
                 }
-            })
+
+                favouriteListener?.addToFav(value.id)
+
+            }
+        }
+
+        fun checkFavItems(value: PropertyModel) {
+            if (MainActivity.favItemsMap.contains(value.id.toString())) {
+                img_fav?.setImageResource(R.drawable.fillheart)
+                img_fav?.setTag("fillheart")
+
+
+            } else {
+                img_fav?.setImageResource(R.drawable.bottom_heart_home)
+                img_fav?.setTag("emptyheart")
+
+            }
+
         }
 
     }
