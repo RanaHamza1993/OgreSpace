@@ -475,10 +475,10 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
         }
     }
 
-    fun getDataVolley(requestType: RequestType, url: String, token: String, urlflag: String) {
-
+    fun getDataVolley(requestType: RequestType, url: String, token: String,requestTag:String) {
+        var netWorkResponse=0
         if (requestType==RequestType.ArrayRequest) {
-            var netWorkResponse=0
+
             try {
 
                 val jsonObj = object : JsonArrayRequest(Request.Method.GET, url, null, Response.Listener { response ->
@@ -506,7 +506,7 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
                         return headers
                     }
                 }
-                jsonObj.tag="flagArraytRequest"
+                jsonObj.tag=requestTag
                 jsonObj.setShouldCache(false)
                 MySingleton.getInstance(mContext).addToRequestQueue(jsonObj)
 
@@ -521,10 +521,11 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
 
                 val jsonObj = object : StringRequest(Request.Method.GET, url, Response.Listener { response ->
                     if (mResultCallback != null)
-                        mResultCallback!!.notifySuccess(requestType, response, url + urlflag)
+                        mResultCallback!!.notifySuccess(requestType, response, url)
                 }, Response.ErrorListener { error ->
                     if (mResultCallback != null)
-                        mResultCallback!!.notifyError(requestType, error, url + urlflag)
+                        mResultCallback!!.notifyError(requestType, error, url)
+                    Log.d("error",error.toString())
                 }) {
 
 
@@ -533,14 +534,14 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
                             netWorkResponse = response?.statusCode!!
                         }catch(e:Exception){}
                         return super.parseNetworkResponse(response)
-//
+
 //                        try{
 //                            var cacheEntry: Cache.Entry? = HttpHeaderParser.parseCacheHeaders(response)
 //                            if (cacheEntry == null) {
 //                                cacheEntry = Cache.Entry()
 //                            }
 //
-//                            val cacheHitButRefreshed = (1 * 60 * 1000).toLong() // in 3 minutes cache will be hit, but also refreshed on background
+//                            val cacheHitButRefreshed = (3 * 60 * 1000).toLong() // in 3 minutes cache will be hit, but also refreshed on background
 //                            val cacheExpired = (1 * 60 * 60 * 1000).toLong() // in 24 hours this cache entry expires completely
 //                            val now = System.currentTimeMillis()
 //                            val softExpire = now + cacheHitButRefreshed
@@ -578,11 +579,12 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
                 }
 
 
-//                if(url.contains(Url.urlGetWatchlist)||url.contains(Url.urlGetCart))
+//                             if(url.contains(Url.urlGetWatchlist)||url.contains(Url.urlGetCart)||url.contains(Url.urlCourseBidHistory)
+//                                             ||url.contains(Url.urlNoteBidHistory)||url.contains(Url.urlBookBidHistory)||url.contains(Url.urlFlashBidHistory))
 //                jsonObj.setShouldCache(false)
-//                              else
-                jsonObj.tag="flagStringtRequest"
+//                           else
                 jsonObj.setShouldCache(false)
+                jsonObj.tag=requestTag
                 MySingleton.getInstance(mContext).addToRequestQueue(jsonObj)
 
             } catch (e: Exception) {
@@ -619,14 +621,20 @@ class VolleyService constructor(resultCallback: Communicator.IVolleResult?, cont
                         return headers
                     }
                 }
-                jsonObj.tag="flagObjectRequest"
+
+
+                //if(url.contains(Url.urlGetWatchlist)||url.contains(Url.urlGetCart))
+                //   jsonObj.setShouldCache(false)
+                // else
                 jsonObj.setShouldCache(false)
+                jsonObj.tag=requestTag
                 MySingleton.getInstance(mContext).addToRequestQueue(jsonObj)
 
             } catch (e: Exception) {
             }
         }
     }
+
 
 
     fun deleteDataVolley(requestType: RequestType, url: String, token: String) {

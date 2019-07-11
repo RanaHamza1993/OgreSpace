@@ -40,12 +40,19 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
         spinner_layout?.visibility = View.GONE
+
+
       //  searchIcon?.visibility = View.GONE
         keyWordsList.clear()
         val predictions = response?.getJSONArray("predictions")
         for (i in 0 until predictions!!.length()) {
             keyWordsList.add(predictions.getJSONObject(i).getString("description"))
         }
+        if (drawerLayout!!.isDrawerOpen(GravityCompat.END)) {
+            d_suggestion_recycler?.visibility=View.VISIBLE
+            setDrawerSuggestionAdapter()
+        }
+        else
         setAdapter()
     }
 
@@ -71,8 +78,21 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
     var mcontext: Context? = null
     var volleyService: VolleyService? = null
     var suggestionRecycler: RecyclerView? = null
+    var d_suggestion_recycler: RecyclerView? = null
     var rootView: RelativeLayout? = null
+    var d_search_edit_text: TextView? = null
+    var d_search_edit_textwatcher: TextWatcher? = null
+    var main_search_textWatcher: TextWatcher? = null
     var type = ""
+    val drawerSuggestionListener=object :SearchKeyWordsAdapter.ISearchListener{
+        override fun onItemClick(position: Int, keyWord: String) {
+            d_search_edit_text?.removeTextChangedListener(d_search_edit_textwatcher)
+            d_search_edit_text?.setText(keyWord)
+            d_search_edit_text?.addTextChangedListener(d_search_edit_textwatcher)
+            d_suggestion_recycler?.visibility=View.GONE
+        }
+
+    }
     val searchListener = object : SearchKeyWordsAdapter.ISearchListener {
         override fun onItemClick(position: Int, keyWord: String) {
             val args = Bundle()
@@ -132,7 +152,11 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
     }
 
     private fun setIds(view: View) {
-        navigationView = view.findViewById(R.id.nav_view)
+        navigationView = view.findViewById(R.id.search_nav_view)
+        val navHeader = navigationView?.getHeaderView(0)
+        d_search_edit_text=navHeader?.findViewById(R.id.fs_search_edit)
+        d_suggestion_recycler=navHeader?.findViewById(R.id.fs_suggestions_recycler)
+
         drawerLayout = view.findViewById(R.id.search_drawer)
         rootView=view.findViewById(R.id.searchSuggestionRoot)
         actionBarDrawerToggle =
@@ -141,6 +165,7 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         volleyService = VolleyService(this, mcontext!!.applicationContext)
         suggestionRecycler = view.findViewById(R.id.suggestions_recycler)
         suggestionRecycler?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        d_suggestion_recycler?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         main_search_edit = activity?.findViewById(R.id.mainsearch_edittext)
         main_edit_cross = activity!!.findViewById(R.id.edit_cross)
         main_edit_mic = activity!!.findViewById(R.id.edit_mic)
@@ -183,7 +208,7 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
        // if (!searchQuery.equals(""))
           //  searchIcon?.visibility = View.GONE
 
-        main_search_edit!!.addTextChangedListener(object : TextWatcher {
+        main_search_textWatcher=object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -213,14 +238,55 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
 
                     main_edit_cross.visibility = View.GONE
                     main_edit_mic.visibility = View.VISIBLE
-                 //   searchIcon?.visibility = View.VISIBLE
+                    //   searchIcon?.visibility = View.VISIBLE
                     spinner_layout?.visibility = View.VISIBLE
 
 
                 }
             }
 
-        })
+        }
+        main_search_edit!!.addTextChangedListener(main_search_textWatcher)
+
+        d_search_edit_textwatcher=object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                MySingleton.getInstance(mcontext!!).requestQueue.cancelAll("searchRequest")
+                var value = d_search_edit_text?.text.toString()
+                value = value.replace(" ", "%20")
+                if (isRunning&&!value.equals(""))
+                    getSearchResult(value)
+                else {
+                    keyWordsList.clear()
+                    setDrawerSuggestionAdapter()
+                }
+//                main_edit_cross.visibility = View.VISIBLE
+//                main_edit_mic.visibility = View.GONE
+//
+//                main_edit_cross.setOnClickListener {
+//                    main_search_edit?.setText("")
+//
+//
+//                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+                if (TextUtils.isEmpty(s.toString().trim())) {
+
+//                    main_edit_cross.visibility = View.GONE
+//                    main_edit_mic.visibility = View.VISIBLE
+//                    //   searchIcon?.visibility = View.VISIBLE
+                    d_suggestion_recycler?.visibility=View.GONE
+
+
+                }
+            }
+
+        }
+        d_search_edit_text?.addTextChangedListener(d_search_edit_textwatcher)
 
 
         val typeAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, typeList)
@@ -249,7 +315,7 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         volleyService?.getDataVolley(
             RequestType.JsonObjectRequest,
             Urls.urlGooglePlaceSearch + value + "&key=AIzaSyBvtXUC9gCiJTPRwX-tCHsOgTiLo2H8P6Q",
-            ""
+            "","searchRequest"
         )
 
     }
@@ -261,6 +327,16 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         } else
             searchAdapter = SearchKeyWordsAdapter(keyWordsList, searchListener)
         suggestionRecycler?.adapter = searchAdapter
+        searchAdapter?.notifyDataSetChanged()
+    }
+
+    fun setDrawerSuggestionAdapter() {
+        if (!keyWordsList.isEmpty()) {
+            val list: List<String> = keyWordsList.distinct()
+            searchAdapter = SearchKeyWordsAdapter(list, drawerSuggestionListener)
+        } else
+            searchAdapter = SearchKeyWordsAdapter(keyWordsList, drawerSuggestionListener)
+        d_suggestion_recycler?.adapter = searchAdapter
         searchAdapter?.notifyDataSetChanged()
     }
 
