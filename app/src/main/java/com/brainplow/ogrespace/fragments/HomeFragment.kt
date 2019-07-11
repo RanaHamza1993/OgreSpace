@@ -290,6 +290,7 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
     }
      @SuppressLint("ClickableViewAccessibility")
     fun setListeners(){
+         main_search_edit?.setText("")
         saleMoreText?.setOnClickListener(){
             navigateToMoreProperties(0,"",2)
         }

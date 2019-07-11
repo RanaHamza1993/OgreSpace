@@ -2,20 +2,16 @@ package com.brainplow.ogrespace.activities
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Rect
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.annotation.NonNull
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.error.VolleyError
 import com.brainplow.ogrespace.R
@@ -30,32 +26,31 @@ import com.brainplow.ogrespace.fragments.ProfileFragment
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.ActivityNavigator
 import com.brainplow.ogrespace.kotlin.VolleyService
-import com.facebook.login.LoginManager
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.google.android.material.navigation.NavigationView
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar.*
 import org.json.JSONObject
 
-class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottomBar,Communicator.IVolleResult {
+class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBottomBar, Communicator.IVolleResult {
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
-        val array=response?.getJSONArray("results")
-        for (i in 0 until array!!.length()){
-            val itemId=array.getJSONObject(i)?.getInt("Property_id")?.toString()
-            favItemsMap.put(itemId!!,itemId.toInt())
+        val array = response?.getJSONArray("results")
+        for (i in 0 until array!!.length()) {
+            val itemId = array.getJSONObject(i)?.getInt("Property_id")?.toString()
+            favItemsMap.put(itemId!!, itemId.toInt())
         }
     }
 
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
 
     }
+
     companion object {
         var favItems = MutableLiveData<Int>()
-        var favItemsMap=HashMap<String,Int>()
+        var favItemsMap = HashMap<String, Int>()
     }
 
     override fun isBottomVisible(isVisible: Boolean) {
@@ -63,7 +58,7 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
 
 
             bottomNavigationView.visibility = View.VISIBLE
-           // floatingButton?.visibility = View.VISIBLE
+            // floatingButton?.visibility = View.VISIBLE
         } else {
 
             bottomNavigationView.visibility = View.GONE
@@ -103,9 +98,8 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
             toolbar?.background = resources.getDrawable(R.drawable.search_background)
             val backArrow = resources.getDrawable(R.drawable.ic_back)
             supportActionBar?.setHomeAsUpIndicator(backArrow)
-           // val backArrow = resources.getDrawable(R.drawable.ic_back)
+            // val backArrow = resources.getDrawable(R.drawable.ic_back)
             //supportActionBar?.setHomeAsUpIndicator(backArrow)
-
 
 
         }
@@ -124,9 +118,10 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
             //invite?.setTextColor(R.color.grey)
         }
     }
+
     override fun actionBarListener(title: String) {
-        if (title.equals("Home")||title.equals("Search")) {
-            this.fragmentTitle=title
+        if (title.equals("Home") || title.equals("Search")) {
+            this.fragmentTitle = title
             supportActionBar?.setDisplayShowTitleEnabled(false)
             tolLogo?.setOnClickListener({
                 val fragment2 = supportFragmentManager.findFragmentById(R.id.content_frame)
@@ -177,6 +172,7 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
             secondary_linear?.visibility = View.VISIBLE
         }
     }
+
     var volleyService: VolleyService? = null
     var isBackEnabled: Boolean = false
     var isBottomEnabled: Boolean = false
@@ -208,29 +204,31 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
         setListeners()
     }
 
-    fun volleyRequests(){
+    fun volleyRequests() {
         volleyService!!.getDataVolley(RequestType.JsonObjectRequest, urlGetFavItems, token!!)
     }
-    fun setIds(){
+
+    fun setIds() {
         volleyService = VolleyService(this, this)
         val view: View = nav_view.getHeaderView(0)
         headerBack = view.findViewById(R.id.header_back)
         toolbar = findViewById(R.id.toolbar)
         bottomNavigationView = findViewById(R.id.navigation)
-        navigationView=findViewById(R.id.nav_view)
+        navigationView = findViewById(R.id.nav_view)
         rootView = findViewById(R.id.drawer_layout)
         fragmentName = findViewById(R.id.fragmentName)
         appLogo = findViewById(R.id.app_logo)
         tolLogo = findViewById(R.id.tologo)
         mydrawer = findViewById(R.id.myhamburger)
         toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        )
         drawer_layout.addDrawerListener(toggle!!)
         toggle?.getDrawerArrowDrawable()?.setColor(getResources().getColor(R.color.gray))
         toggle?.isDrawerIndicatorEnabled = false
         toggle?.syncState()
         toolbar?.setNavigationIcon(null)
-        mydrawer?.setOnClickListener(){
+        mydrawer?.setOnClickListener() {
             drawer_layout.openDrawer(Gravity.LEFT)
         }
         secondary_linear = findViewById(R.id.secondry_linear)
@@ -240,8 +238,9 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
         setSupportActionBar(toolbar)
     }
 
-    fun setListeners(){
-        bottomNavigationView.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener {
+    fun setListeners() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(object :
+            BottomNavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 when (item.itemId) {
                     R.id.bottom_home -> {
@@ -258,7 +257,7 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
                         } else {
 
                             val fragmentTransaction = supportFragmentManager.beginTransaction()
-                            fragmentTransaction.run{
+                            fragmentTransaction.run {
                                 replace(R.id.content_frame, fragment)
                                 //  isBackButtonEnabled(false)
                                 commit()
@@ -267,7 +266,7 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
                         }
 
                     }
-                    R.id.bot_save ->{
+                    R.id.bot_save -> {
                         navigateToFragment(MyFavFragment())
                     }
                     R.id.bot_profile -> {
@@ -280,36 +279,36 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
 
 
         })
-        navigationView.setNavigationItemSelectedListener(object : NavigationView.OnNavigationItemSelectedListener{
+        navigationView.setNavigationItemSelectedListener(object : NavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
-                when(item.itemId){
-                    R.id.logout ->{
+                when (item.itemId) {
+                    R.id.logout -> {
                         logOut()
                     }
-                    R.id.established_contact ->{
-                       // ActivityNavigator<MapsActivity>(this@MainActivity,MapsActivity::class.java)
-                       navigateToFragment(ContactUs())
+                    R.id.established_contact -> {
+                        // ActivityNavigator<MapsActivity>(this@MainActivity,MapsActivity::class.java)
+                        navigateToFragment(ContactUs())
                     }
                     R.id.nav_service -> {
                         // ActivityNavigator<MapsActivity>(this@MainActivity,MapsActivity::class.java)
                         navigateToFragment(OgreasService())
                     }
-                    R.id.nav_terms_condition ->{
-                        ActivityNavigator<TermsOfUseActivity>(this@MainActivity,TermsOfUseActivity::class.java)
+                    R.id.nav_terms_condition -> {
+                        ActivityNavigator<TermsOfUseActivity>(this@MainActivity, TermsOfUseActivity::class.java)
 
                     }
-                    R.id.nav_privacy_policy ->{
-                        ActivityNavigator<PrivacyPolicyActivity>(this@MainActivity,PrivacyPolicyActivity::class.java)
+                    R.id.nav_privacy_policy -> {
+                        ActivityNavigator<PrivacyPolicyActivity>(this@MainActivity, PrivacyPolicyActivity::class.java)
 
                     }
-                    R.id.nav_profile ->{
+                    R.id.nav_profile -> {
                         navigateToFragment(ProfileFragment())
-                }
+                    }
                     R.id.nav_fav -> {
                         navigateToFragment(MyFavFragment())
                     }
                     R.id.nav_faqs -> {
-                        navigateToFragment(TestFragment())
+                        //navigateToFragment(TestFragment())
                     }
                 }
                 drawer_layout.closeDrawer(GravityCompat.START)
@@ -338,14 +337,18 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
                     if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
                         // keyboard is opened
 
-                        val inputManager = this@MainActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                        inputManager.hideSoftInputFromWindow(this@MainActivity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS)
+                        val inputManager =
+                            this@MainActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        inputManager.hideSoftInputFromWindow(
+                            this@MainActivity.getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS
+                        )
 
-                    }else if(fragmentTitle.equals("Search")) {
+                    } else if (fragmentTitle.equals("Search")) {
 
-                        val f=supportFragmentManager.findFragmentByTag("Search")
+                        val f = supportFragmentManager.findFragmentByTag("Search")
                         (f as SearchFragment).onBackPressed()
-                    }else {
+                    } else {
 
 
                         onBackPressed()
@@ -370,21 +373,22 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
             }
 
         })
-        invite?.setOnClickListener(){
+        invite?.setOnClickListener() {
             StaticFunctions.inviteOthers(this)
         }
-        globalInvite?.setOnClickListener(){
+        globalInvite?.setOnClickListener() {
             StaticFunctions.inviteOthers(this)
         }
-        headerBack?.setOnClickListener(){
+        headerBack?.setOnClickListener() {
             onBackPressed()
         }
     }
+
     fun botnav() {
 
         val fragment = HomeFragment()
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.run{
+        fragmentTransaction.run {
             replace(R.id.content_frame, fragment)
             commit()
         }
@@ -403,7 +407,7 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
 
     }
 
-    fun logOut(){
+    fun logOut() {
         val sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString("token", "")
@@ -415,25 +419,26 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
 
         Toasty.info(this, "Logout SuccessFully!", Toast.LENGTH_SHORT, true).show()
 
-        ActivityNavigator<LoginActivity>(this@MainActivity,LoginActivity::class.java)
+        ActivityNavigator<LoginActivity>(this@MainActivity, LoginActivity::class.java)
 
         finish()
 
 
     }
-            fun moveToHome() {
 
-                var count = supportFragmentManager.backStackEntryCount
+    fun moveToHome() {
 
-                while (count > 0) {
-                    //    val first = supportFragmentManager.getBackStackEntryAt(0)
-                    //              supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)                          //  fragmentTransaction.addToBackStack("HomeFragment")
+        var count = supportFragmentManager.backStackEntryCount
 
-                    supportFragmentManager.popBackStackImmediate()
-                    count--
-                }
+        while (count > 0) {
+            //    val first = supportFragmentManager.getBackStackEntryAt(0)
+            //              supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)                          //  fragmentTransaction.addToBackStack("HomeFragment")
 
-            }
+            supportFragmentManager.popBackStackImmediate()
+            count--
+        }
+
+    }
 
     override fun onBackPressed() {
 
@@ -441,7 +446,12 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
             drawer_layout.closeDrawer(GravityCompat.START)
 
 
-        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+        }else if (fragmentTitle.equals("Search")) {
+
+            val f = supportFragmentManager.findFragmentByTag("Search")
+            (f as SearchFragment).onBackPressed()
+        }
+        else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             if (isBackEnabled) {
                 supportFragmentManager.popBackStack()
             } else {
@@ -458,6 +468,7 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
 
         }
     }
+
     private fun exitingDailogbox() {
 
         val builder = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
