@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.Response
@@ -35,6 +36,10 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
         this.favouriteListener = favouriteListener
     }
 
+    private var itemClickListener:Communicator.IItemDetail?=null
+    public fun setItemClickListener(itemClickListener:Communicator.IItemDetail){
+        this.itemClickListener=itemClickListener
+    }
     constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType, process: String) : this(
         context,
         items
@@ -42,6 +47,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
         this.context = context
         this.layoutType = layoutType
         this.process = process
+
     }
 
     constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType) : this(context, items) {
@@ -84,6 +90,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
         private var propertyType: TextView? = null
         private var propertArea: TextView? = null
         private var img_fav: ImageView? = null
+        private var top_card_view: CardView? = null
 
         init {
             propertyImage = itemView.findViewById(R.id.p_image)
@@ -93,6 +100,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
             propertyType = itemView.findViewById(R.id.p_type)
             propertArea = itemView.findViewById(R.id.p_area)
             img_fav = itemView.findViewById(R.id.img_fav)
+            top_card_view = itemView.findViewById(R.id.top_card_view)
         }
 
         fun setData(property: PropertyModel) {
