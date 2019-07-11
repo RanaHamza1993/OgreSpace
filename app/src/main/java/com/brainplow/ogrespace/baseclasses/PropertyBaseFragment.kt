@@ -12,12 +12,26 @@ import android.widget.TextView
 import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.enums.RequestType
+import com.brainplow.ogrespace.fragments.PropertyDetailFragment
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.JWTUtils
 import com.brainplow.ogrespace.kotlin.VolleyService
 import org.json.JSONObject
 
-open class PropertyBaseFragment : BaseFragment(), Communicator.IFavourites {
+open class PropertyBaseFragment : BaseFragment(), Communicator.IFavourites,Communicator.IItemDetail {
+
+    override fun onItemClick(id: Int?) {
+        val args=Bundle()
+        args.putInt("id",id!!)
+        val fragment = PropertyDetailFragment()
+        fragment.arguments = args
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.run {
+            replace(R.id.content_frame, fragment)
+            addToBackStack(fragment.toString())
+            commit()
+        }
+    }
 
     override fun addToFav(id: Int?) {
         favId = id

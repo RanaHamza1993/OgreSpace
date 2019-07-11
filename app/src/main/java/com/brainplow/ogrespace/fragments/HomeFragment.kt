@@ -42,20 +42,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.HashMap
 
-class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communicator.IStates,Communicator.IFavourites,Communicator.IItemDetail {
+class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communicator.IStates,Communicator.IFavourites {
 
-    override fun onItemClick(id: Int?) {
-        val args=Bundle()
-        args.putInt("id",id!!)
-        val fragment = PropertyDetailFragment()
-           fragment.arguments = args
-        val fragmentTransaction = fragmentManager?.beginTransaction()
-        fragmentTransaction?.run {
-            replace(R.id.content_frame, fragment)
-            addToBackStack(fragment.toString())
-            commit()
-        }
-    }
 
     override fun notifySuccess(requestType: RequestType?, response: JSONArray?, url: String, netWorkResponse: Int?) {
         if (url == Urls.urlStates) {
@@ -66,9 +54,9 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
 
     override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
         if (url == Urls.urlGetLeaseProperties) {
-            setLeasePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
-        } else if (url == Urls.urlGetSaleProperties)
             setLeasePropertyAdapter(leaseParsing!!.getPropertyData(JSONObject(response), 1))
+        } else if (url == Urls.urlGetSaleProperties)
+            setSalePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
         else if(url.contains(Urls.urlDelFav,true)){
             MainActivity.favItemsMap.remove(favId.toString())
             context?.showInfoMessage("Item deleted from favourite successfully")
@@ -276,6 +264,7 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
         val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutHorizontalProperties)
         propertyAdapter.run{
             setFavouriteListener(this@HomeFragment)
+            setItemClickListener(this@HomeFragment)
         }
         propertiesForSaleRecycler.adapter = propertyAdapter
     }
@@ -283,6 +272,7 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
         val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutHorizontalProperties)
         propertyAdapter.run{
             setFavouriteListener(this@HomeFragment)
+            setItemClickListener(this@HomeFragment)
         }
         propertiesForLeaseRecycler.adapter = propertyAdapter
     }

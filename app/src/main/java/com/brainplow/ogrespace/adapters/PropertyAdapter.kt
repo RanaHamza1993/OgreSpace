@@ -134,6 +134,9 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
                 favouriteListener?.addToFav(value.id)
 
             }
+            itemView.setOnClickListener {
+                itemClickListener?.onItemClick(value.id)
+            }
         }
 
         fun checkFavItems(value: PropertyModel) {
@@ -149,6 +152,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
             }
 
         }
+
 
     }
 
