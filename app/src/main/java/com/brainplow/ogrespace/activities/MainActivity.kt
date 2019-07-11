@@ -87,6 +87,30 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
 
     }
 
+    override fun backArrow(isWhite: Boolean) {
+        if (isWhite) {
+            val backArrow = resources.getDrawable(R.drawable.ic_back_white)
+            supportActionBar?.setHomeAsUpIndicator(backArrow)
+            toolbar?.background = resources.getDrawable(R.drawable.toolbar_background)
+
+
+        } else {
+
+//            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//            mydrawer?.visibility = View.GONE
+            drawer_layout!!.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+//            toolbar?.background = resources.getDrawable(R.drawable.search_background)
+            toolbar?.background = resources.getDrawable(R.drawable.search_background)
+            val backArrow = resources.getDrawable(R.drawable.ic_back)
+            supportActionBar?.setHomeAsUpIndicator(backArrow)
+           // val backArrow = resources.getDrawable(R.drawable.ic_back)
+            //supportActionBar?.setHomeAsUpIndicator(backArrow)
+
+
+
+        }
+    }
+
     override fun toolbarBackground(isWhite: Boolean) {
         if (isWhite) {
             toolbar?.background = resources.getDrawable(R.drawable.search_background)
@@ -101,7 +125,8 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
         }
     }
     override fun actionBarListener(title: String) {
-        if (title.equals("Home")) {
+        if (title.equals("Home")||title.equals("Search")) {
+            this.fragmentTitle=title
             supportActionBar?.setDisplayShowTitleEnabled(false)
             tolLogo?.setOnClickListener({
                 val fragment2 = supportFragmentManager.findFragmentById(R.id.content_frame)
@@ -167,6 +192,7 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
     lateinit var navigationView: NavigationView
     var rootView: DrawerLayout? = null
     var fragmentName: TextView? = null
+    var fragmentTitle: String? = null
     var appLogo: ImageView? = null
     var tolLogo: ImageView? = null
     var headerBack: ImageView? = null
@@ -315,7 +341,11 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
                         val inputManager = this@MainActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                         inputManager.hideSoftInputFromWindow(this@MainActivity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS)
 
-                    } else {
+                    }else if(fragmentTitle.equals("Search")) {
+
+                        val f=supportFragmentManager.findFragmentByTag("Search")
+                        (f as SearchFragment).onBackPressed()
+                    }else {
 
 
                         onBackPressed()

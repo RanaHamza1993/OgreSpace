@@ -1,4 +1,4 @@
-package com.brainplow.ogrespace.activities
+package com.brainplow.ogrespace.unusedfiles
 
 import android.content.Context
 import android.graphics.Rect

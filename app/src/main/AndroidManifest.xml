@@ -22,7 +22,7 @@
             android:roundIcon="@mipmap/app_icon"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".activities.SearchActivity">
+        <activity android:name=".unusedfiles.SearchActivity">
         </activity>
         <activity android:name=".activities.ForgotPassActivity">
         </activity>

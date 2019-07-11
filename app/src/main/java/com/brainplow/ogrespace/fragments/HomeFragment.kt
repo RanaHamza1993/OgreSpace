@@ -16,11 +16,9 @@ import com.android.volley.error.VolleyError
 
 import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.activities.MainActivity
-import com.brainplow.ogrespace.activities.SearchActivity
 import com.brainplow.ogrespace.adapters.PropertyAdapter
 import com.brainplow.ogrespace.adapters.StatesAdapter
 import com.brainplow.ogrespace.apputils.Urls
-import com.brainplow.ogrespace.baseclasses.BaseFragment
 import com.brainplow.ogrespace.baseclasses.PropertyBaseFragment
 import com.brainplow.ogrespace.enums.LayoutType
 import com.brainplow.ogrespace.enums.RequestType
@@ -28,7 +26,6 @@ import com.brainplow.ogrespace.extesnions.showErrorMessage
 import com.brainplow.ogrespace.extesnions.showInfoMessage
 import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
-import com.brainplow.ogrespace.kotlin.ActivityNavigator
 import com.brainplow.ogrespace.kotlin.VolleyParsing
 import com.brainplow.ogrespace.kotlin.VolleyService
 import com.brainplow.ogrespace.models.PropertyModel
@@ -304,10 +301,20 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
 
                 if (event.action == android.view.MotionEvent.ACTION_DOWN) {
 
-                    ActivityNavigator<SearchActivity>(
-                        mcontext!!,
-                        SearchActivity::class.java
-                    )
+                  // navigateToFragment(SearchFragment())
+                    val f=fragmentManager?.findFragmentByTag("Search")
+                    val fragment=SearchFragment()
+                    val transaction=fragmentManager?.beginTransaction()
+                    if(f==null){
+                        transaction?.replace(R.id.content_frame, fragment, "Search")
+                        transaction?.run {
+                            addToBackStack(null)
+                            commit()
+                        }
+                    }else{
+
+                    }
+
                 }
                 return false
             }

@@ -2,6 +2,7 @@ package com.brainplow.ogrespace.fragments
 
 
 import android.content.Context
+import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -10,7 +11,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.*
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.error.VolleyError
@@ -24,6 +30,7 @@ import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.MySingleton
 import com.brainplow.ogrespace.kotlin.VolleyService
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -46,6 +53,10 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         showErrorBody(error)
     }
 
+    var navigationView: NavigationView? = null
+    var drawerLayout: DrawerLayout? = null
+    var actionBarDrawerToggle: ActionBarDrawerToggle? = null
+    var toolbar: Toolbar? = null
     var typeSpinner: Spinner? = null
     var typeList = arrayOf("Please select property type", "Sale", "Lease")
     var keyWordsList = ArrayList<String>()
@@ -60,6 +71,7 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
     var mcontext: Context? = null
     var volleyService: VolleyService? = null
     var suggestionRecycler: RecyclerView? = null
+    var rootView: RelativeLayout? = null
     var type = ""
     val searchListener = object : SearchKeyWordsAdapter.ISearchListener {
         override fun onItemClick(position: Int, keyWord: String) {
@@ -92,6 +104,7 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         setIds(view)
+        rootViewObserver()
         setListeners()
         return view
     }
@@ -99,10 +112,14 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
     override fun onResume() {
         super.onResume()
         isRunning = true
-        //acBarListener?.actionBarListener("Home")
-        acBarListener?.isSearchVisible(true)
-        acBarListener?.toolbarBackground(true)
-        acBarListener?.isBackButtonEnabled(false)
+        acBarListener?.actionBarListener("Search")
+        acBarListener?.run{
+            isSearchVisible(true)
+            toolbarColor(true)
+            backArrow(false)
+            isBackButtonEnabled(true)
+        }
+
     }
 
     override fun onStop() {
@@ -114,17 +131,53 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
 
     }
 
-    private fun setIds(view: View?) {
-        searchIcon = view?.findViewById(R.id.search_icon)
+    private fun setIds(view: View) {
+        navigationView = view.findViewById(R.id.nav_view)
+        drawerLayout = view.findViewById(R.id.search_drawer)
+        rootView=view.findViewById(R.id.searchSuggestionRoot)
+        actionBarDrawerToggle =
+            ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close)
+        searchIcon = view.findViewById(R.id.search_icon)
         volleyService = VolleyService(this, mcontext!!.applicationContext)
-        suggestionRecycler = view?.findViewById(R.id.suggestions_recycler)
+        suggestionRecycler = view.findViewById(R.id.suggestions_recycler)
         suggestionRecycler?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         main_search_edit = activity?.findViewById(R.id.mainsearch_edittext)
         main_edit_cross = activity!!.findViewById(R.id.edit_cross)
         main_edit_mic = activity!!.findViewById(R.id.edit_mic)
-        typeSpinner=view?.findViewById(R.id.spinner_type)
+        typeSpinner=view.findViewById(R.id.spinner_type)
     }
 
+    fun rootViewObserver(){
+        rootView!!.getViewTreeObserver().addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+
+                val r = Rect()
+                rootView!!.getWindowVisibleDisplayFrame(r)
+                val screenHeight = rootView!!.getRootView().getHeight()
+
+
+                // r.bottom is the position above soft keypad or device button.
+                // if keypad is shown, the r.bottom is smaller than that before.
+                val keypadHeight = screenHeight - r.bottom;
+
+                //            Log.d("KeyBoard", "keypadHeight = " + keypadHeight)
+
+                if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
+                    // keyboard is opened
+                    main_search_edit?.isCursorVisible = true
+
+
+                } else {
+
+                    // if(main_search_edit!=null)
+                    main_search_edit?.isCursorVisible = false
+
+                }
+            }
+
+        })
+
+    }
     fun setListeners() {
 
        // if (!searchQuery.equals(""))
@@ -211,5 +264,14 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         searchAdapter?.notifyDataSetChanged()
     }
 
+    fun onBackPressed(){
+        if (drawerLayout!!.isDrawerOpen(GravityCompat.END)) {
+            drawerLayout?.closeDrawer(GravityCompat.END)
+
+
+        }else{
+            fragmentManager?.popBackStack()
+        }
+    }
 
 }
