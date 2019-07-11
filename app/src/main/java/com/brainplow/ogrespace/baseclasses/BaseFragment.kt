@@ -119,7 +119,7 @@ open class BaseFragment : Fragment() {
         val alertDialog = alertDialogBuilder.create()
         // alertDialog.setIcon(R.drawable.tologo)
         alertDialog.show()
-        alertDialog?.setCancelable(true)
+        alertDialog.setCancelable(true)
 
     }
 

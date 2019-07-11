@@ -2,6 +2,6 @@ package com.brainplow.ogrespace.enums
 
 enum class LayoutType {
 
-   LayoutStatesCat,LayoutProperties,LayoutHorizontalProperties
+   LayoutStatesCat,LayoutProperties,LayoutFavourites,LayoutHorizontalProperties
 
 }

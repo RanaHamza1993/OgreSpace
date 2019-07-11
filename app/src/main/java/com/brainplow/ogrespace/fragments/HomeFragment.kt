@@ -80,7 +80,7 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
         if (url == Urls.urlStates) {
             showErrorBody(error)
         }  else if(!url.equals(Urls.urlAddToFav)){
-            showErrorBody(error)
+            //showErrorBody(error)
             context?.showErrorMessage("Item not added to favourite")
         }
         else if(url.equals(Urls.urlDelFav)){

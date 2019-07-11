@@ -36,10 +36,11 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
         this.favouriteListener = favouriteListener
     }
 
-    private var itemClickListener:Communicator.IItemDetail?=null
-    public fun setItemClickListener(itemClickListener:Communicator.IItemDetail){
-        this.itemClickListener=itemClickListener
+    private var itemClickListener: Communicator.IItemDetail? = null
+    public fun setItemClickListener(itemClickListener: Communicator.IItemDetail) {
+        this.itemClickListener = itemClickListener
     }
+
     constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType, process: String) : this(
         context,
         items
@@ -68,7 +69,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
 
     override fun setViewHolder(parent: ViewGroup, layoutInflater: LayoutInflater): RecyclerView.ViewHolder {
         var view: View? = null
-        if (layoutType == LayoutType.LayoutProperties) {
+        if (layoutType == LayoutType.LayoutProperties || layoutType == LayoutType.LayoutFavourites) {
             view = layoutInflater.inflate(R.layout.property_item_layout, parent, false)
         } else if (layoutType == LayoutType.LayoutHorizontalProperties) {
             view = layoutInflater.inflate(R.layout.property_item_horizontal_layout, parent, false)
@@ -90,7 +91,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
         private var propertyType: TextView? = null
         private var propertArea: TextView? = null
         private var img_fav: ImageView? = null
-        private var top_card_view: CardView? = null
+        private var delFav: ImageView? = null
 
         init {
             propertyImage = itemView.findViewById(R.id.p_image)
@@ -100,7 +101,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
             propertyType = itemView.findViewById(R.id.p_type)
             propertArea = itemView.findViewById(R.id.p_area)
             img_fav = itemView.findViewById(R.id.img_fav)
-            top_card_view = itemView.findViewById(R.id.top_card_view)
+            delFav = itemView.findViewById(R.id.del_fav)
         }
 
         fun setData(property: PropertyModel) {
@@ -137,9 +138,28 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
             itemView.setOnClickListener {
                 itemClickListener?.onItemClick(value.id)
             }
+            delFav?.setOnClickListener {
+                val doWork: () -> Unit = { ->
+                    favMap.remove(value.id.toString())
+                    removeItem(value)
+                    favouriteListener?.deleteFromFav(value.id)
+                }
+                showCustomAlerDialog(context, "Item Delete", "Are you sure you want to delete the item?",
+                    "yes", "no", doWork, {
+
+                    })
+
+            }
         }
 
         fun checkFavItems(value: PropertyModel) {
+            if (layoutType == LayoutType.LayoutFavourites) {
+                delFav?.visibility = View.VISIBLE
+                img_fav?.setImageResource(R.drawable.fillheart)
+            } else {
+                delFav?.visibility = View.GONE
+                img_fav?.setImageResource(R.drawable.bottom_heart_home)
+            }
             if (MainActivity.favItemsMap.contains(value.id.toString())) {
                 img_fav?.setImageResource(R.drawable.fillheart)
                 img_fav?.setTag("fillheart")

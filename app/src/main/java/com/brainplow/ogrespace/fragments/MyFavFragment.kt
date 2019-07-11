@@ -16,6 +16,7 @@ import com.android.volley.error.VolleyError
 import com.android.volley.request.StringRequest
 import com.android.volley.toolbox.Volley
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.activities.MainActivity
 import com.brainplow.ogrespace.adapters.PropertyAdapter
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.apputils.Urls.urlAddToFav
@@ -24,6 +25,8 @@ import com.brainplow.ogrespace.baseclasses.BaseFragment
 import com.brainplow.ogrespace.baseclasses.PropertyBaseFragment
 import com.brainplow.ogrespace.enums.LayoutType
 import com.brainplow.ogrespace.enums.RequestType
+import com.brainplow.ogrespace.extesnions.showErrorMessage
+import com.brainplow.ogrespace.extesnions.showInfoMessage
 import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.VolleyParsing
@@ -37,22 +40,23 @@ import org.json.JSONObject
 class MyFavFragment : PropertyBaseFragment(),Communicator.IVolleResult {
 
 
-    override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
-        if(url.equals(Urls.urlAddToFav)){
-            context?.showSuccessMessage("Item added to favourite successfully")
-        }
-    }
+
     override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
 
         if(url.equals(urlGetFav)) {
           //  val response = JSONObject(response)
             parseData(JSONObject(response))
            // setSalePropertyAdapter(volleyParsing?.getFavPropertyData(response, 1)!!)
+        } else if(url.contains(Urls.urlDelFav,true)){
+            MainActivity.favItemsMap.remove(favId.toString())
+            context?.showInfoMessage("Item deleted from favourite successfully")
         }
     }
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
         if(url.equals(urlAddToFav)){
             context?.showSuccessMessage("Item not added to favourite")
+        } else if(url.equals(Urls.urlDelFav)){
+            context?.showErrorMessage("Item not deleted from favourite")
         }
     }
     var propertyList: ArrayList<PropertyModel>? = ArrayList<PropertyModel>()
@@ -129,7 +133,7 @@ class MyFavFragment : PropertyBaseFragment(),Communicator.IVolleResult {
                 val lat = jsonObject?.getString("latitude")
                 val long = jsonObject?.getString("longitude")
 
-                val favourite = PropertyModel(address = Address, id = Id?.toInt(),property_id = property_id?.toInt(), property_title = title,
+                val favourite = PropertyModel(address = Address, id = property_id?.toInt(),property_id = id?.toInt(), property_title = title,
                     property_type = type, one_pic = pic, price = Price?.toDouble(),property_area = area?.toDouble(),post_type = postType,
                     latitude = lat?.toDouble(), longitude = long?.toDouble())
 
@@ -143,7 +147,11 @@ class MyFavFragment : PropertyBaseFragment(),Communicator.IVolleResult {
 
     }
     private fun setSalePropertyAdapter(propertyList: ArrayList<PropertyModel>) {
-        val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutProperties)
+        val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutFavourites)
+        propertyAdapter.run{
+            setFavouriteListener(this@MyFavFragment)
+            setItemClickListener(this@MyFavFragment)
+        }
         recycle_states_more?.adapter = propertyAdapter
     }
 }

@@ -76,20 +76,34 @@
                     android:orientation="vertical"
                     android:paddingTop="@dimen/text_padding_how_it">
                 
-                
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
                 <TextView
                         android:id="@+id/p_title"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:fontFamily="@font/opensans_bold"
                         android:maxLength="26"
                         android:maxLines="2"
+                        android:layout_alignParentStart="true"
                         android:text="machine learning"
+                        android:layout_toLeftOf="@id/del_fav"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/cramnormaltext"
+                        android:textSize="@dimen/app_normal_text"
                         android:textStyle="bold"/>
-                
+                    <ImageView android:layout_width="@dimen/app_normal_text"
+                              android:layout_gravity="right"
+                               android:id="@+id/del_fav"
+                               android:layout_centerInParent="true"
+                               android:layout_marginRight="4dp"
+                               android:visibility="gone"
+                               android:layout_marginLeft="4dp"
+                               android:layout_alignParentEnd="true"
+                               android:layout_height="@dimen/app_normal_text"
+                    android:src="@drawable/delete"/>
+                </RelativeLayout>
                 <LinearLayout
                         android:layout_width="wrap_content"
                         android:gravity="center_vertical"
@@ -109,7 +123,7 @@
                             android:layout_marginLeft="6dp"
                             android:text="Jhon watson"
                             android:textColor="@color/gray"
-                            android:textSize="@dimen/cramnormaltext"
+                            android:textSize="@dimen/app_small_text"
                             android:textStyle="normal"/>
                 </LinearLayout>
                 <RelativeLayout
@@ -185,7 +199,7 @@
                         android:text="For Lease"
                         android:textColor="@color/black"
                         android:textAllCaps="false"
-                        android:textSize="@dimen/bidCardbtntext"
+                        android:textSize="@dimen/app_small_text"
                         android:textStyle="bold"/>
                 
                 <TextView
@@ -199,7 +213,7 @@
                         android:gravity="right"
                         android:textColor="@color/black"
                         android:textAllCaps="false"
-                        android:textSize="@dimen/bidCardbtntext"
+                        android:textSize="@dimen/app_small_text"
                         android:textStyle="bold"/>
             
             
