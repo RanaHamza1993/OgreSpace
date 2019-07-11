@@ -65,7 +65,18 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
     var actionBarDrawerToggle: ActionBarDrawerToggle? = null
     var toolbar: Toolbar? = null
     var typeSpinner: Spinner? = null
+    var dTypeSpinner: Spinner? = null
+    var dSpaceTypeSpinner: Spinner? = null
+    var minPriceSpinner: Spinner? = null
+    var maxPriceSpinner: Spinner? = null
+    var minSpaceSpinner: Spinner? = null
+    var maxSpaceSpinner: Spinner? = null
     var typeList = arrayOf("Please select property type", "Sale", "Lease")
+    var spaceTypeList = arrayOf("Please select space type", "Offices", "Retail","Co Working","Land","Industrial","Medical Offices")
+    var minSpaceList = arrayOf("Please select min space", "500 sqft", "1000 sqft","1500 sqft","2000 sqft","2500 sqft","3000 sqft")
+    var maxSpaceList = arrayOf("Please select max space", "500 sqft", "1000 sqft","1500 sqft","2000 sqft","2500 sqft","3000 sqft")
+    var minPriceList = arrayOf("Please select min price", "$"+ "Any", "$"+"100,000","$"+"200,000","$"+"300,000","$"+ "400,0000","$"+ "500,000")
+    var maxPriceList = arrayOf("Please select max price", "$"+ "Any", "$"+"100,000","$"+"200,000","$"+"300,000","$"+ "400,0000","$"+ "500,000")
     var keyWordsList = ArrayList<String>()
     var searchAdapter: SearchKeyWordsAdapter? = null
     var main_search_edit: EditText? = null
@@ -156,7 +167,12 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         val navHeader = navigationView?.getHeaderView(0)
         d_search_edit_text=navHeader?.findViewById(R.id.fs_search_edit)
         d_suggestion_recycler=navHeader?.findViewById(R.id.fs_suggestions_recycler)
-
+        dTypeSpinner=navHeader?.findViewById(R.id.s_property_type)
+        dSpaceTypeSpinner=navHeader?.findViewById(R.id.s_space_type)
+        minPriceSpinner=navHeader?.findViewById(R.id.s_min_price)
+        maxPriceSpinner=navHeader?.findViewById(R.id.s_max_price)
+        minSpaceSpinner=navHeader?.findViewById(R.id.s_min_space)
+        maxSpaceSpinner=navHeader?.findViewById(R.id.s_max_space)
         drawerLayout = view.findViewById(R.id.search_drawer)
         rootView=view.findViewById(R.id.searchSuggestionRoot)
         actionBarDrawerToggle =
@@ -289,9 +305,48 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         d_search_edit_text?.addTextChangedListener(d_search_edit_textwatcher)
 
 
-        val typeAdapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, typeList)
-        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val typeAdapter = ArrayAdapter<String>(context, R.layout.spinner_item_layout, typeList)
+        val spaceTypeAdapter = ArrayAdapter<String>(context, R.layout.spinner_item_layout, spaceTypeList)
+        val minPriceAdapter = ArrayAdapter<String>(context, R.layout.spinner_item_layout, minPriceList)
+        val maxPriceAdapter = ArrayAdapter<String>(context, R.layout.spinner_item_layout, maxPriceList)
+        val minSpaceAdapter = ArrayAdapter<String>(context, R.layout.spinner_item_layout, minSpaceList)
+        val maxSpaceAdapter = ArrayAdapter<String>(context, R.layout.spinner_item_layout, maxSpaceList)
+        typeAdapter.setDropDownViewResource(R.layout.spinner_item_layout)
+        minPriceAdapter.setDropDownViewResource(R.layout.spinner_item_layout)
+        maxPriceAdapter.setDropDownViewResource(R.layout.spinner_item_layout)
+        spaceTypeAdapter.setDropDownViewResource(R.layout.spinner_item_layout)
+        minSpaceAdapter.setDropDownViewResource(R.layout.spinner_item_layout)
+        maxSpaceAdapter.setDropDownViewResource(R.layout.spinner_item_layout)
         typeSpinner?.adapter=typeAdapter
+        dTypeSpinner?.adapter=typeAdapter
+        dSpaceTypeSpinner?.adapter=spaceTypeAdapter
+        minPriceSpinner?.adapter=minPriceAdapter
+        maxPriceSpinner?.adapter=maxPriceAdapter
+        minSpaceSpinner?.adapter=maxPriceAdapter
+        maxSpaceSpinner?.adapter=maxPriceAdapter
+        minPriceSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+
+            }
+        }
+        maxPriceSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+
+            }
+        }
+
         typeSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -309,6 +364,34 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
 
             }
         }
+        dTypeSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                if (position == 0)
+                    type = ""
+                else if (position == 1)
+                    type = "Sale"
+                else if (position == 2)
+                    type = "lease"
+
+            }
+        }
+        dSpaceTypeSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+            }
+        }
+
     }
 
     private fun getSearchResult(value: String) {
