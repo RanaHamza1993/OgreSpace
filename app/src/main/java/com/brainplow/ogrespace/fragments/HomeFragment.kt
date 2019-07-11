@@ -15,13 +15,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.error.VolleyError
 
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.activities.MainActivity
 import com.brainplow.ogrespace.activities.SearchActivity
 import com.brainplow.ogrespace.adapters.PropertyAdapter
 import com.brainplow.ogrespace.adapters.StatesAdapter
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.baseclasses.BaseFragment
+import com.brainplow.ogrespace.baseclasses.PropertyBaseFragment
 import com.brainplow.ogrespace.enums.LayoutType
 import com.brainplow.ogrespace.enums.RequestType
+import com.brainplow.ogrespace.extesnions.showErrorMessage
+import com.brainplow.ogrespace.extesnions.showInfoMessage
+import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.ActivityNavigator
 import com.brainplow.ogrespace.kotlin.VolleyParsing
@@ -32,24 +37,13 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation
 import com.daimajia.slider.library.SliderLayout
 import com.daimajia.slider.library.SliderTypes.BaseSliderView
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.HashMap
 
-class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.IStates, Communicator.IItemDetail {
+class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communicator.IStates,Communicator.IFavourites {
 
-    override fun onItemClick(id: Int?) {
-        val args=Bundle()
-        args.putInt("id",id!!)
-        val fragment = PropertyDetailFragment()
-           fragment.arguments = args
-        val fragmentTransaction = fragmentManager?.beginTransaction()
-        fragmentTransaction?.run {
-            replace(R.id.content_frame, fragment)
-            addToBackStack(fragment.toString())
-            commit()
-        }
-    }
 
     override fun notifySuccess(requestType: RequestType?, response: JSONArray?, url: String, netWorkResponse: Int?) {
         if (url == Urls.urlStates) {
@@ -60,20 +54,37 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
 
     override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
         if (url == Urls.urlGetLeaseProperties) {
-            setLeasePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
+            setLeasePropertyAdapter(leaseParsing!!.getPropertyData(JSONObject(response), 1))
         } else if (url == Urls.urlGetSaleProperties)
             setSalePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
-
-
+        else if(url.contains(Urls.urlDelFav,true)){
+            MainActivity.favItemsMap.remove(favId.toString())
+            context?.showInfoMessage("Item deleted from favourite successfully")
+        }
     }
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
+         if(url.equals(Urls.urlAddToFav)){
+             if(netWorkResponse==200) {
+                 MainActivity.favItemsMap.put(favId.toString(),favId!!)
+                 context?.showSuccessMessage("Item added to favourite successfully")
+             }
+             else if(netWorkResponse==202)
+                 deleteFromFav(favId)
+
+        }
 
     }
 
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
         if (url == Urls.urlStates) {
             showErrorBody(error)
+        }  else if(!url.equals(Urls.urlAddToFav)){
+            showErrorBody(error)
+            context?.showErrorMessage("Item not added to favourite")
+        }
+        else if(url.equals(Urls.urlDelFav)){
+            context?.showErrorMessage("Item not deleted from favourite")
         }
     }
 
@@ -84,14 +95,15 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
 
     var volleyService: VolleyService? = null
     var volleyParsing: VolleyParsing? = null
+    var leaseParsing: VolleyParsing? = null
     var mcontext: Context? = null
     var acBarListener: Communicator.IActionBar? = null
     var main_search_edit: EditText? = null
-    var saleMoreText: TextView? = null
-    var leaseMoreText: TextView? = null
+    var saleMoreText:TextView?=null
+    var leaseMoreText:TextView?=null
     var rootView: LinearLayout? = null
     lateinit var mDemoSlider: SliderLayout
-
+    lateinit var bottomNavigation: BottomNavigationView
     var bottomBarListener: Communicator.IBottomBar? = null
     lateinit var recycleStates: RecyclerView
     lateinit var propertiesForSaleRecycler: RecyclerView
@@ -108,6 +120,7 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        super.setIVolleyResult(this)
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 //        acBotListeners()
         setIds(view)
@@ -136,6 +149,7 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
     override fun onResume() {
         super.onResume()
         acBotListeners()
+        bottomNavigation.menu.findItem(R.id.bottom_home).setChecked(true)
     }
 
     override fun onStop() {
@@ -180,12 +194,13 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
 
     fun setIds(view: View) {
         volleyParsing = VolleyParsing()
+        leaseParsing = VolleyParsing()
         volleyService = VolleyService(this, mcontext!!.applicationContext)
         rootView = view.findViewById(R.id.homeFragment)
         main_search_edit = activity?.findViewById(R.id.mainsearch_edittext)
-
-        saleMoreText = view.findViewById(R.id.p_sale_more)
-        leaseMoreText = view.findViewById(R.id.p_lease_more)
+        bottomNavigation = activity!!.findViewById(R.id.navigation)
+        saleMoreText=view.findViewById(R.id.p_sale_more)
+        leaseMoreText=view.findViewById(R.id.p_lease_more)
         mDemoSlider = view.findViewById(R.id.banner1);
         mDemoSlider.getPagerIndicator()
             .setDefaultIndicatorColor(getResources().getColor(R.color.Red), getResources().getColor(R.color.gray));
@@ -194,7 +209,7 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         propertiesForLeaseRecycler = view.findViewById(R.id.p_lease_recycler)
         propertiesForSaleRecycler.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         propertiesForLeaseRecycler.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        recycleStates.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        recycleStates.layoutManager =LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
 
     }
 
@@ -245,24 +260,23 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
         }
 
     }
-
     private fun setSalePropertyAdapter(propertyList: ArrayList<PropertyModel>) {
         val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutHorizontalProperties)
-        propertyAdapter.run {
+        propertyAdapter.run{
+            setFavouriteListener(this@HomeFragment)
             setItemClickListener(this@HomeFragment)
         }
         propertiesForSaleRecycler.adapter = propertyAdapter
     }
-
     private fun setLeasePropertyAdapter(propertyList: ArrayList<PropertyModel>) {
         val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutHorizontalProperties)
-        propertyAdapter.run {
+        propertyAdapter.run{
+            setFavouriteListener(this@HomeFragment)
             setItemClickListener(this@HomeFragment)
         }
         propertiesForLeaseRecycler.adapter = propertyAdapter
     }
-
-    fun navigateToMoreProperties(id: Int?, name: String?, mflag: Int) {
+    fun navigateToMoreProperties(id: Int?, name: String?,mflag:Int){
         val args = Bundle()
         args.putInt("mflag", mflag)
         args.putInt("stateId", id!!)
@@ -277,14 +291,13 @@ class HomeFragment : BaseFragment(), Communicator.IVolleResult, Communicator.ISt
 
         }
     }
-
-    @SuppressLint("ClickableViewAccessibility")
-    fun setListeners() {
-        saleMoreText?.setOnClickListener() {
-            navigateToMoreProperties(0, "", 2)
+     @SuppressLint("ClickableViewAccessibility")
+    fun setListeners(){
+        saleMoreText?.setOnClickListener(){
+            navigateToMoreProperties(0,"",2)
         }
-        leaseMoreText?.setOnClickListener() {
-            navigateToMoreProperties(0, "", 3)
+        leaseMoreText?.setOnClickListener(){
+            navigateToMoreProperties(0,"",3)
         }
         main_search_edit!!.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View, event: MotionEvent): Boolean {

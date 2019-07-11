@@ -14,6 +14,8 @@ import com.android.volley.Response
 import com.android.volley.request.StringRequest
 import com.android.volley.toolbox.Volley
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.activities.MainActivity
+import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.apputils.Urls.urlAddToFav
 import com.brainplow.ogrespace.apputils.Urls.urlDelFav
 import com.brainplow.ogrespace.enums.LayoutType
@@ -22,13 +24,18 @@ import com.brainplow.ogrespace.models.PropertyModel
 import com.bumptech.glide.Glide
 import org.json.JSONObject
 
-
-
 class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
     GenericAdapter<PropertyModel>(context, itemss) {
     private var context: Context? = null
     private var layoutType: LayoutType? = null
     private var process: String? = null
+    private var favouriteListener: Communicator.IFavourites? = null
+    private var favMap = HashMap<String, Int>()
+
+    public fun setFavouriteListener(favouriteListener: Communicator.IFavourites) {
+        this.favouriteListener = favouriteListener
+    }
+
     private var itemClickListener:Communicator.IItemDetail?=null
     public fun setItemClickListener(itemClickListener:Communicator.IItemDetail){
         this.itemClickListener=itemClickListener
@@ -46,7 +53,17 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
     constructor(context: Context?, items: ArrayList<PropertyModel>, layoutType: LayoutType) : this(context, items) {
         this.context = context
         this.layoutType = layoutType
+    }
 
+    constructor(
+        context: Context?,
+        items: ArrayList<PropertyModel>,
+        layoutType: LayoutType,
+        favMap: HashMap<String, Int>
+    ) : this(context, items) {
+        this.context = context
+        this.layoutType = layoutType
+        this.favMap = favMap
     }
 
     override fun setViewHolder(parent: ViewGroup, layoutInflater: LayoutInflater): RecyclerView.ViewHolder {
@@ -98,65 +115,45 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
         }
 
         fun setClicks(value: PropertyModel) {
-
-
+            checkFavItems(value)
             img_fav?.setOnClickListener {
-                if (process.equals("delete")) {
-                    deleteFromFav(value.id)
-                } else {
-                    addToFav(value.id)
-                }
-            }
+                val backgroundImageName = img_fav?.getTag().toString()
 
+                if (backgroundImageName === "emptyheart") {
+                    img_fav?.setImageResource(R.drawable.fillheart)
+                    img_fav?.setTag("fillheart")
+
+
+                } else if (backgroundImageName === "fillheart") {
+                    img_fav?.setImageResource(R.drawable.bottom_heart_home)
+                    img_fav?.setTag("emptyheart")
+
+
+                }
+
+                favouriteListener?.addToFav(value.id)
+
+            }
             itemView.setOnClickListener {
                 itemClickListener?.onItemClick(value.id)
             }
-
-    }
-
-    private fun deleteFromFav(id: Int?) {
-        var request = object : StringRequest(Request.Method.DELETE, urlDelFav + id, Response.Listener { response ->
-
-            Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
-
-
-        }, Response.ErrorListener {
-            Toast.makeText(context, "failed", Toast.LENGTH_SHORT).show()
-        }) {
-            override fun getHeaders(): MutableMap<String, String> {
-                var pref = context?.getSharedPreferences("login", Context.MODE_PRIVATE)
-                var token = pref?.getString("token", "abc")
-                var map = HashMap<String, String>()
-                map.put("Authorization", "JWT " + token)
-                return map
-            }
         }
-        var queue = Volley.newRequestQueue(context)
-        queue?.add(request)
-    }
 
-    private fun addToFav(id: Int?) {
-        var request =
-            object : StringRequest(Request.Method.GET, urlAddToFav + id, Response.Listener { response ->
-                var obj = JSONObject(response)
-                var results = obj.getString("results")
-                var favourite = obj.getBoolean("favourite")
-                Toast.makeText(context, "Property added to favourites successfully" + id + results, Toast.LENGTH_SHORT)
-                    .show()
+        fun checkFavItems(value: PropertyModel) {
+            if (MainActivity.favItemsMap.contains(value.id.toString())) {
+                img_fav?.setImageResource(R.drawable.fillheart)
+                img_fav?.setTag("fillheart")
 
-            }, Response.ErrorListener {
-                Toast.makeText(context, "failed", Toast.LENGTH_SHORT).show()
-            }) {
-                override fun getHeaders(): MutableMap<String, String> {
-                    var pref = context?.getSharedPreferences("login", Context.MODE_PRIVATE)
-                    var token = pref?.getString("token", "abc")
-                    var map = HashMap<String, String>()
-                    map.put("Authorization", "JWT " + token)
-                    return map
-                }
+
+            } else {
+                img_fav?.setImageResource(R.drawable.bottom_heart_home)
+                img_fav?.setTag("emptyheart")
+
             }
-        var queue = Volley.newRequestQueue(context)
-        queue?.add(request)
+
+        }
+
+
     }
 
-}}
+}

@@ -3,7 +3,7 @@
     <string name="aboutogrespace">About OgreSpace</string>
     <string name="facebook_app_id">2249887752002229</string>
     <string name="google_map_api">AIzaSyCwFuBLNlN0azRUJ80g93QJ_RJLGRXVCCc</string>
-
+    
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ogre_space">
         <font color="#FFFFFF">OgreSpace</font>
@@ -13,7 +13,7 @@
     </string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    
     <string name="rfp_as_paragraph_one">RFPGurus response is a team effort that requires non-stop communication and
         coordination between your organization and the client. Team work and system collaboration ensures success. We
         are striving to establish two-way visibility for boosting High Return on Investment (ROI) .We remove tiresome

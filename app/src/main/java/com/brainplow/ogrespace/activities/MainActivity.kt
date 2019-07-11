@@ -16,15 +16,20 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import com.android.volley.error.VolleyError
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.apputils.Urls.urlGetFavItems
 import com.brainplow.ogrespace.baseclasses.BaseActivity
 import com.brainplow.ogrespace.constants.StaticFunctions
+import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.fragments.*
 import com.brainplow.ogrespace.fragments.ContactUs
 import com.brainplow.ogrespace.fragments.HomeFragment
 import com.brainplow.ogrespace.fragments.ProfileFragment
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.ActivityNavigator
+import com.brainplow.ogrespace.kotlin.VolleyService
 import com.facebook.login.LoginManager
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -33,8 +38,26 @@ import com.google.android.material.navigation.NavigationView
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar.*
+import org.json.JSONObject
 
-class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottomBar {
+class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottomBar,Communicator.IVolleResult {
+
+    override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
+        val array=response?.getJSONArray("results")
+        for (i in 0 until array!!.length()){
+            val itemId=array.getJSONObject(i)?.getInt("Property_id")?.toString()
+            favItemsMap.put(itemId!!,itemId.toInt())
+        }
+    }
+
+    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
+
+    }
+    companion object {
+        var favItems = MutableLiveData<Int>()
+        var favItemsMap=HashMap<String,Int>()
+    }
+
     override fun isBottomVisible(isVisible: Boolean) {
         if (isVisible) {
 
@@ -129,6 +152,7 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
             secondary_linear?.visibility = View.VISIBLE
         }
     }
+    var volleyService: VolleyService? = null
     var isBackEnabled: Boolean = false
     var isBottomEnabled: Boolean = false
     var isSearchEnable: Boolean = false
@@ -146,15 +170,23 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
     var appLogo: ImageView? = null
     var tolLogo: ImageView? = null
     var headerBack: ImageView? = null
+    var token: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE)
+        token = sharedPreferences!!.getString("token", "JWT")
         setIds()
+        volleyRequests()
         botnav()
         setListeners()
     }
 
+    fun volleyRequests(){
+        volleyService!!.getDataVolley(RequestType.JsonObjectRequest, urlGetFavItems, token!!)
+    }
     fun setIds(){
+        volleyService = VolleyService(this, this)
         val view: View = nav_view.getHeaderView(0)
         headerBack = view.findViewById(R.id.header_back)
         toolbar = findViewById(R.id.toolbar)

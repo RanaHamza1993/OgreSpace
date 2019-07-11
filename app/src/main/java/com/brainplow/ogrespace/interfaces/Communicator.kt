@@ -45,4 +45,8 @@ interface Communicator {
     interface IItemDetail{
         fun onItemClick(id:Int?){}
     }
+    interface IFavourites{
+        fun addToFav(id:Int?){}
+        fun deleteFromFav(id:Int?){}
+    }
 }
