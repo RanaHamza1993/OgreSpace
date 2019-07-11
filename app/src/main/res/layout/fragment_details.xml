@@ -220,6 +220,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <TextView
+                        android:drawablePadding="@dimen/s4b_padding"
+                        android:drawableLeft="@drawable/area_img"
                         android:fontFamily="@font/opensans_bold"
                         android:layout_marginTop="@dimen/bidcardmargintop"
                         android:layout_marginBottom="@dimen/bidcardmargintop"
