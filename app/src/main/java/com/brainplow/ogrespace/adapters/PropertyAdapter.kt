@@ -108,7 +108,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
                 }
             }
 
-            itemView?.setOnClickListener {
+            itemView.setOnClickListener {
                 itemClickListener?.onItemClick(value.id)
             }
 
