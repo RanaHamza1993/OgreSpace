@@ -46,4 +46,8 @@
 
     </string>
     <string name="rfp_as_heading_two">The Tools to Win Government Business</string>
+    
+    
+    <string name="drawer_open">open_drawer</string>
+    <string name="drawer_close">close_drawer</string>
 </resources>

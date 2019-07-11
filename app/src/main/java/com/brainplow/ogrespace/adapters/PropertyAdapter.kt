@@ -144,7 +144,7 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
                     removeItem(value)
                     favouriteListener?.deleteFromFav(value.id)
                 }
-                showCustomAlerDialog(context, "Item Delete", "Are you sure you want to delete the item?",
+                showCustomAlerDialog(context, "Item Delete", "Are you sure you want to delete this item?",
                     "yes", "no", doWork, {
 
                     })
@@ -160,15 +160,17 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
                 delFav?.visibility = View.GONE
                 img_fav?.setImageResource(R.drawable.bottom_heart_home)
             }
-            if (MainActivity.favItemsMap.contains(value.id.toString())) {
-                img_fav?.setImageResource(R.drawable.fillheart)
-                img_fav?.setTag("fillheart")
+            if (layoutType != LayoutType.LayoutFavourites) {
+                if (MainActivity.favItemsMap.contains(value.id.toString())) {
+                    img_fav?.setImageResource(R.drawable.fillheart)
+                    img_fav?.setTag("fillheart")
 
 
-            } else {
-                img_fav?.setImageResource(R.drawable.bottom_heart_home)
-                img_fav?.setTag("emptyheart")
+                } else {
+                    img_fav?.setImageResource(R.drawable.bottom_heart_home)
+                    img_fav?.setTag("emptyheart")
 
+                }
             }
 
         }

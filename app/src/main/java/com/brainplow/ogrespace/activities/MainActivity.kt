@@ -282,6 +282,9 @@ class MainActivity : BaseActivity(),Communicator.IActionBar,Communicator.IBottom
                     R.id.nav_fav -> {
                         navigateToFragment(MyFavFragment())
                     }
+                    R.id.nav_faqs -> {
+                        navigateToFragment(TestFragment())
+                    }
                 }
                 drawer_layout.closeDrawer(GravityCompat.START)
                 return true
