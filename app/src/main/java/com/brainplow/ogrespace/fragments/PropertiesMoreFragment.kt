@@ -29,7 +29,7 @@ import org.json.JSONObject
 import java.lang.Exception
 
 
-class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communicator.IFavourites {
+class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communicator.IFavourites,Communicator.IItemDetail {
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
         // if (url.contains(Urls.urlPropertyByState)) {
@@ -200,8 +200,10 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
                 super.onScrolled(recyclerView, dx, dy);
             }
         })
+
         propertyAdapter?.run {
             setFavouriteListener(this@PropertiesMoreFragment)
+            setItemClickListener(this@PropertiesMoreFragment)
             notifyDataSetChanged()
         }
         if (load.ishowingg())
