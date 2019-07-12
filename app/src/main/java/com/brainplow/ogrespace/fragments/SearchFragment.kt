@@ -92,6 +92,8 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
     var d_suggestion_recycler: RecyclerView? = null
     var rootView: RelativeLayout? = null
     var d_search_edit_text: TextView? = null
+    var dSearch: TextView? = null
+    var dClear: TextView? = null
     var d_search_edit_textwatcher: TextWatcher? = null
     var main_search_textWatcher: TextWatcher? = null
     var type = ""
@@ -168,6 +170,8 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         d_search_edit_text=navHeader?.findViewById(R.id.fs_search_edit)
         d_suggestion_recycler=navHeader?.findViewById(R.id.fs_suggestions_recycler)
         dTypeSpinner=navHeader?.findViewById(R.id.s_property_type)
+        dSearch=navHeader?.findViewById(R.id.search_filter)
+        dClear=navHeader?.findViewById(R.id.clear_filer)
         dSpaceTypeSpinner=navHeader?.findViewById(R.id.s_space_type)
         minPriceSpinner=navHeader?.findViewById(R.id.s_min_price)
         maxPriceSpinner=navHeader?.findViewById(R.id.s_max_price)
@@ -392,6 +396,9 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
             }
         }
 
+        dClear?.setOnClickListener {
+            clearFilters()
+        }
     }
 
     private fun getSearchResult(value: String) {
@@ -432,5 +439,13 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
             fragmentManager?.popBackStack()
         }
     }
-
+    fun clearFilters(){
+        d_search_edit_text?.setText("")
+        maxSpaceSpinner?.setSelection(0)
+        minSpaceSpinner?.setSelection(0)
+        maxPriceSpinner?.setSelection(0)
+        minPriceSpinner?.setSelection(0)
+        dTypeSpinner?.setSelection(0)
+        dSpaceTypeSpinner?.setSelection(0)
+    }
 }
