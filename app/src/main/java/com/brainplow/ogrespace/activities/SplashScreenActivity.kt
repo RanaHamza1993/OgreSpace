@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
@@ -21,33 +22,26 @@ class SplashScreenActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         val connectionDetector = ConnectionDetector(this)
-
-        val secondsDelayed = 1
-        WeakHandler().postDelayed({
+        Handler().postDelayed({
             val sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE)
-
-
             val token = sharedPreferences.getString("token", "")//"No name defined" is the default value.
 
-            if (connectionDetector.isconnected() == true) {
-                if (token != "") {
-
-                    val intent = Intent( this@SplashScreenActivity, MainActivity::class.java)
-
+            if (connectionDetector.isconnected()) {
+                if (!token.equals("")) {
+                    val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
                     startActivity(intent)
-
-                     this@SplashScreenActivity.finish()
+                    this@SplashScreenActivity.finish()
 
                 } else {
 
-                    val intent = Intent( this@SplashScreenActivity, OnBoardScreenActivity::class.java)
+                    val intent = Intent(this@SplashScreenActivity, OnBoardScreenActivity::class.java)
 
                     startActivity(intent)
 
-                     this@SplashScreenActivity.finish()
+                    this@SplashScreenActivity.finish()
                 }
-            } else if (connectionDetector.isconnected() === false) {
-                Toasty.info( this@SplashScreenActivity, "Please connect to Internet", Toast.LENGTH_SHORT, true).show()
+            } else if (!connectionDetector.isconnected()) {
+                Toasty.info(this@SplashScreenActivity, "Please connect to Internet", Toast.LENGTH_SHORT, true).show()
 
                 //      Toast.makeText(SplashScreen.this,"No Net connected pleasse try again",Toast.LENGTH_SHORT).show();
 
@@ -60,10 +54,8 @@ class SplashScreenActivity : AppCompatActivity() {
                             startActivity(intent)
                         }
                 snk.show()
-
             }
-            //finish();
-        }, (secondsDelayed * 3000).toLong())
+        }, 3000)
 
 
     }
