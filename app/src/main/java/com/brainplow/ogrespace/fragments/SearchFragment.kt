@@ -25,11 +25,14 @@ import com.badoo.mobile.util.WeakHandler
 import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.adapters.SearchKeyWordsAdapter
 import com.brainplow.ogrespace.apputils.Urls
+import com.brainplow.ogrespace.apputils.Urls.urlFilterSearch
+import com.brainplow.ogrespace.apputils.Urls.urlGooglePlaceSearch
 import com.brainplow.ogrespace.baseclasses.BaseFragment
 import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.MySingleton
 import com.brainplow.ogrespace.kotlin.VolleyService
+import com.brainplow.ogrespace.models.FilterSearchModel
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.coroutines.launch
@@ -39,21 +42,20 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
 
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
-        spinner_layout?.visibility = View.GONE
-
-
-      //  searchIcon?.visibility = View.GONE
-        keyWordsList.clear()
-        val predictions = response?.getJSONArray("predictions")
-        for (i in 0 until predictions!!.length()) {
-            keyWordsList.add(predictions.getJSONObject(i).getString("description"))
+        if(url.contains(urlGooglePlaceSearch)) {
+            spinner_layout?.visibility = View.GONE
+            //  searchIcon?.visibility = View.GONE
+            keyWordsList.clear()
+            val predictions = response?.getJSONArray("predictions")
+            for (i in 0 until predictions!!.length()) {
+                keyWordsList.add(predictions.getJSONObject(i).getString("description"))
+            }
+            if (drawerLayout!!.isDrawerOpen(GravityCompat.END)) {
+                d_suggestion_recycler?.visibility = View.VISIBLE
+                setDrawerSuggestionAdapter()
+            } else
+                setAdapter()
         }
-        if (drawerLayout!!.isDrawerOpen(GravityCompat.END)) {
-            d_suggestion_recycler?.visibility=View.VISIBLE
-            setDrawerSuggestionAdapter()
-        }
-        else
-        setAdapter()
     }
 
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
@@ -97,9 +99,11 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
     var d_search_edit_textwatcher: TextWatcher? = null
     var main_search_textWatcher: TextWatcher? = null
     var type = ""
+    var dSearchWord=""
     val drawerSuggestionListener=object :SearchKeyWordsAdapter.ISearchListener{
         override fun onItemClick(position: Int, keyWord: String) {
             d_search_edit_text?.removeTextChangedListener(d_search_edit_textwatcher)
+            dSearchWord=keyWord
             d_search_edit_text?.setText(keyWord)
             d_search_edit_text?.addTextChangedListener(d_search_edit_textwatcher)
             d_suggestion_recycler?.visibility=View.GONE
@@ -109,8 +113,9 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
     val searchListener = object : SearchKeyWordsAdapter.ISearchListener {
         override fun onItemClick(position: Int, keyWord: String) {
             val args = Bundle()
-            args.putString("keyword", keyWord)
-            args.putString("type", type)
+            val obj=FilterSearchModel(keyword = keyWord,property_type = type)
+            args.putSerializable("filterModel",obj)
+            args.putInt("mflag",1)
             val fragment = SearchResult()
             fragment.arguments = args
             val fragmentTransaction = fragmentManager?.beginTransaction()
@@ -398,6 +403,25 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
 
         dClear?.setOnClickListener {
             clearFilters()
+        }
+        dSearch?.setOnClickListener {
+            drawerLayout?.closeDrawer(GravityCompat.END)
+            clearFilters()
+            val args = Bundle()
+            val obj=FilterSearchModel(keyword = dSearchWord,property_type = "Office",post_type = "lease",
+                pricelowlimit = "1000",pricehighlimit = "4000",spacelowlimit = "100",spacehighlimit = "2000")
+            args.putSerializable("filterModel",obj)
+            args.putInt("mflag",2)
+            val fragment = SearchResult()
+            fragment.arguments = args
+            val fragmentTransaction = fragmentManager?.beginTransaction()
+            fragmentTransaction?.run {
+                replace(R.id.content_frame, fragment)
+                addToBackStack(null)
+                commit()
+            }
+
+
         }
     }
 
