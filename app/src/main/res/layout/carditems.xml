@@ -19,8 +19,8 @@
         
         <ImageView
                 android:id="@+id/state_image"
-                android:layout_width="@dimen/width_iv_home"
-                android:layout_height="@dimen/width_iv_home"
+                android:layout_width="@dimen/catimgsize"
+                android:layout_height="@dimen/catimgsize"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="@dimen/app_spacing_small"
                 android:layout_marginRight="@dimen/app_spacing_small"
