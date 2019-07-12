@@ -49,6 +49,8 @@ class StatesAdapter(context: Context?, itemss: ArrayList<StateModel>?) : Generic
         var view: View? = null
         if (layoutType == LayoutType.LayoutStatesCat) {
             view = layoutInflater.inflate(R.layout.carditems, parent, false)
+        } else if (layoutType == LayoutType.LayoutStateSmall) {
+            view = layoutInflater.inflate(R.layout.card_small_item, parent, false)
         }
         return StatesHolder(view!!)
     }
@@ -68,12 +70,11 @@ class StatesAdapter(context: Context?, itemss: ArrayList<StateModel>?) : Generic
 
         fun setData(state: StateModel) {
             stateName?.setText(state.state)
-            if (type.equals("features")){
+            if (type.equals("features")) {
                 Glide.with(context!!)
                     .load(state.icon_image).placeholder(R.drawable.cplaceholder)
                     .into(stateImage!!)
-            }
-            else{
+            } else {
                 Glide.with(context!!)
                     .load(Urls.iconStorageUrl + state.icon_image).placeholder(R.drawable.cplaceholder)
                     .into(stateImage!!)
