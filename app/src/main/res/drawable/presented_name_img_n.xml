@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item
+            android:drawable="@drawable/presented_name_img"
+            android:width="@dimen/margintop_large"
+            android:height="@dimen/margintop_large"
+    />
+
+</layer-list >
