@@ -322,8 +322,8 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         dSpaceTypeSpinner?.adapter=spaceTypeAdapter
         minPriceSpinner?.adapter=minPriceAdapter
         maxPriceSpinner?.adapter=maxPriceAdapter
-        minSpaceSpinner?.adapter=maxPriceAdapter
-        maxSpaceSpinner?.adapter=maxPriceAdapter
+        minSpaceSpinner?.adapter=minSpaceAdapter
+        maxSpaceSpinner?.adapter=maxSpaceAdapter
         minPriceSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
