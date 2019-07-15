@@ -10,11 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.error.VolleyError
 
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.activities.MainActivity
 import com.brainplow.ogrespace.adapters.PropertyAdapter
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.baseclasses.BaseFragment
+import com.brainplow.ogrespace.baseclasses.PropertyBaseFragment
 import com.brainplow.ogrespace.enums.LayoutType
 import com.brainplow.ogrespace.enums.RequestType
+import com.brainplow.ogrespace.extesnions.showInfoMessage
+import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.LoadingDialog
 import com.brainplow.ogrespace.kotlin.VolleyParsing
@@ -26,17 +30,34 @@ import org.json.JSONObject
 import java.util.logging.Filter
 
 
-class SearchResult : BaseFragment(), Communicator.IVolleResult {
+class SearchResult : PropertyBaseFragment(), Communicator.IVolleResult {
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
 
 
 //        empty_message?.visibility=View.GONE
 //        search_icon?.visibility=View.GONE
-        flag = 1
-        setSearchAdapter(volleyParsing?.getPropertyData(response, pages)!!)
+
+        if(url.equals(Urls.urlAddToFav)){
+            if(netWorkResponse==200) {
+                MainActivity.favItemsMap.put(favId.toString(),favId!!)
+                context?.showSuccessMessage("Item added to favourite successfully")
+            }
+            else if(netWorkResponse==202)
+                deleteFromFav(favId)
+
+        }else {
+            flag = 1
+            setSearchAdapter(volleyParsing?.getPropertyData(response, pages)!!)
+        }
     }
 
+    override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
+         if(url.contains(Urls.urlDelFav,true)){
+            MainActivity.favItemsMap.remove(favId.toString())
+            context?.showInfoMessage("Item deleted from favourite successfully")
+        }
+    }
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
         showErrorBody(error)
     }
@@ -73,7 +94,7 @@ class SearchResult : BaseFragment(), Communicator.IVolleResult {
                 super.onScrolled(recyclerView, dx, dy);
             }
         })
-
+        propertyAdapter?.setFavouriteListener(this@SearchResult)
         propertyAdapter?.notifyDataSetChanged()
         if (load.ishowingg())
             load.dismisss()
@@ -110,6 +131,7 @@ class SearchResult : BaseFragment(), Communicator.IVolleResult {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        super.setIVolleyResult(this)
         val view = inflater.inflate(R.layout.fragment_search_result, container, false)
         val bundle = arguments
         filterModel = bundle?.getSerializable("filterModel") as FilterSearchModel
