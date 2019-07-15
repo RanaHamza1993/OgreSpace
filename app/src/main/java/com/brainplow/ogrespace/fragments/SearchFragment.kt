@@ -42,7 +42,7 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
 
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
-        if(url.contains(urlGooglePlaceSearch)) {
+        if (url.contains(urlGooglePlaceSearch)) {
             spinner_layout?.visibility = View.GONE
             //  searchIcon?.visibility = View.GONE
             keyWordsList.clear()
@@ -74,11 +74,30 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
     var minSpaceSpinner: Spinner? = null
     var maxSpaceSpinner: Spinner? = null
     var typeList = arrayOf("Please select property type", "Sale", "Lease")
-    var spaceTypeList = arrayOf("Please select space type", "Offices", "Retail","Co Working","Land","Industrial","Medical Offices")
-    var minSpaceList = arrayOf("Please select min space", "500 sqft", "1000 sqft","1500 sqft","2000 sqft","2500 sqft","3000 sqft")
-    var maxSpaceList = arrayOf("Please select max space", "500 sqft", "1000 sqft","1500 sqft","2000 sqft","2500 sqft","3000 sqft")
-    var minPriceList = arrayOf("Please select min price", "$"+ "Any", "$"+"100,000","$"+"200,000","$"+"300,000","$"+ "400,0000","$"+ "500,000")
-    var maxPriceList = arrayOf("Please select max price", "$"+ "Any", "$"+"100,000","$"+"200,000","$"+"300,000","$"+ "400,0000","$"+ "500,000")
+    var spaceTypeList =
+        arrayOf("Please select space type", "Offices", "Retail", "Co Working", "Land", "Industrial", "Medical Offices")
+    var minSpaceList =
+        arrayOf("Please select min space", "500 sqft", "1000 sqft", "1500 sqft", "2000 sqft", "2500 sqft", "3000 sqft")
+    var maxSpaceList =
+        arrayOf("Please select max space", "500 sqft", "1000 sqft", "1500 sqft", "2000 sqft", "2500 sqft", "3000 sqft")
+    var minPriceList = arrayOf(
+        "Please select min price",
+        "$" + "Any",
+        "$" + "1000",
+        "$" + "2000",
+        "$" + "3000",
+        "$" + "4000",
+        "$" + "5000"
+    )
+    var maxPriceList = arrayOf(
+        "Please select max price",
+        "$" + "Any",
+        "$" + "1000",
+        "$" + "2000",
+        "$" + "3000",
+        "$" + "4000",
+        "$" + "5000"
+    )
     var keyWordsList = ArrayList<String>()
     var searchAdapter: SearchKeyWordsAdapter? = null
     var main_search_edit: EditText? = null
@@ -99,23 +118,29 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
     var d_search_edit_textwatcher: TextWatcher? = null
     var main_search_textWatcher: TextWatcher? = null
     var type = ""
-    var dSearchWord=""
-    val drawerSuggestionListener=object :SearchKeyWordsAdapter.ISearchListener{
+    var dPropertyType = ""
+    var dPostType = ""
+    var dPriceLowLimit = ""
+    var dPriceHighLimit = ""
+    var dSpaceLowLimit = ""
+    var dSpaceHighLimit = ""
+    var dSearchWord = ""
+    val drawerSuggestionListener = object : SearchKeyWordsAdapter.ISearchListener {
         override fun onItemClick(position: Int, keyWord: String) {
             d_search_edit_text?.removeTextChangedListener(d_search_edit_textwatcher)
-            dSearchWord=keyWord
+            dSearchWord = keyWord
             d_search_edit_text?.setText(keyWord)
             d_search_edit_text?.addTextChangedListener(d_search_edit_textwatcher)
-            d_suggestion_recycler?.visibility=View.GONE
+            d_suggestion_recycler?.visibility = View.GONE
         }
 
     }
     val searchListener = object : SearchKeyWordsAdapter.ISearchListener {
         override fun onItemClick(position: Int, keyWord: String) {
             val args = Bundle()
-            val obj=FilterSearchModel(keyword = keyWord,property_type = type)
-            args.putSerializable("filterModel",obj)
-            args.putInt("mflag",1)
+            val obj = FilterSearchModel(keyword = keyWord, property_type = type)
+            args.putSerializable("filterModel", obj)
+            args.putInt("mflag", 1)
             val fragment = SearchResult()
             fragment.arguments = args
             val fragmentTransaction = fragmentManager?.beginTransaction()
@@ -151,7 +176,7 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         super.onResume()
         isRunning = true
         acBarListener?.actionBarListener("Search")
-        acBarListener?.run{
+        acBarListener?.run {
             isSearchVisible(true)
             toolbarColor(true)
             backArrow(false)
@@ -172,18 +197,18 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
     private fun setIds(view: View) {
         navigationView = view.findViewById(R.id.search_nav_view)
         val navHeader = navigationView?.getHeaderView(0)
-        d_search_edit_text=navHeader?.findViewById(R.id.fs_search_edit)
-        d_suggestion_recycler=navHeader?.findViewById(R.id.fs_suggestions_recycler)
-        dTypeSpinner=navHeader?.findViewById(R.id.s_property_type)
-        dSearch=navHeader?.findViewById(R.id.search_filter)
-        dClear=navHeader?.findViewById(R.id.clear_filer)
-        dSpaceTypeSpinner=navHeader?.findViewById(R.id.s_space_type)
-        minPriceSpinner=navHeader?.findViewById(R.id.s_min_price)
-        maxPriceSpinner=navHeader?.findViewById(R.id.s_max_price)
-        minSpaceSpinner=navHeader?.findViewById(R.id.s_min_space)
-        maxSpaceSpinner=navHeader?.findViewById(R.id.s_max_space)
+        d_search_edit_text = navHeader?.findViewById(R.id.fs_search_edit)
+        d_suggestion_recycler = navHeader?.findViewById(R.id.fs_suggestions_recycler)
+        dTypeSpinner = navHeader?.findViewById(R.id.s_property_type)
+        dSearch = navHeader?.findViewById(R.id.search_filter)
+        dClear = navHeader?.findViewById(R.id.clear_filer)
+        dSpaceTypeSpinner = navHeader?.findViewById(R.id.s_space_type)
+        minPriceSpinner = navHeader?.findViewById(R.id.s_min_price)
+        maxPriceSpinner = navHeader?.findViewById(R.id.s_max_price)
+        minSpaceSpinner = navHeader?.findViewById(R.id.s_min_space)
+        maxSpaceSpinner = navHeader?.findViewById(R.id.s_max_space)
         drawerLayout = view.findViewById(R.id.search_drawer)
-        rootView=view.findViewById(R.id.searchSuggestionRoot)
+        rootView = view.findViewById(R.id.searchSuggestionRoot)
         actionBarDrawerToggle =
             ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close)
         searchIcon = view.findViewById(R.id.search_icon)
@@ -194,10 +219,10 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         main_search_edit = activity?.findViewById(R.id.mainsearch_edittext)
         main_edit_cross = activity!!.findViewById(R.id.edit_cross)
         main_edit_mic = activity!!.findViewById(R.id.edit_mic)
-        typeSpinner=view.findViewById(R.id.spinner_type)
+        typeSpinner = view.findViewById(R.id.spinner_type)
     }
 
-    fun rootViewObserver(){
+    fun rootViewObserver() {
         rootView!!.getViewTreeObserver().addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
 
@@ -228,12 +253,13 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         })
 
     }
+
     fun setListeners() {
 
-       // if (!searchQuery.equals(""))
-          //  searchIcon?.visibility = View.GONE
+        // if (!searchQuery.equals(""))
+        //  searchIcon?.visibility = View.GONE
 
-        main_search_textWatcher=object : TextWatcher {
+        main_search_textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -241,7 +267,7 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
                 MySingleton.getInstance(mcontext!!).requestQueue.cancelAll("searchRequest")
                 var value = main_search_edit?.text.toString()
                 value = value.replace(" ", "%20")
-                if (isRunning&&!value.equals(""))
+                if (isRunning && !value.equals(""))
                     getSearchResult(value)
                 else {
                     keyWordsList.clear()
@@ -273,7 +299,7 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         }
         main_search_edit!!.addTextChangedListener(main_search_textWatcher)
 
-        d_search_edit_textwatcher=object : TextWatcher {
+        d_search_edit_textwatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -281,7 +307,7 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
                 MySingleton.getInstance(mcontext!!).requestQueue.cancelAll("searchRequest")
                 var value = d_search_edit_text?.text.toString()
                 value = value.replace(" ", "%20")
-                if (isRunning&&!value.equals(""))
+                if (isRunning && !value.equals(""))
                     getSearchResult(value)
                 else {
                     keyWordsList.clear()
@@ -304,7 +330,7 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
 //                    main_edit_cross.visibility = View.GONE
 //                    main_edit_mic.visibility = View.VISIBLE
 //                    //   searchIcon?.visibility = View.VISIBLE
-                    d_suggestion_recycler?.visibility=View.GONE
+                    d_suggestion_recycler?.visibility = View.GONE
 
 
                 }
@@ -326,22 +352,23 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         spaceTypeAdapter.setDropDownViewResource(R.layout.spinner_item_layout)
         minSpaceAdapter.setDropDownViewResource(R.layout.spinner_item_layout)
         maxSpaceAdapter.setDropDownViewResource(R.layout.spinner_item_layout)
-        typeSpinner?.adapter=typeAdapter
-        dTypeSpinner?.adapter=typeAdapter
-        dSpaceTypeSpinner?.adapter=spaceTypeAdapter
-        minPriceSpinner?.adapter=minPriceAdapter
-        maxPriceSpinner?.adapter=maxPriceAdapter
-        minSpaceSpinner?.adapter=minSpaceAdapter
-        maxSpaceSpinner?.adapter=maxSpaceAdapter
+        typeSpinner?.adapter = typeAdapter
+        dTypeSpinner?.adapter = typeAdapter
+        dSpaceTypeSpinner?.adapter = spaceTypeAdapter
+        minPriceSpinner?.adapter = minPriceAdapter
+        maxPriceSpinner?.adapter = maxPriceAdapter
+        minSpaceSpinner?.adapter = minSpaceAdapter
+        maxSpaceSpinner?.adapter = maxSpaceAdapter
         minPriceSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
 
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
-
+                if (position == 0 || position == 1)
+                    dPriceLowLimit = ""
+                else
+                    dPriceLowLimit = minPriceList.get(position).replace("[$,]".toRegex(), "")
             }
         }
         maxPriceSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -351,14 +378,42 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
+                if (position == 0 || position == 1)
+                    dPriceHighLimit = ""
+                else
+                    dPriceHighLimit = maxPriceList.get(position).replace("[$,]".toRegex(), "")
 
             }
         }
 
-        typeSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        minSpaceSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position == 0)
+                    dSpaceLowLimit = ""
+                else
+                    dSpaceLowLimit =
+                        minSpaceList.get(position).substring(0, minSpaceList.get(position).lastIndexOf(" "))
+            }
+        }
+        maxSpaceSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position == 0 || position == 1)
+                    dSpaceHighLimit = ""
+                else
+                    dSpaceHighLimit =
+                        maxSpaceList.get(position).substring(0, maxSpaceList.get(position).lastIndexOf(" "))
+            }
+        }
+        typeSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
 
@@ -393,11 +448,13 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         dSpaceTypeSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
-
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
+                if (position == 0 || position == 1)
+                    dPropertyType = ""
+                else
+                    dPropertyType = spaceTypeList.get(position).replace(" ", "%20")
             }
         }
 
@@ -408,10 +465,17 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
             drawerLayout?.closeDrawer(GravityCompat.END)
             clearFilters()
             val args = Bundle()
-            val obj=FilterSearchModel(keyword = dSearchWord,property_type = "Office",post_type = "lease",
-                pricelowlimit = "1000",pricehighlimit = "4000",spacelowlimit = "100",spacehighlimit = "2000")
-            args.putSerializable("filterModel",obj)
-            args.putInt("mflag",2)
+            val obj = FilterSearchModel(
+                keyword = dSearchWord,
+                property_type = dPropertyType,
+                post_type = type,
+                pricelowlimit = dPriceLowLimit,
+                pricehighlimit = dPriceHighLimit,
+                spacelowlimit = dSpaceLowLimit,
+                spacehighlimit = dSpaceHighLimit
+            )
+            args.putSerializable("filterModel", obj)
+            args.putInt("mflag", 2)
             val fragment = SearchResult()
             fragment.arguments = args
             val fragmentTransaction = fragmentManager?.beginTransaction()
@@ -429,7 +493,7 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         volleyService?.getDataVolley(
             RequestType.JsonObjectRequest,
             Urls.urlGooglePlaceSearch + value + "&key=AIzaSyBvtXUC9gCiJTPRwX-tCHsOgTiLo2H8P6Q",
-            "","searchRequest"
+            "", "searchRequest"
         )
 
     }
@@ -454,16 +518,17 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         searchAdapter?.notifyDataSetChanged()
     }
 
-    fun onBackPressed(){
+    fun onBackPressed() {
         if (drawerLayout!!.isDrawerOpen(GravityCompat.END)) {
             drawerLayout?.closeDrawer(GravityCompat.END)
 
 
-        }else{
+        } else {
             fragmentManager?.popBackStack()
         }
     }
-    fun clearFilters(){
+
+    fun clearFilters() {
         d_search_edit_text?.setText("")
         maxSpaceSpinner?.setSelection(0)
         minSpaceSpinner?.setSelection(0)

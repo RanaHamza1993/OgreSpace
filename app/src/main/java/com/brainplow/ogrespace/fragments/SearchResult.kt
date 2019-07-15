@@ -1,6 +1,4 @@
 package com.brainplow.ogrespace.fragments
-
-
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -39,8 +37,19 @@ class SearchResult : BaseFragment(), Communicator.IVolleResult {
         setSearchAdapter(volleyParsing?.getPropertyData(response, pages)!!)
     }
 
+    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
+        showErrorBody(error)
+    }
+
     private fun setSearchAdapter(propertyList: ArrayList<PropertyModel>) {
 
+        if(propertyList.isEmpty()) {
+            empty_message?.visibility = View.VISIBLE
+            searchRecycler?.visibility=View.GONE
+        }else{
+            empty_message?.visibility = View.GONE
+            searchRecycler?.visibility=View.VISIBLE
+        }
         if (pages == 1) {
             propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutProperties)
             searchRecycler?.adapter = propertyAdapter
@@ -70,9 +79,7 @@ class SearchResult : BaseFragment(), Communicator.IVolleResult {
             load.dismisss()
     }
 
-    override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
-        showErrorBody(error)
-    }
+
 
     var layoutmanger: LinearLayoutManager? = null
     var bidPages = 0
@@ -152,11 +159,17 @@ class SearchResult : BaseFragment(), Communicator.IVolleResult {
         }else if(mflag==2){
             val ob=JSONObject()
             ob.put("keyword",keyWord)
+            if(!filterModel?.post_type.equals(""))
             ob.put("post_type",filterModel?.post_type)
+            if(!filterModel?.property_type.equals(""))
             ob.put("property_type",filterModel?.property_type)
+            if(!filterModel?.pricelowlimit.equals(""))
             ob.put("pricelowlimit",filterModel?.pricelowlimit)
+            if(!filterModel?.pricehighlimit.equals(""))
             ob.put("pricehighlimit",filterModel?.pricehighlimit)
+            if(!filterModel?.spacelowlimit.equals(""))
             ob.put("spacelowlimit",filterModel?.spacelowlimit)
+            if(!filterModel?.spacehighlimit.equals(""))
             ob.put("spacehighlimit",filterModel?.spacehighlimit)
             volleyService?.postDataVolley(
                 RequestType.JsonObjectRequest,

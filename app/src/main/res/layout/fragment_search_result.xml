@@ -10,9 +10,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="@dimen/homefragmentmargin"
+            android:visibility="visible"
             android:clipToPadding="false"
             android:nestedScrollingEnabled="false"
             android:id="@+id/search_recycler"
     />
+    <TextView
+            android:id="@+id/empty_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:singleLine="false"
+            android:text="Sorry no result found"
+            android:textSize="@dimen/app_heading_text"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
 </LinearLayout>
