@@ -3,6 +3,7 @@ package com.brainplow.ogrespace.fragments
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.extesnions.showInfoMessage
 import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
+import com.brainplow.ogrespace.kotlin.SSL
 import com.brainplow.ogrespace.kotlin.VolleyService
 import com.brainplow.ogrespace.models.PropertyModel
 import com.brainplow.ogrespace.models.StateModel
@@ -43,23 +45,22 @@ import java.util.HashMap
 class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult {
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
-        if(url.equals(Urls.urlAddToFav)){
-            if(netWorkResponse==200) {
-                MainActivity.favItemsMap.put(favId.toString(),favId!!)
+        if (url.equals(Urls.urlAddToFav)) {
+            if (netWorkResponse == 200) {
+                MainActivity.favItemsMap.put(favId.toString(), favId!!)
                 context?.showSuccessMessage("Item added to favourite successfully")
-            }
-            else if(netWorkResponse==202)
+            } else if (netWorkResponse == 202)
                 deleteFromFav(favId)
 
         }
     }
+
     override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
-    //    val a = 5
-        if(url.contains(Urls.urlDelFav,true)){
+        //    val a = 5
+        if (url.contains(Urls.urlDelFav, true)) {
             MainActivity.favItemsMap.remove(favId.toString())
             context?.showInfoMessage("Item deleted from favourite successfully")
-        }
-        else if (url.contains(Urls.urlProperyDetail))
+        } else if (url.contains(Urls.urlProperyDetail))
             getDetailItems(response)
 
     }
@@ -74,64 +75,71 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
 
     private fun getSimilarItems(response: JSONArray?) {
         propertyArrayList?.clear()
-         for (i in 0 until response?.length()!!){
-             val propertyModel = PropertyModel()
-             val baseObj = response.getJSONObject(i)
-             val id = baseObj?.getInt("id")
-             propertyModel.id = id
+        for (i in 0 until response?.length()!!) {
+            val propertyModel = PropertyModel()
+            val baseObj = response.getJSONObject(i)
+            val id = baseObj?.getInt("id")
+            propertyModel.id = id
 
-             val property_title = baseObj?.getString("property_title")
-             propertyModel.property_title = property_title
+            val property_title = baseObj?.getString("property_title")
+            propertyModel.property_title = property_title
 
-             val property_type = baseObj?.getString("property_type")
-             propertyModel.property_type = property_type
+            val property_type = baseObj?.getString("property_type")
+            propertyModel.property_type = property_type
 
-             val one_pic = baseObj?.getString("one_pic")
-             propertyModel.one_pic = one_pic
+            val one_pic = baseObj?.getString("one_pic")
+            propertyModel.one_pic = one_pic
 
-             val price = baseObj?.getDouble("price")
-             propertyModel.price = price
+            val price = baseObj?.getDouble("price")
+            propertyModel.price = price
 
-             val property_area = baseObj?.getDouble("property_area")
-             propertyModel.property_area = property_area
+            val property_area = baseObj?.getDouble("property_area")
+            propertyModel.property_area = property_area
 
-             val address = baseObj?.getString("address")
-             propertyModel.address = address
+            val address = baseObj?.getString("address")
+            propertyModel.address = address
 
-             val post_type = baseObj?.getString("post_type")
-             propertyModel.post_type = post_type
+            val post_type = baseObj?.getString("post_type")
+            propertyModel.post_type = post_type
 
-             val latitude = baseObj?.getDouble("latitude")
-             propertyModel.latitude = latitude
+            val latitude = baseObj?.getDouble("latitude")
+            propertyModel.latitude = latitude
 
-             val longitude = baseObj?.getDouble("longitude")
-             propertyModel.longitude = longitude
+            val longitude = baseObj?.getDouble("longitude")
+            propertyModel.longitude = longitude
 
-             propertyArrayList?.add(propertyModel)
+            propertyArrayList?.add(propertyModel)
 
-             linearLayoutManager = LinearLayoutManager(activity)
-             propertyAdapter = PropertyAdapter(activity, propertyArrayList!!, LayoutType.LayoutProperties)
-             recyc_similar_prop?.layoutManager = linearLayoutManager as RecyclerView.LayoutManager?
-             propertyAdapter?.run{
-                 setFavouriteListener(this@PropertyDetailFragment)
-                 setItemClickListener(this@PropertyDetailFragment)
-             }
-             recyc_similar_prop?.adapter = propertyAdapter
-             recyc_similar_prop?.setNestedScrollingEnabled(false)
+            linearLayoutManager = LinearLayoutManager(activity)
+            propertyAdapter = PropertyAdapter(activity, propertyArrayList!!, LayoutType.LayoutProperties)
+            recyc_similar_prop?.layoutManager = linearLayoutManager as RecyclerView.LayoutManager?
+            propertyAdapter?.run {
+                setFavouriteListener(this@PropertyDetailFragment)
+                setItemClickListener(this@PropertyDetailFragment)
+            }
+            recyc_similar_prop?.adapter = propertyAdapter
+            recyc_similar_prop?.setNestedScrollingEnabled(false)
 
-         }
+        }
     }
 
     private fun getDetailItems(response: String?) {
         featuresArray?.clear()
         val baseObj = JSONObject(response)
+
+        val arrayPics = baseObj.getJSONArray("pics")
+        for (i in 0 until arrayPics?.length()!!) {
+            var picUrl: String = arrayPics?.getString(i)
+            Log.d("propertPics", picUrl)
+            url_maps?.put(i.toString(), picUrl!!)
+        }
+        propertyImages()
         val arrayResults = baseObj.getJSONArray("results")
-        var propertyLng : String ? = null
-        var propertyLat : String ? = null
-        var property_title : String ? = null
+        var propertyLng: String? = null
+        var propertyLat: String? = null
+        var property_title: String? = null
         for (i in 0 until arrayResults?.length()!!) {
             val dataObj = arrayResults?.getJSONObject(i)
-
 
 
             val mapped_servicesArray = dataObj?.getJSONArray("mapped_services")
@@ -141,7 +149,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
                 val our_services = featuresObj?.getString("our_services")
                 stateModel.state = our_services
 
-                val logo_of_services = featuresObj?.getString("logo_of_services_30px")
+                val logo_of_services = featuresObj?.getString("logo_of_services_64px")
                 stateModel.icon_image = logo_of_services
 
                 val id = featuresObj?.getInt("id")
@@ -195,7 +203,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
             val country = dataObj.getString("country")
             val posted_date = dataObj.getString("posted_date")
             val services = dataObj.getString("services")
-             property_title = dataObj.getString("property_title")
+            property_title = dataObj.getString("property_title")
             property_company_txt?.setText(property_title)
             val contact_no = dataObj.getString("contact_no")
             val active_bool = dataObj.getBoolean("active_bool")
@@ -240,14 +248,18 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
     var token: String? = null
     var mapFragment: SupportMapFragment? = null
     var itemId = 0
+    var url_maps =  HashMap<String, String>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.setIVolleyResult(this)
         val view = inflater.inflate(R.layout.fragment_details, container, false)
         val b = arguments
+        SSL.sslCertificates()
+        //url_maps = HashMap()
+
         itemId = b!!.getInt("id")
         setIds(view)
         volleyRequests()
-        propertyImages()
+
         return view
     }
 
@@ -288,17 +300,12 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
     }
 
     private fun propertyImages() {
-        val url_maps = HashMap<String, Int>()
-        url_maps["Electronics"] = R.drawable.slider1
-        url_maps["Beats Audio"] = R.drawable.slider2
-        url_maps["Apple Mackbook Pro"] = R.drawable.slider3
-        url_maps["Home Appliances"] = R.drawable.slider4
-        url_maps["Sports"] = R.drawable.slider5
 
-        for (name in url_maps.keys) {
+
+        for (name in url_maps!!.keys) {
             val textSliderView = DefaultSliderView(activity)
             // initialize a SliderLayout
-            textSliderView.image(url_maps[name]!!)
+            textSliderView.image(url_maps!![name]!!)
                 .setScaleType(BaseSliderView.ScaleType.Fit)
 
             mDemoSlider.run {

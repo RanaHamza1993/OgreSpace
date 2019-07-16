@@ -7,7 +7,7 @@ object Urls {
     val urlAddToFav = baseUrl + "office/user_favourite_android/"
     val urlGetFav = baseUrl + "office/get_user_favourite/"
     val urlDelFav = baseUrl + "office/delete_user_favourite/"
-    val urlProperyDetail = baseUrl + "office/property_detail_by_id/"
+    val urlProperyDetail = baseUrl + "office/property_detail_by_id_android/"
     val urlSimilarProperties = baseUrl + "office/similar_properties/"
     val urlGetFavItems = baseUrl + "office/favourite_properties_id"
     val urlFilterSearch = baseUrl + "office/filter_properties1/"
