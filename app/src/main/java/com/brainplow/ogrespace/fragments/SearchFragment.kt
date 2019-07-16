@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -265,6 +266,7 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         // if (!searchQuery.equals(""))
         //  searchIcon?.visibility = View.GONE
 
+
         main_search_textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -305,6 +307,28 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
         }
         main_search_edit!!.addTextChangedListener(main_search_textWatcher)
 
+        main_search_edit!!.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+
+
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                val args = Bundle()
+                val obj = FilterSearchModel(keyword = main_search_edit?.text.toString().trim(), property_type = type)
+                args.putSerializable("filterModel", obj)
+                args.putInt("mflag", 1)
+                val fragment = SearchResult()
+                fragment.arguments = args
+                val fragmentTransaction = fragmentManager?.beginTransaction()
+                fragmentTransaction?.run {
+                    replace(R.id.content_frame, fragment)
+                    addToBackStack(null)
+                    commit()
+                }
+
+                return@OnEditorActionListener true
+            }
+            false
+        })
         d_search_edit_textwatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
