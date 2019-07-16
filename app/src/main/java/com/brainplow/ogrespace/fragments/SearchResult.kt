@@ -143,7 +143,7 @@ class SearchResult : PropertyBaseFragment(), Communicator.IVolleResult {
         if(mflag==1) {
             type =    filterModel?.property_type
         }
-        keyWord = filterModel?.keyword?.replace("[ -._&@#\$()*!~:,]", "%20")
+        keyWord = filterModel?.keyword?.replace("[ -._&@#\$()*!~:,]".toRegex(), "%20")
         obj = JSONObject()
         obj?.put("keyword", keyWord)
         if (!type.equals(""))

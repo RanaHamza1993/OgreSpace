@@ -11,6 +11,7 @@ object Urls {
     val urlSimilarProperties = baseUrl + "office/similar_properties/"
     val urlGetFavItems = baseUrl + "office/favourite_properties_id"
     val urlFilterSearch = baseUrl + "office/filter_properties1/"
+    val urlGetPlaces = baseUrl + "office/search_suggestions/"
 
     //val baseImageStorageUrl=               baseStorageUrl+"OfficeImages/"
     val iconStorageUrl = baseStorageUrl + "final/"

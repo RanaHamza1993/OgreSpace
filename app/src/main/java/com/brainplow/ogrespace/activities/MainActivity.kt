@@ -269,12 +269,14 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
                     R.id.bottom_search ->{
                        // navigateToFragment(SearchFragment())
                         val f=supportFragmentManager.findFragmentByTag("Search")
-
                         if(f==null){
                            navigateToFragment(SearchFragment(),true,"Search")
                             } else{
 
                         }
+                    }
+                    R.id.bot_notification ->{
+                        navigateToFragment(NotificationsFragment())
                     }
                     R.id.bot_save -> {
                         navigateToFragment(MyFavFragment())

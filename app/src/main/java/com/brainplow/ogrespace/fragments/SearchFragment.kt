@@ -26,6 +26,7 @@ import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.adapters.SearchKeyWordsAdapter
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.apputils.Urls.urlFilterSearch
+import com.brainplow.ogrespace.apputils.Urls.urlGetPlaces
 import com.brainplow.ogrespace.apputils.Urls.urlGooglePlaceSearch
 import com.brainplow.ogrespace.baseclasses.BaseFragment
 import com.brainplow.ogrespace.enums.RequestType
@@ -36,19 +37,23 @@ import com.brainplow.ogrespace.models.FilterSearchModel
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.coroutines.launch
+import org.json.JSONArray
 import org.json.JSONObject
 
 class SearchFragment : BaseFragment(), Communicator.IVolleResult {
 
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
-        if (url.contains(urlGooglePlaceSearch)) {
+
+    }
+
+    override fun notifySuccess(requestType: RequestType?, response: JSONArray?, url: String, netWorkResponse: Int?) {
+        if (url.contains(urlGetPlaces)) {
             spinner_layout?.visibility = View.GONE
             //  searchIcon?.visibility = View.GONE
             keyWordsList.clear()
-            val predictions = response?.getJSONArray("predictions")
-            for (i in 0 until predictions!!.length()) {
-                keyWordsList.add(predictions.getJSONObject(i).getString("description"))
+            for (i in 0 until response!!.length()) {
+                keyWordsList.add(response.getJSONObject(i).getString("address_suggestion"))
             }
             if (drawerLayout!!.isDrawerOpen(GravityCompat.END)) {
                 d_suggestion_recycler?.visibility = View.VISIBLE
@@ -57,7 +62,6 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
                 setAdapter()
         }
     }
-
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
         showErrorBody(error)
     }
@@ -492,9 +496,14 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
     }
 
     private fun getSearchResult(value: String) {
+//        volleyService?.getDataVolley(
+//            RequestType.JsonObjectRequest,
+//            Urls.urlGooglePlaceSearch + value + "&key=AIzaSyBvtXUC9gCiJTPRwX-tCHsOgTiLo2H8P6Q",
+//            "", "searchRequest"
+
         volleyService?.getDataVolley(
-            RequestType.JsonObjectRequest,
-            Urls.urlGooglePlaceSearch + value + "&key=AIzaSyBvtXUC9gCiJTPRwX-tCHsOgTiLo2H8P6Q",
+            RequestType.ArrayRequest,
+            Urls.urlGetPlaces + value + "/",
             "", "searchRequest"
         )
 
