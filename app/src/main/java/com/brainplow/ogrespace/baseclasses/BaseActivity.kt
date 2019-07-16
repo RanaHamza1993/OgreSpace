@@ -66,4 +66,17 @@ open class BaseActivity : AppCompatActivity() {
             commit()
         }
     }
+    fun navigateToFragment(fragment: Fragment,addToBackStack:Boolean=true,tag:String=""){
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.run{
+            if(!tag.equals(""))
+            replace(R.id.content_frame, fragment,tag)
+            else
+                replace(R.id.content_frame, fragment)
+            if(addToBackStack)
+                addToBackStack(null)
+
+            commit()
+        }
+    }
 }
