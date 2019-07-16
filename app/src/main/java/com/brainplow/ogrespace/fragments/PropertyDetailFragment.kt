@@ -12,12 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.error.VolleyError
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.activities.MainActivity
 import com.brainplow.ogrespace.adapters.PropertyAdapter
 import com.brainplow.ogrespace.adapters.StatesAdapter
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.baseclasses.BaseFragment
+import com.brainplow.ogrespace.baseclasses.PropertyBaseFragment
 import com.brainplow.ogrespace.enums.LayoutType
 import com.brainplow.ogrespace.enums.RequestType
+import com.brainplow.ogrespace.extesnions.showInfoMessage
+import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.VolleyService
 import com.brainplow.ogrespace.models.PropertyModel
@@ -36,11 +40,26 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.HashMap
 
-class PropertyDetailFragment : BaseFragment(), Communicator.IVolleResult {
+class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult {
 
+    override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
+        if(url.equals(Urls.urlAddToFav)){
+            if(netWorkResponse==200) {
+                MainActivity.favItemsMap.put(favId.toString(),favId!!)
+                context?.showSuccessMessage("Item added to favourite successfully")
+            }
+            else if(netWorkResponse==202)
+                deleteFromFav(favId)
+
+        }
+    }
     override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
-        val a = 5
-        if (url.contains(Urls.urlProperyDetail))
+    //    val a = 5
+        if(url.contains(Urls.urlDelFav,true)){
+            MainActivity.favItemsMap.remove(favId.toString())
+            context?.showInfoMessage("Item deleted from favourite successfully")
+        }
+        else if (url.contains(Urls.urlProperyDetail))
             getDetailItems(response)
 
     }
@@ -56,73 +75,77 @@ class PropertyDetailFragment : BaseFragment(), Communicator.IVolleResult {
     private fun getSimilarItems(response: JSONArray?) {
         propertyArrayList?.clear()
          for (i in 0 until response?.length()!!){
-             var propertyModel = PropertyModel()
-             var baseObj = response?.getJSONObject(i)
-             var id = baseObj?.getInt("id")
-             propertyModel?.id = id
+             val propertyModel = PropertyModel()
+             val baseObj = response.getJSONObject(i)
+             val id = baseObj?.getInt("id")
+             propertyModel.id = id
 
-             var property_title = baseObj?.getString("property_title")
-             propertyModel?.property_title = property_title
+             val property_title = baseObj?.getString("property_title")
+             propertyModel.property_title = property_title
 
-             var property_type = baseObj?.getString("property_type")
-             propertyModel?.property_type = property_type
+             val property_type = baseObj?.getString("property_type")
+             propertyModel.property_type = property_type
 
-             var one_pic = baseObj?.getString("one_pic")
-             propertyModel?.one_pic = one_pic
+             val one_pic = baseObj?.getString("one_pic")
+             propertyModel.one_pic = one_pic
 
-             var price = baseObj?.getDouble("price")
-             propertyModel?.price = price
+             val price = baseObj?.getDouble("price")
+             propertyModel.price = price
 
-             var property_area = baseObj?.getDouble("property_area")
-             propertyModel?.property_area = property_area
+             val property_area = baseObj?.getDouble("property_area")
+             propertyModel.property_area = property_area
 
-             var address = baseObj?.getString("address")
-             propertyModel?.address = address
+             val address = baseObj?.getString("address")
+             propertyModel.address = address
 
-             var post_type = baseObj?.getString("post_type")
-             propertyModel?.post_type = post_type
+             val post_type = baseObj?.getString("post_type")
+             propertyModel.post_type = post_type
 
-             var latitude = baseObj?.getDouble("latitude")
-             propertyModel?.latitude = latitude
+             val latitude = baseObj?.getDouble("latitude")
+             propertyModel.latitude = latitude
 
-             var longitude = baseObj?.getDouble("longitude")
-             propertyModel?.longitude = longitude
+             val longitude = baseObj?.getDouble("longitude")
+             propertyModel.longitude = longitude
 
              propertyArrayList?.add(propertyModel)
 
              linearLayoutManager = LinearLayoutManager(activity)
              propertyAdapter = PropertyAdapter(activity, propertyArrayList!!, LayoutType.LayoutProperties)
              recyc_similar_prop?.layoutManager = linearLayoutManager as RecyclerView.LayoutManager?
+             propertyAdapter?.run{
+                 setFavouriteListener(this@PropertyDetailFragment)
+                 setItemClickListener(this@PropertyDetailFragment)
+             }
              recyc_similar_prop?.adapter = propertyAdapter
-             recyc_similar_prop?.setNestedScrollingEnabled(false);
+             recyc_similar_prop?.setNestedScrollingEnabled(false)
 
          }
     }
 
     private fun getDetailItems(response: String?) {
         featuresArray?.clear()
-        var baseObj = JSONObject(response)
-        var arrayResults = baseObj?.getJSONArray("results")
+        val baseObj = JSONObject(response)
+        val arrayResults = baseObj.getJSONArray("results")
         var propertyLng : String ? = null
         var propertyLat : String ? = null
         var property_title : String ? = null
         for (i in 0 until arrayResults?.length()!!) {
-            var dataObj = arrayResults?.getJSONObject(i)
+            val dataObj = arrayResults?.getJSONObject(i)
 
 
 
-            var mapped_servicesArray = dataObj?.getJSONArray("mapped_services")
+            val mapped_servicesArray = dataObj?.getJSONArray("mapped_services")
             for (i in 0 until mapped_servicesArray?.length()!!) {
-                var stateModel = StateModel()
-                var featuresObj = mapped_servicesArray?.getJSONObject(i)
-                var our_services = featuresObj?.getString("our_services")
-                stateModel?.state = our_services
+                val stateModel = StateModel()
+                val featuresObj = mapped_servicesArray?.getJSONObject(i)
+                val our_services = featuresObj?.getString("our_services")
+                stateModel.state = our_services
 
-                var logo_of_services = featuresObj?.getString("logo_of_services_30px")
-                stateModel?.icon_image = logo_of_services
+                val logo_of_services = featuresObj?.getString("logo_of_services_30px")
+                stateModel.icon_image = logo_of_services
 
-                var id = featuresObj?.getInt("id")
-                stateModel?.id = id
+                val id = featuresObj?.getInt("id")
+                stateModel.id = id
 
                 featuresArray?.add(stateModel)
                 gridLayoutManager = GridLayoutManager(activity, 5)
@@ -132,56 +155,56 @@ class PropertyDetailFragment : BaseFragment(), Communicator.IVolleResult {
                 recyc_features?.setNestedScrollingEnabled(true);
             }
 
-            var id = dataObj?.getString("id")
+            val id = dataObj.getString("id")
 
-            var address = dataObj?.getString("address")
+            val address = dataObj.getString("address")
             property_address_txt?.setText(address)
             property_location_txt?.setText(address)
 
-            var property_type = dataObj?.getString("property_type")
+            val property_type = dataObj.getString("property_type")
             property_type_txt?.setText(property_type)
 
-            propertyLat = dataObj?.getString("latitude")
-            propertyLng = dataObj?.getString("longitude")
+            propertyLat = dataObj.getString("latitude")
+            propertyLng = dataObj.getString("longitude")
 
 
-            var pic_url = dataObj?.getString("pic_url")
+            val pic_url = dataObj.getString("pic_url")
 
 
-            var one_pic = dataObj?.getString("one_pic")
+            val one_pic = dataObj.getString("one_pic")
 
-            var property_id = dataObj?.getString("property_id")
+            val property_id = dataObj.getString("property_id")
             property_id_txt?.setText(property_id)
 
-            var description = dataObj?.getString("description")
+            val description = dataObj.getString("description")
             property_dis_txt?.setText(description)
 
-            var price = dataObj?.getString("price")
+            val price = dataObj.getString("price")
             property_price_txt?.setText(price)
             property_pri_txt?.setText(price)
 
-            var presented_company = dataObj?.getString("presented_company")
+            var presented_company = dataObj.getString("presented_company")
 
 
-            var presented_name = dataObj?.getString("presented_name")
+            val presented_name = dataObj.getString("presented_name")
             property_presented_txt?.setText(presented_name)
 
-            var state = dataObj?.getString("state")
-            var zipcode = dataObj?.getString("zipcode")
-            var city = dataObj?.getString("city")
-            var country = dataObj?.getString("country")
-            var posted_date = dataObj?.getString("posted_date")
-            var services = dataObj?.getString("services")
-             property_title = dataObj?.getString("property_title")
+            val state = dataObj.getString("state")
+            val zipcode = dataObj.getString("zipcode")
+            val city = dataObj.getString("city")
+            val country = dataObj.getString("country")
+            val posted_date = dataObj.getString("posted_date")
+            val services = dataObj.getString("services")
+             property_title = dataObj.getString("property_title")
             property_company_txt?.setText(property_title)
-            var contact_no = dataObj?.getString("contact_no")
-            var active_bool = dataObj?.getBoolean("active_bool")
+            val contact_no = dataObj.getString("contact_no")
+            val active_bool = dataObj.getBoolean("active_bool")
 
-            var property_area = dataObj?.getString("property_area")
+            val property_area = dataObj.getString("property_area")
             property_area_txt?.setText(property_area)
 
-            var price_type = dataObj?.getString("price_type")
-            var post_type = dataObj?.getString("post_type")
+            var price_type = dataObj.getString("price_type")
+            var post_type = dataObj.getString("post_type")
 
 
         }
@@ -218,7 +241,8 @@ class PropertyDetailFragment : BaseFragment(), Communicator.IVolleResult {
     var mapFragment: SupportMapFragment? = null
     var itemId = 0
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.fragment_details, container, false)
+        super.setIVolleyResult(this)
+        val view = inflater.inflate(R.layout.fragment_details, container, false)
         val b = arguments
         itemId = b!!.getInt("id")
         setIds(view)
@@ -228,13 +252,13 @@ class PropertyDetailFragment : BaseFragment(), Communicator.IVolleResult {
     }
 
     private fun setMap(propertyLat: String?, propertyLng: String?, property_title: String?) {
-        mapFragment = childFragmentManager?.findFragmentById(R.id.mappp) as SupportMapFragment?
+        mapFragment = childFragmentManager.findFragmentById(R.id.mappp) as SupportMapFragment?
         if (mapFragment == null) {
             val fm = fragmentManager
             val ft = fm?.beginTransaction()
             mapFragment = SupportMapFragment.newInstance()
             ft?.replace(R.id.mappp, mapFragment!!)?.commit()
-            mapFragment = childFragmentManager?.findFragmentById(R.id.mappp) as SupportMapFragment?
+            mapFragment = childFragmentManager.findFragmentById(R.id.mappp) as SupportMapFragment?
             if (mapFragment == null) {
                 val fm = fragmentManager
                 val ft = fm?.beginTransaction()

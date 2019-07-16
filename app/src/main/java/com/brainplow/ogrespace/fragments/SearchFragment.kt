@@ -75,7 +75,9 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
     var maxSpaceSpinner: Spinner? = null
     var typeList = arrayOf("Please select property type", "Sale", "Lease")
     var spaceTypeList =
-        arrayOf("Please select space type", "Offices", "Retail", "Co Working", "Land", "Industrial", "Medical Offices")
+        arrayOf("Please select space type", "Office","Coworking", "Flex", "Health Care", "Hospitality", "Industrial", "Industrial Office"
+        ,"Industrial Office Medical","Industrial Office Retail","Land","Live Work Office","Medical","Multifamily","Restaurant",
+            "Shopping Center","Sports and Entertainment","Sublease Office","Warehouse")
     var minSpaceList =
         arrayOf("Please select min space", "500 sqft", "1000 sqft", "1500 sqft", "2000 sqft", "2500 sqft", "3000 sqft")
     var maxSpaceList =

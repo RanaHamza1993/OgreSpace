@@ -94,8 +94,12 @@ class SearchResult : PropertyBaseFragment(), Communicator.IVolleResult {
                 super.onScrolled(recyclerView, dx, dy);
             }
         })
-        propertyAdapter?.setFavouriteListener(this@SearchResult)
-        propertyAdapter?.notifyDataSetChanged()
+        propertyAdapter?.run{
+            setFavouriteListener(this@SearchResult)
+            setItemClickListener(this@SearchResult)
+            notifyDataSetChanged()
+
+        }
         if (load.ishowingg())
             load.dismisss()
     }
