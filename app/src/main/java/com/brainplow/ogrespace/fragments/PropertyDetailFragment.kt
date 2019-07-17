@@ -109,18 +109,20 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
             propertyModel.longitude = longitude
 
             propertyArrayList?.add(propertyModel)
-
-            linearLayoutManager = LinearLayoutManager(activity)
-            propertyAdapter = PropertyAdapter(activity, propertyArrayList!!, LayoutType.LayoutProperties)
-            recyc_similar_prop?.layoutManager = linearLayoutManager as RecyclerView.LayoutManager?
-            propertyAdapter?.run {
-                setFavouriteListener(this@PropertyDetailFragment)
-                setItemClickListener(this@PropertyDetailFragment)
-            }
-            recyc_similar_prop?.adapter = propertyAdapter
-            recyc_similar_prop?.setNestedScrollingEnabled(false)
-
         }
+        setAdapter(propertyArrayList!!)
+    }
+    private fun setAdapter(propertyArrayList:ArrayList<PropertyModel>){
+        linearLayoutManager = LinearLayoutManager(mcontext)
+        propertyAdapter = PropertyAdapter(mcontext, propertyArrayList, LayoutType.LayoutProperties)
+        recyc_similar_prop?.layoutManager = linearLayoutManager as RecyclerView.LayoutManager?
+        propertyAdapter?.run {
+            setFavouriteListener(this@PropertyDetailFragment)
+            setItemClickListener(this@PropertyDetailFragment)
+        }
+        recyc_similar_prop?.adapter = propertyAdapter
+        recyc_similar_prop?.setNestedScrollingEnabled(false)
+
     }
 
     private fun getDetailItems(response: String?) {
@@ -129,9 +131,9 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
 
         val arrayPics = baseObj.getJSONArray("pics")
         for (i in 0 until arrayPics?.length()!!) {
-            var picUrl: String = arrayPics?.getString(i)
+            val picUrl: String = arrayPics.getString(i)
             Log.d("propertPics", picUrl)
-            url_maps?.put(i.toString(), picUrl!!)
+            url_maps.put(i.toString(), picUrl)
         }
         propertyImages()
         val arrayResults = baseObj.getJSONArray("results")
@@ -139,13 +141,13 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
         var propertyLat: String? = null
         var property_title: String? = null
         for (i in 0 until arrayResults?.length()!!) {
-            val dataObj = arrayResults?.getJSONObject(i)
+            val dataObj = arrayResults.getJSONObject(i)
 
 
             val mapped_servicesArray = dataObj?.getJSONArray("mapped_services")
-            for (i in 0 until mapped_servicesArray?.length()!!) {
+            for (a in 0 until mapped_servicesArray?.length()!!) {
                 val stateModel = StateModel()
-                val featuresObj = mapped_servicesArray?.getJSONObject(i)
+                val featuresObj = mapped_servicesArray.getJSONObject(a)
                 val our_services = featuresObj?.getString("our_services")
                 stateModel.state = our_services
 
@@ -220,7 +222,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
     }
 
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
-        showErrorBody(error)
+      //  showErrorBody(error)
     }
 
     var propertyArrayList: ArrayList<PropertyModel>? = null
@@ -272,10 +274,10 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
             ft?.replace(R.id.mappp, mapFragment!!)?.commit()
             mapFragment = childFragmentManager.findFragmentById(R.id.mappp) as SupportMapFragment?
             if (mapFragment == null) {
-                val fm = fragmentManager
-                val ft = fm?.beginTransaction()
+                val fmanager = fragmentManager
+                val ftransaction = fmanager?.beginTransaction()
                 mapFragment = SupportMapFragment.newInstance()
-                ft?.replace(R.id.mappp, mapFragment!!)?.commit()
+                ftransaction?.replace(R.id.mappp, mapFragment!!)?.commit()
 
             }
 
@@ -302,10 +304,10 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
     private fun propertyImages() {
 
 
-        for (name in url_maps!!.keys) {
+        for (name in url_maps.keys) {
             val textSliderView = DefaultSliderView(activity)
             // initialize a SliderLayout
-            textSliderView.image(url_maps!![name]!!)
+            textSliderView.image(url_maps[name])
                 .setScaleType(BaseSliderView.ScaleType.Fit)
 
             mDemoSlider.run {
@@ -339,14 +341,10 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
         property_location_txt = view.findViewById(R.id.property_location_txt);
         property_company_txt = view.findViewById(R.id.property_company_txt);
         property_presented_txt = view.findViewById(R.id.property_presented_txt);
-
         recyc_features = view.findViewById(R.id.recyc_features);
         recyc_similar_prop = view.findViewById(R.id.recyc_similar_prop);
-
         featuresArray = ArrayList()
         propertyArrayList = ArrayList()
-
-
         mDemoSlider = view.findViewById(R.id.property_img);
         mDemoSlider.getPagerIndicator()
             .setDefaultIndicatorColor(getResources().getColor(R.color.Red), getResources().getColor(R.color.gray));
