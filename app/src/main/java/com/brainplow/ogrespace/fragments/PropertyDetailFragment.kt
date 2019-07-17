@@ -112,7 +112,8 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
         }
         setAdapter(propertyArrayList!!)
     }
-    private fun setAdapter(propertyArrayList:ArrayList<PropertyModel>){
+
+    private fun setAdapter(propertyArrayList: ArrayList<PropertyModel>) {
         linearLayoutManager = LinearLayoutManager(mcontext)
         propertyAdapter = PropertyAdapter(mcontext, propertyArrayList, LayoutType.LayoutProperties)
         recyc_similar_prop?.layoutManager = linearLayoutManager as RecyclerView.LayoutManager?
@@ -164,41 +165,26 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
                 recyc_features?.adapter = statesAdapter
                 recyc_features?.setNestedScrollingEnabled(true);
             }
-
             val id = dataObj.getString("id")
-
             val address = dataObj.getString("address")
             property_address_txt?.setText(address)
             property_location_txt?.setText(address)
-
             val property_type = dataObj.getString("property_type")
             property_type_txt?.setText(property_type)
-
             propertyLat = dataObj.getString("latitude")
             propertyLng = dataObj.getString("longitude")
-
-
             val pic_url = dataObj.getString("pic_url")
-
-
             val one_pic = dataObj.getString("one_pic")
-
             val property_id = dataObj.getString("property_id")
             property_id_txt?.setText(property_id)
-
             val description = dataObj.getString("description")
             property_dis_txt?.setText(description)
-
             val price = dataObj.getString("price")
             property_price_txt?.setText(price)
             property_pri_txt?.setText(price)
-
             var presented_company = dataObj.getString("presented_company")
-
-
             val presented_name = dataObj.getString("presented_name")
             property_presented_txt?.setText(presented_name)
-
             val state = dataObj.getString("state")
             val zipcode = dataObj.getString("zipcode")
             val city = dataObj.getString("city")
@@ -209,20 +195,16 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
             property_company_txt?.setText(property_title)
             val contact_no = dataObj.getString("contact_no")
             val active_bool = dataObj.getBoolean("active_bool")
-
             val property_area = dataObj.getString("property_area")
             property_area_txt?.setText(property_area)
-
             var price_type = dataObj.getString("price_type")
             var post_type = dataObj.getString("post_type")
-
-
         }
         setMap(propertyLat, propertyLng, property_title)
     }
 
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
-      //  showErrorBody(error)
+        //  showErrorBody(error)
     }
 
     var propertyArrayList: ArrayList<PropertyModel>? = null
@@ -250,7 +232,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
     var token: String? = null
     var mapFragment: SupportMapFragment? = null
     var itemId = 0
-    var url_maps =  HashMap<String, String>()
+    var url_maps = HashMap<String, String>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.setIVolleyResult(this)
         val view = inflater.inflate(R.layout.fragment_details, container, false)
