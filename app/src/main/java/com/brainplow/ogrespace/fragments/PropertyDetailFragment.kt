@@ -62,7 +62,6 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
             context?.showInfoMessage("Item deleted from favourite successfully")
         } else if (url.contains(Urls.urlProperyDetail))
             getDetailItems(response)
-
     }
 
     override fun notifySuccess(requestType: RequestType?, response: JSONArray?, url: String, netWorkResponse: Int?) {

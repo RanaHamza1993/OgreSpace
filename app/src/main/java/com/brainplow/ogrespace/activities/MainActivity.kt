@@ -20,7 +20,7 @@ import com.brainplow.ogrespace.baseclasses.BaseActivity
 import com.brainplow.ogrespace.constants.StaticFunctions
 import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.fragments.*
-import com.brainplow.ogrespace.fragments.ContactUs
+import com.brainplow.ogrespace.fragments.ContactUsFragment
 import com.brainplow.ogrespace.fragments.HomeFragment
 import com.brainplow.ogrespace.fragments.ProfileFragment
 import com.brainplow.ogrespace.interfaces.Communicator
@@ -299,7 +299,7 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
                     }
                     R.id.established_contact -> {
                         // ActivityNavigator<MapsActivity>(this@MainActivity,MapsActivity::class.java)
-                        navigateToFragment(ContactUs())
+                        navigateToFragment(ContactUsFragment())
                     }
                     R.id.nav_service -> {
                         // ActivityNavigator<MapsActivity>(this@MainActivity,MapsActivity::class.java)

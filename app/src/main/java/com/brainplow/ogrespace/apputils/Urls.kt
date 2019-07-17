@@ -12,7 +12,6 @@ object Urls {
     val urlGetFavItems = baseUrl + "office/favourite_properties_id"
     val urlFilterSearch = baseUrl + "office/filter_properties1/"
     val urlGetPlaces = baseUrl + "office/search_suggestions/"
-
     //val baseImageStorageUrl=               baseStorageUrl+"OfficeImages/"
     val iconStorageUrl = baseStorageUrl + "final/"
     val urlImageUpload = baseStorageUrl + "hamzatest.php"
@@ -26,5 +25,6 @@ object Urls {
     val urlGetUserProfile = baseUrl + "user/GetUserDetail/"
     val urlUpdateUserProfile = baseUrl + "user/UpdateProfile/"
     val urlSearchProperties = baseUrl + "office/search_properties1/"
+    val urlContactUs = baseUrl + "user/contact_us/"
     val urlGooglePlaceSearch = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input="
 }
