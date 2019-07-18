@@ -267,31 +267,31 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
         if (firstname.isEmpty()) {
 
             // fname.error = "Enter First Name"
-            showErrorMessage("Enter First Name")
+            showErrorMessage("Enter first name")
             return
         }
         if(firstname.length<2){
-            showErrorMessage("First Name must be between 2 and 64 characters")
+            showErrorMessage("First name must be between 2 and 64 characters")
             return
         }
         if (lastname.isEmpty()) {
 
             // lname.error = "Enter Last Name"
-            showErrorMessage("Enter Last Name")
+            showErrorMessage("Enter last Name")
             return
         }
         if (lastname.length<2) {
-            showErrorMessage("Last Name must be between 2 and 64 characters")
+            showErrorMessage("Last name must be between 2 and 64 characters")
             return
         }
         if (username.isEmpty()) {
 
             //  name.error = "Enter Username"
-            showErrorMessage("Enter Username")
+            showErrorMessage("Enter username")
             return
         }
         if (username.length<3) {
-            showErrorMessage("Username Name must be between 3 and 64 characters")
+            showErrorMessage("Username name must be between 3 and 64 characters")
             return
         }
 

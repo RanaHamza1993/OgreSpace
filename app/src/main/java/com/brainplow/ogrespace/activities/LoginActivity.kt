@@ -38,7 +38,7 @@ import kotlin.math.sign
 class LoginActivity : BaseActivity(),Communicator.IVolleResult {
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
         if(url.equals(Urls.urlSignIn)){
-            showSuccessMessage("You have successfully logged in to OgreSpace")
+            showSuccessMessage("You have successfully signed into OgreSpace")
             val sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             // var user_id=obj.getString("user_id")
@@ -141,7 +141,9 @@ class LoginActivity : BaseActivity(),Communicator.IVolleResult {
         })
 
         signInBtn?.setOnClickListener {
+            StaticFunctions.hideKeyboard(it,this)
             singnIn()
+
         }
         privacypolicy.setOnClickListener({
             ActivityNavigator<PrivacyPolicyActivity>(this@LoginActivity,PrivacyPolicyActivity::class.java)

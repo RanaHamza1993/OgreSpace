@@ -211,7 +211,7 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
             mcontext?.showErrorMessage("Last Name must be between 2 and 64 characters")
             return false
         }
-        if (unum!!.equals("")){
+        if (unum.equals("")||!isVal){
             mcontext?.showErrorMessage("Enter valid number")
             return false
         }
