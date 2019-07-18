@@ -38,7 +38,7 @@
                     android:layout_marginBottom="15dp"
                     android:gravity="center"
                     android:fontFamily="@font/opensans_bold"
-                    android:text="Get in touch with us"
+                    android:text="Contact Us"
                     android:layout_gravity="center"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/crammargin10"
                     android:padding="@dimen/crampadding5"
-                    android:hint="Phone*"
+                    android:hint="Phone No.*"
                     app:hintTextAppearance="@style/InputTextLayout">
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -103,8 +103,8 @@
                         android:layout_marginRight="0dp"
                         android:fontFamily="@font/opensans_bold"
                         android:singleLine="true"
-                        android:digits="1234567890"
-                        android:inputType="number"
+                        android:digits="1234567890+"
+                        android:inputType="phone"
                         android:maxLength="15"
                         android:textAppearance="@style/CustomTextAppearance" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -162,6 +162,7 @@
                     android:gravity="center"
                     android:elevation="@dimen/button_elevation"
                     android:text="Submit"
+                    android:textAllCaps="false"
                     android:fontFamily="@font/opensans_bold"
                     style="?android:attr/borderlessButtonStyle"
                     android:textSize="@dimen/button_text"
@@ -170,7 +171,7 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="HEADQUARTER"
+                    android:text="OgreSpace"
                     android:fontFamily="@font/opensans_bold"
                     android:textSize="25sp"
                     android:gravity="center"
@@ -181,8 +182,7 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="5050 Quorum Drive Ste 700 Dallas TX 75254
-+1-214-302-7330"
+                    android:text="5050 Quorum Drive Ste 700 Dallas TX 75254"
                     android:maxLines="3"
                     android:padding="5dp"
                     android:fontFamily="@font/opensans_bold"
@@ -206,7 +206,7 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="contact AT OgreSpace DOT com"
+                    android:text="Establish Contact"
                     android:fontFamily="@font/opensans_bold"
                     android:textSize="@dimen/app_normal_text"
                     android:gravity="center"
@@ -222,7 +222,7 @@
                 <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="EMAIL"
+                        android:text="Email"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:layout_weight="0.7"
@@ -233,7 +233,7 @@
                 <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="ogrespace.com"
+                        android:text="contact AT OgreSpace DOT com "
                         android:textColor="@color/grey"
                         android:layout_weight="1.3"
                         android:padding="5dp"
@@ -250,7 +250,7 @@
                 <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="TOLL"
+                        android:text="Toll"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:layout_weight="0.7"
@@ -278,7 +278,7 @@
                 <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="FAX"
+                        android:text="Fax"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:layout_weight="0.7"
