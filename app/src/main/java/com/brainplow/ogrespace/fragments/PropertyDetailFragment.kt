@@ -247,20 +247,16 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
     }
 
     private fun setMap(propertyLat: String?, propertyLng: String?, property_title: String?) {
-        mapFragment = childFragmentManager.findFragmentById(R.id.mappp) as SupportMapFragment?
+        try {
+            mapFragment = childFragmentManager.findFragmentById(R.id.mappp) as SupportMapFragment?
+        } catch (e: Exception) {
+        }
         if (mapFragment == null) {
             val fm = fragmentManager
             val ft = fm?.beginTransaction()
             mapFragment = SupportMapFragment.newInstance()
             ft?.replace(R.id.mappp, mapFragment!!)?.commit()
-            mapFragment = childFragmentManager.findFragmentById(R.id.mappp) as SupportMapFragment?
-            if (mapFragment == null) {
-                val fmanager = fragmentManager
-                val ftransaction = fmanager?.beginTransaction()
-                mapFragment = SupportMapFragment.newInstance()
-                ftransaction?.replace(R.id.mappp, mapFragment!!)?.commit()
-
-            }
+            //    mapFragment = childFragmentManager.findFragmentById(R.id.mappp) as SupportMapFragment?
 
 
             mapFragment!!.getMapAsync(object : OnMapReadyCallback {
