@@ -22,6 +22,10 @@
             android:roundIcon="@mipmap/app_icon"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".activities.ChangePasswordActivity"
+                  android:theme="@style/AppTheme.Popup"
+                  android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
         <activity android:name=".activities.ForgotPassActivity">
         </activity>
         <activity android:name=".activities.RegisterActivity">
@@ -37,7 +41,6 @@
         <activity
                 android:name=".activities.MainActivity"
                 android:windowSoftInputMode="stateAlwaysHidden">
-            
         </activity>
         <activity android:name=".activities.OnBoardScreenActivity">
         </activity>
@@ -59,6 +62,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>
+    
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>

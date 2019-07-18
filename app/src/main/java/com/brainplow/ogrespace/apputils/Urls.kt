@@ -24,6 +24,7 @@ object Urls {
     val urlGetSaleProperties = baseUrl + "office/Sale_Property_android/"
     val urlGetUserProfile = baseUrl + "user/GetUserDetail/"
     val urlUpdateUserProfile = baseUrl + "user/UpdateProfile/"
+    val urlChangePassword = baseUrl + "user/user_change_password/"
     val urlSearchProperties = baseUrl + "office/search_properties1/"
     val urlContactUs = baseUrl + "user/contact_us/"
     val urlGooglePlaceSearch = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input="

@@ -2,6 +2,7 @@ package com.brainplow.ogrespace.activities
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.TypedValue
@@ -266,16 +267,16 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
                         }
 
                     }
-                    R.id.bottom_search ->{
-                       // navigateToFragment(SearchFragment())
-                        val f=supportFragmentManager.findFragmentByTag("Search")
-                        if(f==null){
-                           navigateToFragment(SearchFragment(),true,"Search")
-                            } else{
+                    R.id.bottom_search -> {
+                        // navigateToFragment(SearchFragment())
+                        val f = supportFragmentManager.findFragmentByTag("Search")
+                        if (f == null) {
+                            navigateToFragment(SearchFragment(), true, "Search")
+                        } else {
 
                         }
                     }
-                    R.id.bot_notification ->{
+                    R.id.bot_notification -> {
                         navigateToFragment(NotificationsFragment())
                     }
                     R.id.bot_save -> {
@@ -288,8 +289,6 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
                 }
                 return true
             }
-
-
         })
         navigationView.setNavigationItemSelectedListener(object : NavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -319,9 +318,12 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
                     R.id.nav_fav -> {
                         navigateToFragment(MyFavFragment())
                     }
-                    R.id.nav_faqs -> {
-                        //navigateToFragment(TestFragment())
+                    R.id.nav_change_password -> {
+                      //  ActivityNavigator<ChangePasswordActivity>(this@MainActivity, ChangePasswordActivity::class.java)
+                        val intent = Intent(this@MainActivity, ChangePasswordActivity::class.java)
+                        startActivity(intent)
                     }
+
                 }
                 drawer_layout.closeDrawer(GravityCompat.START)
                 return true
@@ -458,12 +460,11 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
             drawer_layout.closeDrawer(GravityCompat.START)
 
 
-        }else if (fragmentTitle.equals("Search")) {
+        } else if (fragmentTitle.equals("Search")) {
 
             val f = supportFragmentManager.findFragmentByTag("Search")
             (f as SearchFragment).onBackPressed()
-        }
-        else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             if (isBackEnabled) {
                 supportFragmentManager.popBackStack()
             } else {
