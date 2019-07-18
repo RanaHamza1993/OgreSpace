@@ -31,6 +31,7 @@ import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.baseclasses.BaseFragment
 import com.brainplow.ogrespace.constants.StaticFunctions
+import com.brainplow.ogrespace.constants.StaticFunctions.checkNumberValidation
 import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.extesnions.showErrorMessage
 import com.brainplow.ogrespace.extesnions.showSuccessMessage
@@ -46,6 +47,7 @@ import java.io.FileNotFoundException
 import java.io.InputStream
 import java.lang.Exception
 import java.util.HashMap
+import java.util.regex.Pattern
 import kotlin.math.ln
 
 class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
@@ -54,7 +56,7 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
         if (url.contains(Urls.urlUpdateUserProfile, true)) {
             if (filePath != null)
                 imageUpload(filePath)
-            mcontext?.showSuccessMessage("Profile updated successfully")
+            mcontext?.showSuccessMessage("Your profile has been updated successfully")
         }
 
     }
@@ -198,16 +200,19 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
         val ustate = userState?.text?.toString()
         val uaddress = userAddress?.text?.toString()
         val ucity = userCity?.text?.toString()
-        if (ufname.equals("")) {
-            mcontext?.showErrorMessage("Enter first name")
+        val isVal=checkNumberValidation(unum!!)
+
+
+        if (ufname!!.equals("")||ufname.length<=1) {
+            mcontext?.showErrorMessage("First Name must be between 2 and 64 characters")
             return false
         }
-        if (ulname.equals("")) {
-            mcontext?.showErrorMessage("Enter last name")
+        if (ulname!!.equals("")||ulname.length<=1) {
+            mcontext?.showErrorMessage("Last Name must be between 2 and 64 characters")
             return false
         }
-        if (unum.equals("")) {
-            mcontext?.showErrorMessage("Enter phone number")
+        if (unum!!.equals("")){
+            mcontext?.showErrorMessage("Enter valid number")
             return false
         }
         if (ucountry.equals("")) {
@@ -401,4 +406,6 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
         )
         MySingleton.getInstance(mcontext!!).requestQueue.add(request)
     }
+
+
 }

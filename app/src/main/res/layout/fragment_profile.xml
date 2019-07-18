@@ -78,6 +78,7 @@
                             android:inputType="textCapWords"
                             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                             android:singleLine="true"
+                            android:maxLength="64"
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray"
                             android:windowSoftInputMode="stateVisible" />
@@ -105,6 +106,7 @@
                             android:hint="Last Name"
                             android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                             android:singleLine="true"
+                            android:maxLength="64"
                             android:inputType="textCapWords"
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray" />
