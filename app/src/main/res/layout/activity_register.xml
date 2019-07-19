@@ -127,7 +127,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/crammargin30"
                         android:fontFamily="@font/opensans_bold"
                         android:gravity="center"
                         android:text="Sign Up"
@@ -284,9 +283,9 @@
                             android:id="@+id/terms_and_privacy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/colorPrimary"
+                            android:backgroundTint="@color/black"
                             android:padding="@dimen/text_padding_how_it"
-                            android:theme="@style/switch.theme" />
+                            android:theme="@style/customSwitch.theme" />
 
 
                     <TextView
@@ -322,7 +321,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:text="Already have an Account? Sign In"
+                        android:text="Already have an account? Sign In"
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         android:textSize="@dimen/app_normal_text" />

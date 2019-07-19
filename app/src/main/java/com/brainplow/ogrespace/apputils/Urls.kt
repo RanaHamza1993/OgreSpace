@@ -16,6 +16,8 @@ object Urls {
     val iconStorageUrl = baseStorageUrl + "final/"
     val urlImageUpload = baseStorageUrl + "hamzatest.php"
     val urlSignUp = baseUrl + "user/createuser/"
+    val urlEmailCheck = baseUrl + "user/EmailVerify/"
+    val urlUserNameCheck = baseUrl + "user/UsernameVerify/"
     val urlSignIn = baseUrl + "login/"
     val urlStates = baseUrl + "office/state_list/"
     val urlPropertyByState = baseUrl + "office/state_properties/"

@@ -25,6 +25,9 @@ import com.android.volley.request.StringRequest
 import com.badoo.mobile.util.WeakHandler
 import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.apputils.Urls
+import com.brainplow.ogrespace.apputils.Urls.urlEmailCheck
+import com.brainplow.ogrespace.apputils.Urls.urlSignUp
+import com.brainplow.ogrespace.apputils.Urls.urlUserNameCheck
 import com.brainplow.ogrespace.baseclasses.BaseActivity
 import com.brainplow.ogrespace.constants.StaticFunctions
 import com.brainplow.ogrespace.constants.StaticFunctions.emailValidator
@@ -48,12 +51,27 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
 
-        if(url.equals(Urls.urlSignUp)){
+        if(url.equals(urlSignUp)){
             showSuccessDialog()
             WeakHandler().postDelayed({
                 dialog.dismiss()
             },2500)
             spinner?.dismisss()
+        }
+        if(url.equals(urlEmailCheck)){
+            if(netWorkResponse==201)
+                input_layout_r_mail.error="Email already exist"
+                else if(netWorkResponse==200)
+            input_layout_r_mail.error=""
+        }
+        if(url.equals(urlUserNameCheck)){
+            if(netWorkResponse==201)
+            input_layout_r_un.error="Username already exist"
+            else if(netWorkResponse==200)
+            input_layout_r_un.error=""
+
+
+
         }
     }
 
@@ -61,6 +79,7 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
         if(url.equals(Urls.urlSignUp)){
             showErrorBody(error)
         }
+
     }
     lateinit var memail: EditText
     lateinit var pass: EditText
@@ -237,6 +256,22 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
             }else
                 input_layout_r_pass.helperText=""
         }
+        memail.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus){
+
+            }else {
+                val isValid= emailValidator(memail.text.toString())
+                if (memail.text.length > 1&&isValid)
+                    checkEmailExistence(memail.text.toString())
+            }
+        }
+        name.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus){
+
+            }else
+                if(name.text.length>0)
+                checkUserNameExistence(name.text.toString())
+        }
         conpass.setOnFocusChangeListener { v, hasFocus ->
             if(hasFocus)
                 input_layout_c_pass.helperText=""
@@ -381,5 +416,11 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
 
     }
 
+    fun checkEmailExistence(email:String?){
+        volleyService?.postDataVolley(RequestType.JsonObjectRequest, Urls.urlEmailCheck, JSONObject().put("email",email), "")
+    }
+    fun checkUserNameExistence(userName:String?){
+        volleyService?.postDataVolley(RequestType.JsonObjectRequest, Urls.urlUserNameCheck, JSONObject().put("username",userName), "")
+    }
 
 }
