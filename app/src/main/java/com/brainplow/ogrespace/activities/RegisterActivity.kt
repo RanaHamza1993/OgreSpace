@@ -55,6 +55,7 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
             showSuccessDialog()
             WeakHandler().postDelayed({
                 dialog.dismiss()
+                onBackPressed()
             },2500)
             spinner?.dismisss()
         }
@@ -261,16 +262,22 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
 
             }else {
                 val isValid= emailValidator(memail.text.toString())
-                if (memail.text.length > 1&&isValid)
+                if(memail.text.length==0)
+                    input_layout_r_mail.error=""
+               else if (memail.text.length > 1&&isValid)
                     checkEmailExistence(memail.text.toString())
+
             }
         }
         name.setOnFocusChangeListener { v, hasFocus ->
             if(hasFocus){
 
-            }else
-                if(name.text.length>0)
-                checkUserNameExistence(name.text.toString())
+            }else {
+                if(name.text.length==0)
+                    input_layout_r_un.error=""
+                else if (name.text.length > 0)
+                    checkUserNameExistence(name.text.toString())
+            }
         }
         conpass.setOnFocusChangeListener { v, hasFocus ->
             if(hasFocus)
