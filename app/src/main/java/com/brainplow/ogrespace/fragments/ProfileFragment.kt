@@ -31,6 +31,7 @@ import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.baseclasses.BaseFragment
 import com.brainplow.ogrespace.constants.StaticFunctions
+import com.brainplow.ogrespace.constants.StaticFunctions.checkNumberValidation
 import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.extesnions.showErrorMessage
 import com.brainplow.ogrespace.extesnions.showSuccessMessage
@@ -46,6 +47,7 @@ import java.io.FileNotFoundException
 import java.io.InputStream
 import java.lang.Exception
 import java.util.HashMap
+import java.util.regex.Pattern
 import kotlin.math.ln
 
 class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
@@ -54,7 +56,7 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
         if (url.contains(Urls.urlUpdateUserProfile, true)) {
             if (filePath != null)
                 imageUpload(filePath)
-            mcontext?.showSuccessMessage("Profile updated successfully")
+            mcontext?.showSuccessMessage("Your profile has been updated successfully")
         }
 
     }
@@ -83,6 +85,7 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
     var userPhoneNo: EditText? = null
     var userState: EditText? = null
     var userCity: EditText? = null
+    var userCompany: EditText? = null
     var userAddress: EditText? = null
     var editProfile: TextView? = null
     var updateProfile: Button? = null
@@ -127,6 +130,7 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
         userFirstName = view.findViewById(R.id.user__fname)
         userLastName = view.findViewById(R.id.user_lname)
         userCountry = view.findViewById(R.id.user_country)
+        userCompany = view.findViewById(R.id.user_company)
         userPhoneNo = view.findViewById(R.id.user_mobileno)
         userState = view.findViewById(R.id.user_state)
         userCity = view.findViewById(R.id.user_city)
@@ -152,6 +156,7 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
             userLastName?.setText(obj.getString("Lname"))
             userPhoneNo?.setText(obj.getString("Mobile"))
             userCountry?.setText(obj.getString("Country"))
+            userCompany?.setText(obj.getString("Company"))
             userState?.setText(obj.getString("State"))
             userAddress?.setText(obj.getString("Address"))
             userCity?.setText(obj.getString("City"))
@@ -177,6 +182,7 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
             obj.put("State", userState?.text?.toString())
             obj.put("Address", userAddress?.text?.toString())
             obj.put("City", userCity?.text?.toString())
+            obj.put("Company", userCompany?.text?.toString())
             if (filePath != null)
                 obj.put("Pic", profilepicname)
             else
@@ -198,16 +204,24 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
         val ustate = userState?.text?.toString()
         val uaddress = userAddress?.text?.toString()
         val ucity = userCity?.text?.toString()
-        if (ufname.equals("")) {
-            mcontext?.showErrorMessage("Enter first name")
+        val ucompany = userCompany?.text?.toString()
+        val isVal=checkNumberValidation(unum!!)
+
+
+        if (ufname!!.equals("")||ufname.length<=1) {
+            mcontext?.showErrorMessage("First Name must be between 2 and 64 characters")
             return false
         }
-        if (ulname.equals("")) {
-            mcontext?.showErrorMessage("Enter last name")
+        if (ulname!!.equals("")||ulname.length<=1) {
+            mcontext?.showErrorMessage("Last Name must be between 2 and 64 characters")
             return false
         }
-        if (unum.equals("")) {
-            mcontext?.showErrorMessage("Enter phone number")
+        if (unum.equals("")||!isVal){
+            mcontext?.showErrorMessage("Enter valid number")
+            return false
+        }
+        if (userCompany!!.equals("")){
+            mcontext?.showErrorMessage("Enter company name")
             return false
         }
         if (ucountry.equals("")) {
@@ -401,4 +415,6 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
         )
         MySingleton.getInstance(mcontext!!).requestQueue.add(request)
     }
+
+
 }

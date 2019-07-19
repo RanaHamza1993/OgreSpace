@@ -62,7 +62,6 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
             context?.showInfoMessage("Item deleted from favourite successfully")
         } else if (url.contains(Urls.urlProperyDetail))
             getDetailItems(response)
-
     }
 
     override fun notifySuccess(requestType: RequestType?, response: JSONArray?, url: String, netWorkResponse: Int?) {
@@ -109,18 +108,21 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
             propertyModel.longitude = longitude
 
             propertyArrayList?.add(propertyModel)
-
-            linearLayoutManager = LinearLayoutManager(activity)
-            propertyAdapter = PropertyAdapter(activity, propertyArrayList!!, LayoutType.LayoutProperties)
-            recyc_similar_prop?.layoutManager = linearLayoutManager as RecyclerView.LayoutManager?
-            propertyAdapter?.run {
-                setFavouriteListener(this@PropertyDetailFragment)
-                setItemClickListener(this@PropertyDetailFragment)
-            }
-            recyc_similar_prop?.adapter = propertyAdapter
-            recyc_similar_prop?.setNestedScrollingEnabled(false)
-
         }
+        setAdapter(propertyArrayList!!)
+    }
+
+    private fun setAdapter(propertyArrayList: ArrayList<PropertyModel>) {
+        linearLayoutManager = LinearLayoutManager(mcontext)
+        propertyAdapter = PropertyAdapter(mcontext, propertyArrayList, LayoutType.LayoutProperties)
+        recyc_similar_prop?.layoutManager = linearLayoutManager as RecyclerView.LayoutManager?
+        propertyAdapter?.run {
+            setFavouriteListener(this@PropertyDetailFragment)
+            setItemClickListener(this@PropertyDetailFragment)
+        }
+        recyc_similar_prop?.adapter = propertyAdapter
+        recyc_similar_prop?.setNestedScrollingEnabled(false)
+
     }
 
     private fun getDetailItems(response: String?) {
@@ -129,9 +131,9 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
 
         val arrayPics = baseObj.getJSONArray("pics")
         for (i in 0 until arrayPics?.length()!!) {
-            var picUrl: String = arrayPics?.getString(i)
+            val picUrl: String = arrayPics.getString(i)
             Log.d("propertPics", picUrl)
-            url_maps?.put(i.toString(), picUrl!!)
+            url_maps.put(i.toString(), picUrl)
         }
         propertyImages()
         val arrayResults = baseObj.getJSONArray("results")
@@ -139,13 +141,13 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
         var propertyLat: String? = null
         var property_title: String? = null
         for (i in 0 until arrayResults?.length()!!) {
-            val dataObj = arrayResults?.getJSONObject(i)
+            val dataObj = arrayResults.getJSONObject(i)
 
 
             val mapped_servicesArray = dataObj?.getJSONArray("mapped_services")
-            for (i in 0 until mapped_servicesArray?.length()!!) {
+            for (a in 0 until mapped_servicesArray?.length()!!) {
                 val stateModel = StateModel()
-                val featuresObj = mapped_servicesArray?.getJSONObject(i)
+                val featuresObj = mapped_servicesArray.getJSONObject(a)
                 val our_services = featuresObj?.getString("our_services")
                 stateModel.state = our_services
 
@@ -162,41 +164,26 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
                 recyc_features?.adapter = statesAdapter
                 recyc_features?.setNestedScrollingEnabled(true);
             }
-
             val id = dataObj.getString("id")
-
             val address = dataObj.getString("address")
             property_address_txt?.setText(address)
             property_location_txt?.setText(address)
-
             val property_type = dataObj.getString("property_type")
             property_type_txt?.setText(property_type)
-
             propertyLat = dataObj.getString("latitude")
             propertyLng = dataObj.getString("longitude")
-
-
             val pic_url = dataObj.getString("pic_url")
-
-
             val one_pic = dataObj.getString("one_pic")
-
             val property_id = dataObj.getString("property_id")
             property_id_txt?.setText(property_id)
-
             val description = dataObj.getString("description")
             property_dis_txt?.setText(description)
-
             val price = dataObj.getString("price")
             property_price_txt?.setText(price)
             property_pri_txt?.setText(price)
-
             var presented_company = dataObj.getString("presented_company")
-
-
             val presented_name = dataObj.getString("presented_name")
             property_presented_txt?.setText(presented_name)
-
             val state = dataObj.getString("state")
             val zipcode = dataObj.getString("zipcode")
             val city = dataObj.getString("city")
@@ -207,20 +194,16 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
             property_company_txt?.setText(property_title)
             val contact_no = dataObj.getString("contact_no")
             val active_bool = dataObj.getBoolean("active_bool")
-
             val property_area = dataObj.getString("property_area")
             property_area_txt?.setText(property_area)
-
             var price_type = dataObj.getString("price_type")
             var post_type = dataObj.getString("post_type")
-
-
         }
         setMap(propertyLat, propertyLng, property_title)
     }
 
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
-        showErrorBody(error)
+        //  showErrorBody(error)
     }
 
     var propertyArrayList: ArrayList<PropertyModel>? = null
@@ -248,7 +231,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
     var token: String? = null
     var mapFragment: SupportMapFragment? = null
     var itemId = 0
-    var url_maps =  HashMap<String, String>()
+    var url_maps = HashMap<String, String>()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.setIVolleyResult(this)
         val view = inflater.inflate(R.layout.fragment_details, container, false)
@@ -264,20 +247,16 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
     }
 
     private fun setMap(propertyLat: String?, propertyLng: String?, property_title: String?) {
-        mapFragment = childFragmentManager.findFragmentById(R.id.mappp) as SupportMapFragment?
+        try {
+            mapFragment = childFragmentManager.findFragmentById(R.id.mappp) as SupportMapFragment?
+        } catch (e: Exception) {
+        }
         if (mapFragment == null) {
             val fm = fragmentManager
             val ft = fm?.beginTransaction()
             mapFragment = SupportMapFragment.newInstance()
             ft?.replace(R.id.mappp, mapFragment!!)?.commit()
-            mapFragment = childFragmentManager.findFragmentById(R.id.mappp) as SupportMapFragment?
-            if (mapFragment == null) {
-                val fm = fragmentManager
-                val ft = fm?.beginTransaction()
-                mapFragment = SupportMapFragment.newInstance()
-                ft?.replace(R.id.mappp, mapFragment!!)?.commit()
-
-            }
+            //    mapFragment = childFragmentManager.findFragmentById(R.id.mappp) as SupportMapFragment?
 
 
             mapFragment!!.getMapAsync(object : OnMapReadyCallback {
@@ -302,10 +281,10 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
     private fun propertyImages() {
 
 
-        for (name in url_maps!!.keys) {
+        for (name in url_maps.keys) {
             val textSliderView = DefaultSliderView(activity)
             // initialize a SliderLayout
-            textSliderView.image(url_maps!![name]!!)
+            textSliderView.image(url_maps[name])
                 .setScaleType(BaseSliderView.ScaleType.Fit)
 
             mDemoSlider.run {
@@ -339,14 +318,10 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
         property_location_txt = view.findViewById(R.id.property_location_txt);
         property_company_txt = view.findViewById(R.id.property_company_txt);
         property_presented_txt = view.findViewById(R.id.property_presented_txt);
-
         recyc_features = view.findViewById(R.id.recyc_features);
         recyc_similar_prop = view.findViewById(R.id.recyc_similar_prop);
-
         featuresArray = ArrayList()
         propertyArrayList = ArrayList()
-
-
         mDemoSlider = view.findViewById(R.id.property_img);
         mDemoSlider.getPagerIndicator()
             .setDefaultIndicatorColor(getResources().getColor(R.color.Red), getResources().getColor(R.color.gray));

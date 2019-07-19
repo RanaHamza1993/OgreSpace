@@ -1,12 +1,12 @@
 package com.brainplow.ogrespace.adapters
-
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.brainplow.ogrespace.R
 
-abstract class GenericAdapter<T>(private val context: Context?, private var items: ArrayList<T>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class GenericAdapter<T>(private val context: Context?, private var items: ArrayList<T>?) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     open fun showCustomAlerDialog(
         context: Context?,
@@ -44,7 +44,6 @@ abstract class GenericAdapter<T>(private val context: Context?, private var item
     }
 
     abstract fun setViewHolder(parent: ViewGroup, layoutInflater: LayoutInflater): RecyclerView.ViewHolder
-
     open fun onBindData(holder: RecyclerView.ViewHolder, value: T) {}
     open fun onBindData(holder: RecyclerView.ViewHolder, value: T, position: Int) {}
     open fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {}
@@ -75,6 +74,7 @@ abstract class GenericAdapter<T>(private val context: Context?, private var item
         this.notifyDataSetChanged()
 
     }
+
     fun removeItem(obj: T) {
         items?.remove(obj)
         this.notifyDataSetChanged()

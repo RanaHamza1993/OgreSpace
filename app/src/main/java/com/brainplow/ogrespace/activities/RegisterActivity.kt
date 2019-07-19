@@ -25,8 +25,13 @@ import com.android.volley.request.StringRequest
 import com.badoo.mobile.util.WeakHandler
 import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.apputils.Urls
+import com.brainplow.ogrespace.apputils.Urls.urlEmailCheck
+import com.brainplow.ogrespace.apputils.Urls.urlSignUp
+import com.brainplow.ogrespace.apputils.Urls.urlUserNameCheck
 import com.brainplow.ogrespace.baseclasses.BaseActivity
 import com.brainplow.ogrespace.constants.StaticFunctions
+import com.brainplow.ogrespace.constants.StaticFunctions.emailValidator
+import com.brainplow.ogrespace.constants.StaticFunctions.passwordValidator
 import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.extesnions.showErrorMessage
 import com.brainplow.ogrespace.extesnions.showSuccessMessage
@@ -39,17 +44,35 @@ import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 import java.nio.charset.Charset
 import java.util.HashMap
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
 
-        if(url.equals(Urls.urlSignUp)){
+        if(url.equals(urlSignUp)){
             showSuccessDialog()
             WeakHandler().postDelayed({
                 dialog.dismiss()
+                onBackPressed()
             },2500)
             spinner?.dismisss()
+        }
+        if(url.equals(urlEmailCheck)){
+            if(netWorkResponse==201)
+                input_layout_r_mail.error="Email already exist"
+                else if(netWorkResponse==200)
+            input_layout_r_mail.error=""
+        }
+        if(url.equals(urlUserNameCheck)){
+            if(netWorkResponse==201)
+            input_layout_r_un.error="Username already exist"
+            else if(netWorkResponse==200)
+            input_layout_r_un.error=""
+
+
+
         }
     }
 
@@ -57,6 +80,7 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
         if(url.equals(Urls.urlSignUp)){
             showErrorBody(error)
         }
+
     }
     lateinit var memail: EditText
     lateinit var pass: EditText
@@ -233,13 +257,39 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
             }else
                 input_layout_r_pass.helperText=""
         }
+        memail.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus){
+
+            }else {
+                val isValid= emailValidator(memail.text.toString())
+                if(memail.text.length==0)
+                    input_layout_r_mail.error=""
+               else if (memail.text.length > 1&&isValid)
+                    checkEmailExistence(memail.text.toString())
+
+            }
+        }
+        name.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus){
+
+            }else {
+                if(name.text.length==0)
+                    input_layout_r_un.error=""
+                else if (name.text.length > 0)
+                    checkUserNameExistence(name.text.toString())
+            }
+        }
         conpass.setOnFocusChangeListener { v, hasFocus ->
             if(hasFocus)
-                input_layout_c_pass.helperText="Password must be 8 characters long and must include 1 upper case, 1 lower case, 1 number and 1 special character"
+                input_layout_c_pass.helperText=""
+                //input_layout_c_pass.helperText="Password must be 8 characters long and must include 1 upper case, 1 lower case, 1 number and 1 special character"
+
             else
                 input_layout_c_pass.helperText=""
         }
         signup?.setOnClickListener {
+
+
             signupAPI()
         }
 
@@ -261,37 +311,38 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
         val password = pass.text.trim().toString()
         val confirmPass = conpass.text.trim().toString()
         val mail = memail.text.trim().toString()
-        val isValid = StaticFunctions.emailValidator(mail)
+        val isValid = emailValidator(mail)
+        val isPwdValid = passwordValidator(password)
 
         //   val isValid=passwordValidator(password)
         if (firstname.isEmpty()) {
 
             // fname.error = "Enter First Name"
-            showErrorMessage("Enter First Name")
+            showErrorMessage("Enter first name")
             return
         }
         if(firstname.length<2){
-            showErrorMessage("First Name must be between 2 and 64 characters")
+            showErrorMessage("First name must be between 2 and 64 characters")
             return
         }
         if (lastname.isEmpty()) {
 
             // lname.error = "Enter Last Name"
-            showErrorMessage("Enter Last Name")
+            showErrorMessage("Enter last Name")
             return
         }
         if (lastname.length<2) {
-            showErrorMessage("Last Name must be between 2 and 64 characters")
+            showErrorMessage("Last name must be between 2 and 64 characters")
             return
         }
         if (username.isEmpty()) {
 
             //  name.error = "Enter Username"
-            showErrorMessage("Enter Username")
+            showErrorMessage("Enter username")
             return
         }
         if (username.length<3) {
-            showErrorMessage("Username Name must be between 3 and 64 characters")
+            showErrorMessage("Username must be between 3 and 64 characters")
             return
         }
 
@@ -311,14 +362,14 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
             // input_layout_r_pass.isPasswordVisibilityToggleEnabled = false
 
             //  pass.error = "Enter a Password"
-            showErrorMessage("Enter a Password")
+            showErrorMessage("Enter password")
             return
         }
 
         if (confirmPass.isEmpty()) {
             //   input_layout_c_pass.isPasswordVisibilityToggleEnabled = false
             //  conpass.error = "Enter Password, again"
-            showErrorMessage("Enter Confirm Password")
+            showErrorMessage("Enter confirm password")
 
             return
         }
@@ -326,12 +377,20 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
 
             //input_layout_c_pass.isPasswordVisibilityToggleEnabled=false
             // conpass.error = "Passwords are not same"
-            showErrorMessage("Passwords are not same")
+            showErrorMessage("Password does not match")
+            // Toasty.error(this, "Passwords are not same", Toast.LENGTH_SHORT, true).show()
+            return
+        }
+        if (!isPwdValid) {
+
+            //input_layout_c_pass.isPasswordVisibilityToggleEnabled=false
+            // conpass.error = "Passwords are not same"
+            showErrorMessage("Password must be 8 characters long and must include 1 upper case, 1 lower case, 1 number and 1 special character.")
             // Toasty.error(this, "Passwords are not same", Toast.LENGTH_SHORT, true).show()
             return
         }
         if (!checkTerms!!.isChecked) {
-            showErrorMessage("Please check terms and condition checkbox")
+            showErrorMessage("Please agree to Terms of Use and Privacy Policy")
             return
         }
         spinner?.showdialog()
@@ -362,6 +421,13 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
 
+    }
+
+    fun checkEmailExistence(email:String?){
+        volleyService?.postDataVolley(RequestType.JsonObjectRequest, Urls.urlEmailCheck, JSONObject().put("email",email), "")
+    }
+    fun checkUserNameExistence(userName:String?){
+        volleyService?.postDataVolley(RequestType.JsonObjectRequest, Urls.urlUserNameCheck, JSONObject().put("username",userName), "")
     }
 
 }

@@ -2,6 +2,7 @@ package com.brainplow.ogrespace.activities
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.TypedValue
@@ -15,12 +16,15 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.error.VolleyError
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.apputils.Urls.urlGetFavItems
+import com.brainplow.ogrespace.apputils.Urls.urlGetUserProfile
 import com.brainplow.ogrespace.baseclasses.BaseActivity
 import com.brainplow.ogrespace.constants.StaticFunctions
+import com.brainplow.ogrespace.constants.StaticFunctions.loadImage
 import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.fragments.*
-import com.brainplow.ogrespace.fragments.ContactUs
+import com.brainplow.ogrespace.fragments.ContactUsFragment
 import com.brainplow.ogrespace.fragments.HomeFragment
 import com.brainplow.ogrespace.fragments.ProfileFragment
 import com.brainplow.ogrespace.interfaces.Communicator
@@ -30,8 +34,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.google.android.material.navigation.NavigationView
+import com.mikhaellopez.circularimageview.CircularImageView
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONArray
 import org.json.JSONObject
 
 class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBottomBar, Communicator.IVolleResult {
@@ -41,6 +47,13 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
         for (i in 0 until array!!.length()) {
             val itemId = array.getJSONObject(i)?.getInt("Property_id")?.toString()
             favItemsMap.put(itemId!!, itemId.toInt())
+        }
+    }
+
+    override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
+        if (url == urlGetUserProfile) {
+            val userimage=JSONArray(response).getJSONObject(0).getString("Pic")
+            loadImage(this, userimage, userImage, Urls.iconStorageUrl)
         }
     }
 
@@ -192,6 +205,7 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
     var appLogo: ImageView? = null
     var tolLogo: ImageView? = null
     var headerBack: ImageView? = null
+    var userImage: CircularImageView? = null
     var token: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -206,12 +220,15 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
 
     fun volleyRequests() {
         volleyService!!.getDataVolley(RequestType.JsonObjectRequest, urlGetFavItems, token!!)
+        volleyService?.getDataVolley(RequestType.StringRequest, Urls.urlGetUserProfile, token!!)
+
     }
 
     fun setIds() {
         volleyService = VolleyService(this, this)
         val view: View = nav_view.getHeaderView(0)
         headerBack = view.findViewById(R.id.header_back)
+        userImage = view.findViewById(R.id.userImage)
         toolbar = findViewById(R.id.toolbar)
         bottomNavigationView = findViewById(R.id.navigation)
         navigationView = findViewById(R.id.nav_view)
@@ -266,16 +283,16 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
                         }
 
                     }
-                    R.id.bottom_search ->{
-                       // navigateToFragment(SearchFragment())
-                        val f=supportFragmentManager.findFragmentByTag("Search")
-                        if(f==null){
-                           navigateToFragment(SearchFragment(),true,"Search")
-                            } else{
+                    R.id.bottom_search -> {
+                        // navigateToFragment(SearchFragment())
+                        val f = supportFragmentManager.findFragmentByTag("Search")
+                        if (f == null) {
+                            navigateToFragment(SearchFragment(), true, "Search")
+                        } else {
 
                         }
                     }
-                    R.id.bot_notification ->{
+                    R.id.bot_notification -> {
                         navigateToFragment(NotificationsFragment())
                     }
                     R.id.bot_save -> {
@@ -288,8 +305,6 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
                 }
                 return true
             }
-
-
         })
         navigationView.setNavigationItemSelectedListener(object : NavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -299,7 +314,7 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
                     }
                     R.id.established_contact -> {
                         // ActivityNavigator<MapsActivity>(this@MainActivity,MapsActivity::class.java)
-                        navigateToFragment(ContactUs())
+                        navigateToFragment(ContactUsFragment())
                     }
                     R.id.nav_service -> {
                         // ActivityNavigator<MapsActivity>(this@MainActivity,MapsActivity::class.java)
@@ -319,9 +334,12 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
                     R.id.nav_fav -> {
                         navigateToFragment(MyFavFragment())
                     }
-                    R.id.nav_faqs -> {
-                        //navigateToFragment(TestFragment())
+                    R.id.nav_change_password -> {
+                      //  ActivityNavigator<ChangePasswordActivity>(this@MainActivity, ChangePasswordActivity::class.java)
+                        val intent = Intent(this@MainActivity, ChangePasswordActivity::class.java)
+                        startActivity(intent)
                     }
+
                 }
                 drawer_layout.closeDrawer(GravityCompat.START)
                 return true
@@ -458,12 +476,11 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
             drawer_layout.closeDrawer(GravityCompat.START)
 
 
-        }else if (fragmentTitle.equals("Search")) {
+        } else if (fragmentTitle.equals("Search")) {
 
             val f = supportFragmentManager.findFragmentByTag("Search")
             (f as SearchFragment).onBackPressed()
-        }
-        else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             if (isBackEnabled) {
                 supportFragmentManager.popBackStack()
             } else {

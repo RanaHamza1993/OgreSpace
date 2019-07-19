@@ -12,6 +12,8 @@ import com.mikhaellopez.circularimageview.CircularImageView
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
+
+
 object StaticFunctions {
     fun inviteOthers(context: Context?) {
         val sendIntent = Intent()
@@ -63,6 +65,13 @@ object StaticFunctions {
         Glide.with(context!!)
             .load(storage+image).placeholder(R.drawable.cplaceholder)
             .into(imageView!!)
+    }
+    fun checkNumberValidation(number:String):Boolean{
+        //val regex = "^\\+(?:[0-9] ?){6,14}[0-9]$"
+        val regex = "^((\\+92)|(0092))-{0,1}\\d{3}-{0,1}\\d{7}\$|^\\d{11}\$|^\\d{4}-\\d{7}\$\n"
+        val  pattern = Pattern.compile(regex)
+        val matcher = pattern.matcher(number).matches()
+        return matcher
     }
 
 }
