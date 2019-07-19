@@ -68,8 +68,8 @@ class ChangePasswordActivity : BaseActivity(),Communicator.IVolleResult {
     fun setListeners(){
         bcpSubmit?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                var newPass = "${etcp_newPass?.text?.trim()}"
-                var confPass = "${etcp_confirmPass?.text?.trim()}"
+                val newPass = "${etcp_newPass?.text?.trim()}"
+                val confPass = "${etcp_confirmPass?.text?.trim()}"
                 //
 
                 val isValid=passwordValidator(newPass)

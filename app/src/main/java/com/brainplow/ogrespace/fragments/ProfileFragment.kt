@@ -85,6 +85,7 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
     var userPhoneNo: EditText? = null
     var userState: EditText? = null
     var userCity: EditText? = null
+    var userCompany: EditText? = null
     var userAddress: EditText? = null
     var editProfile: TextView? = null
     var updateProfile: Button? = null
@@ -129,6 +130,7 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
         userFirstName = view.findViewById(R.id.user__fname)
         userLastName = view.findViewById(R.id.user_lname)
         userCountry = view.findViewById(R.id.user_country)
+        userCompany = view.findViewById(R.id.user_company)
         userPhoneNo = view.findViewById(R.id.user_mobileno)
         userState = view.findViewById(R.id.user_state)
         userCity = view.findViewById(R.id.user_city)
@@ -154,6 +156,7 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
             userLastName?.setText(obj.getString("Lname"))
             userPhoneNo?.setText(obj.getString("Mobile"))
             userCountry?.setText(obj.getString("Country"))
+            userCompany?.setText(obj.getString("Company"))
             userState?.setText(obj.getString("State"))
             userAddress?.setText(obj.getString("Address"))
             userCity?.setText(obj.getString("City"))
@@ -179,6 +182,7 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
             obj.put("State", userState?.text?.toString())
             obj.put("Address", userAddress?.text?.toString())
             obj.put("City", userCity?.text?.toString())
+            obj.put("Company", userCompany?.text?.toString())
             if (filePath != null)
                 obj.put("Pic", profilepicname)
             else
@@ -200,6 +204,7 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
         val ustate = userState?.text?.toString()
         val uaddress = userAddress?.text?.toString()
         val ucity = userCity?.text?.toString()
+        val ucompany = userCompany?.text?.toString()
         val isVal=checkNumberValidation(unum!!)
 
 
@@ -213,6 +218,10 @@ class ProfileFragment : BaseFragment(), Communicator.IVolleResult {
         }
         if (unum.equals("")||!isVal){
             mcontext?.showErrorMessage("Enter valid number")
+            return false
+        }
+        if (userCompany!!.equals("")){
+            mcontext?.showErrorMessage("Enter company name")
             return false
         }
         if (ucountry.equals("")) {

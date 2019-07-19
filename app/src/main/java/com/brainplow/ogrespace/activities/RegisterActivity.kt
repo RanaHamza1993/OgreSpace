@@ -27,6 +27,8 @@ import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.baseclasses.BaseActivity
 import com.brainplow.ogrespace.constants.StaticFunctions
+import com.brainplow.ogrespace.constants.StaticFunctions.emailValidator
+import com.brainplow.ogrespace.constants.StaticFunctions.passwordValidator
 import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.extesnions.showErrorMessage
 import com.brainplow.ogrespace.extesnions.showSuccessMessage
@@ -39,6 +41,8 @@ import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 import java.nio.charset.Charset
 import java.util.HashMap
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
 
@@ -235,11 +239,15 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
         }
         conpass.setOnFocusChangeListener { v, hasFocus ->
             if(hasFocus)
-                input_layout_c_pass.helperText="Password must be 8 characters long and must include 1 upper case, 1 lower case, 1 number and 1 special character"
+                input_layout_c_pass.helperText=""
+                //input_layout_c_pass.helperText="Password must be 8 characters long and must include 1 upper case, 1 lower case, 1 number and 1 special character"
+
             else
                 input_layout_c_pass.helperText=""
         }
         signup?.setOnClickListener {
+
+
             signupAPI()
         }
 
@@ -261,7 +269,8 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
         val password = pass.text.trim().toString()
         val confirmPass = conpass.text.trim().toString()
         val mail = memail.text.trim().toString()
-        val isValid = StaticFunctions.emailValidator(mail)
+        val isValid = emailValidator(mail)
+        val isPwdValid = passwordValidator(password)
 
         //   val isValid=passwordValidator(password)
         if (firstname.isEmpty()) {
@@ -291,7 +300,7 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
             return
         }
         if (username.length<3) {
-            showErrorMessage("Username name must be between 3 and 64 characters")
+            showErrorMessage("Username must be between 3 and 64 characters")
             return
         }
 
@@ -311,14 +320,14 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
             // input_layout_r_pass.isPasswordVisibilityToggleEnabled = false
 
             //  pass.error = "Enter a Password"
-            showErrorMessage("Enter a Password")
+            showErrorMessage("Enter password")
             return
         }
 
         if (confirmPass.isEmpty()) {
             //   input_layout_c_pass.isPasswordVisibilityToggleEnabled = false
             //  conpass.error = "Enter Password, again"
-            showErrorMessage("Enter Confirm Password")
+            showErrorMessage("Enter confirm password")
 
             return
         }
@@ -326,12 +335,20 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
 
             //input_layout_c_pass.isPasswordVisibilityToggleEnabled=false
             // conpass.error = "Passwords are not same"
-            showErrorMessage("Passwords are not same")
+            showErrorMessage("Password does not match")
+            // Toasty.error(this, "Passwords are not same", Toast.LENGTH_SHORT, true).show()
+            return
+        }
+        if (!isPwdValid) {
+
+            //input_layout_c_pass.isPasswordVisibilityToggleEnabled=false
+            // conpass.error = "Passwords are not same"
+            showErrorMessage("Password must be 8 characters long and must include 1 upper case, 1 lower case, 1 number and 1 special character.")
             // Toasty.error(this, "Passwords are not same", Toast.LENGTH_SHORT, true).show()
             return
         }
         if (!checkTerms!!.isChecked) {
-            showErrorMessage("Please check terms and condition checkbox")
+            showErrorMessage("Please agree to Terms of Use and Privacy Policy")
             return
         }
         spinner?.showdialog()
@@ -363,5 +380,6 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
         dialog.show()
 
     }
+
 
 }

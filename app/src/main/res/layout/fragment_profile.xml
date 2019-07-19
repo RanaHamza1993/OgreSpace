@@ -139,7 +139,30 @@
                             android:textColorHint="@color/gray"
                     />
                 </com.google.android.material.textfield.TextInputLayout>
-
+    
+                <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/text_padding_how_it"
+                        android:layout_marginTop="@dimen/text_padding_how_it"
+                        android:layout_marginRight="@dimen/text_padding_how_it"
+                        android:padding="@dimen/text_padding_how_it"
+                        app:hintTextAppearance="@style/InputTextLayout">
+        
+                    <EditText
+                            style="@style/CustomTextAppearance"
+                            android:id="@+id/user_company"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/_7sdp"
+                            android:hint="Company"
+                            android:inputType="textCapWords"
+                            android:paddingBottom="@dimen/_7sdp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray" />
+                </com.google.android.material.textfield.TextInputLayout>
+    
+    
                 <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/input_bio"
                         android:layout_width="match_parent"
