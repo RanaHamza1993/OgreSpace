@@ -120,7 +120,7 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
+                
                 android:orientation="vertical">
 
             <RelativeLayout
@@ -134,8 +134,8 @@
                         android:layout_marginTop="3dp"
                         android:layout_marginBottom="8dp"
                         android:text="Properties For Lease"
-                        android:fontFamily="@font/opensans_bold"
                         android:textColor="@color/black"
+                        android:fontFamily="@font/opensans_bold"
                         android:textSize="@dimen/app_heading_text"
                         android:textStyle="bold" />
 
@@ -169,271 +169,421 @@
                     android:paddingLeft="@dimen/homefragmentpadding" />
 
         </LinearLayout>
-
+    
         <LinearLayout
+                android:layout_marginBottom="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-            <RelativeLayout
+                android:background="@color/white"
+                android:orientation="vertical">
+        
+        
+            <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/homefragmentmargin"
-                        android:layout_marginTop="3dp"
-                        android:text="Bid &amp; Buy on Notes"
-                        android:layout_marginBottom="8dp"
-                        android:fontFamily="@font/opensans_bold"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/app_heading_text"
-                        android:textStyle="bold" />
-
-                <TextView
-                        android:id="@+id/bidbuynotes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/homefragmentmargin"
-                        android:textColor="@drawable/bidbuybtntextstate"
-                        android:background="@drawable/bid_buy_btns_home"
-                        android:paddingLeft="@dimen/crampadding12"
-                        android:gravity="center"
-                        android:layout_centerVertical="true"
-                        android:paddingRight="@dimen/crampadding12"
-                        android:paddingTop="@dimen/crammargin2"
-                        android:paddingBottom="@dimen/crammargin2"
-                        android:text="More"
-                        android:elevation="@dimen/button_elevation"
-                        android:textSize="@dimen/bidCardbtntext"
-                        android:textStyle="bold" />
-
-            </RelativeLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerBidOnNotes"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/app_spacing_small"
+                    android:layout_marginTop="@dimen/app_elevation"
+                    android:text="Packages &amp; Pricing"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textSize="@dimen/app_heading_text"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+        
+        
+            <HorizontalScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:minHeight="@dimen/_150sdp"
-                    android:clipToPadding="false"
-                    android:paddingLeft="@dimen/homefragmentpadding" />
-
-        </LinearLayout>
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-        android:visibility="gone">
-
-            <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <TextView
-                        android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+            
+                <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/homefragmentmargin"
-                        android:layout_marginTop="3dp"
-                        android:text="Bid &amp; Buy on Flash Cards"
-                        android:layout_marginBottom="8dp"
-                        android:fontFamily="@font/opensans_bold"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/app_heading_text"
-                        android:textStyle="bold" />
-
-                <TextView
-                        android:id="@+id/bidbuyflash"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/homefragmentmargin"
-                        android:textColor="@drawable/bidbuybtntextstate"
-                        android:background="@drawable/bid_buy_btns_home"
-                        android:paddingLeft="@dimen/crampadding12"
-                        android:gravity="center"
-                        android:layout_centerVertical="true"
-                        android:paddingRight="@dimen/crampadding12"
-                        android:paddingTop="@dimen/crammargin2"
-                        android:paddingBottom="@dimen/crammargin2"
-                        android:text="More"
-                        android:elevation="@dimen/button_elevation"
-                        android:textSize="@dimen/bidCardbtntext"
-                        android:textStyle="bold" />
-
-            </RelativeLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerBidOnFlashCards"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:minHeight="@dimen/_150sdp"
-                    android:clipToPadding="false"
-                    android:paddingLeft="@dimen/homefragmentmargin" />
-
-        </LinearLayout>
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-            <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/homefragmentmargin"
-                        android:layout_marginTop="3dp"
-                        android:text="Bid &amp; Buy on Books"
-                        android:layout_marginBottom="8dp"
-                        android:fontFamily="@font/opensans_bold"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/app_heading_text"
-                        android:textStyle="bold" />
-
-                <TextView
-                        android:id="@+id/mstbookMore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/homefragmentmargin"
-                        android:textColor="@drawable/bidbuybtntextstate"
-                        android:background="@drawable/bid_buy_btns_home"
-                        android:paddingLeft="@dimen/crampadding12"
-                        android:gravity="center"
-                        android:layout_centerVertical="true"
-                        android:paddingRight="@dimen/crampadding12"
-                        android:paddingTop="@dimen/crammargin2"
-                        android:paddingBottom="@dimen/crammargin2"
-                        android:text="More"
-                        android:elevation="@dimen/button_elevation"
-                        android:textSize="@dimen/bidCardbtntext"
-                        android:textStyle="bold" />
-            </RelativeLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerTopRated"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:layout_marginBottom="40dp"
-                    android:minHeight="@dimen/_150sdp"
-                    android:paddingLeft="@dimen/homefragmentpadding" />
-
-        </LinearLayout>
-
-
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-            <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/homefragmentmargin"
-                        android:layout_marginTop="3dp"
-                        android:text="Top Rated Courses"
-                        android:fontFamily="@font/opensans_bold"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/app_heading_text"
-                        android:textStyle="bold" />
-
-                <TextView
-                        android:id="@+id/tpratedMore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/homefragmentmargin"
-                        android:textColor="@drawable/bidbuybtntextstate"
-                        android:background="@drawable/bid_buy_btns_home"
-                        android:paddingLeft="@dimen/crampadding12"
-                        android:gravity="center"
-                        android:layout_centerVertical="true"
-                        android:paddingRight="@dimen/crampadding12"
-                        android:paddingTop="@dimen/crammargin2"
-                        android:paddingBottom="@dimen/crammargin2"
-                        android:text="More"
-                        android:elevation="@dimen/button_elevation"
-                        android:textSize="@dimen/bidCardbtntext"
-                        android:textStyle="bold" />
-
-            </RelativeLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerTopCourse"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:paddingLeft="@dimen/homefragmentpadding" />
-
-        </LinearLayout>
-
-
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-            <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/homefragmentmargin"
-                        android:layout_marginTop="3dp"
-                        android:text="Most popular Courses"
-                        android:fontFamily="@font/opensans_bold"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/app_heading_text"
-                        android:textStyle="bold" />
-
-                <TextView
-                        android:id="@+id/mstpopNotesMore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/homefragmentmargin"
-                        android:textColor="@drawable/bidbuybtntextstate"
-                        android:background="@drawable/bid_buy_btns_home"
-                        android:paddingLeft="@dimen/crampadding12"
-                        android:gravity="center"
-                        android:layout_centerVertical="true"
-                        android:paddingRight="@dimen/crampadding12"
-                        android:paddingTop="@dimen/crammargin2"
-                        android:paddingBottom="@dimen/crammargin2"
-                        android:text="More"
-                        android:elevation="@dimen/button_elevation"
-                        android:textSize="@dimen/bidCardbtntext"
-                        android:textStyle="bold" />
-
-            </RelativeLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerPopCourses"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-
-                    android:paddingLeft="@dimen/homefragmentpadding" />
-
+                        android:orientation="horizontal">
+                
+                    <androidx.cardview.widget.CardView
+                            android:id="@+id/pricing_trial"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/app_spacing_small"
+                            android:background="@color/white"
+                            app:cardCornerRadius="@dimen/app_spacing_smallest"
+                            app:cardElevation="@dimen/app_elevation">
+                    
+                        <LinearLayout
+                                android:layout_width="@dimen/home_card_width"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                        
+                            <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingBottom="@dimen/app_spacing_small"
+                                    android:paddingTop="@dimen/app_spacing_small"
+                                    android:fontFamily="@font/opensans_bold"
+                                    android:textAllCaps="false"
+                                    android:text="FREE PLAN"
+                                    android:textStyle="bold"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/charcoal"
+                                    android:textSize="@dimen/app_normal_text" />
+                        
+                        
+                            <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:background="@color/black"
+                                    android:gravity="center">
+                            
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/opensans_bold"
+                                        android:textAllCaps="false"
+                                        android:text="$ "
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/app_small_text"
+                                        android:textStyle="bold" />
+                            
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/opensans_bold"
+                                        android:textAllCaps="false"
+                                        android:text="0.00"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/creditcard_heading"
+                                        android:textStyle="bold" />
+                        
+                            </LinearLayout>
+                        
+                        
+                            <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/app_spacing_small"
+                                    android:paddingBottom="@dimen/app_spacing_smallest"
+                                    android:paddingTop="@dimen/app_spacing_smallest"
+                                    android:fontFamily="@font/opensans_bold"
+                                    android:textAllCaps="false"
+                                    android:text="See More..."
+                                    android:textAlignment="center"
+                                    android:textColor="@color/gray"
+                                    android:textSize="@dimen/app_small_text" />
+                        
+                        
+                            <Button
+                                    android:id="@+id/b_pricing_trial"
+                                    android:layout_gravity="center"
+                                    android:paddingLeft="@dimen/app_spacing"
+                                    android:paddingRight="@dimen/app_spacing"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/app_spacing_small"
+                                    android:padding="@dimen/rating_height"
+                                    android:text="Register Now"
+                                    android:minHeight="@dimen/btnsize"
+                                    android:textColor="@drawable/bidbuybtntextstate"
+                                    android:background="@drawable/bid_buy_btns_home"
+                                    android:textSize="@dimen/app_button_text"
+                                    android:textStyle="bold"
+                                    android:textAllCaps="false"/>
+                    
+                        </LinearLayout>
+                
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                            android:id="@+id/pricing_monthly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/app_spacing_small"
+                            android:background="@color/white"
+                            app:cardCornerRadius="@dimen/app_spacing_smallest"
+                            app:cardElevation="@dimen/app_elevation">
+                    
+                        <LinearLayout
+                                android:layout_width="@dimen/home_card_width"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                        
+                            <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingBottom="@dimen/app_spacing_small"
+                                    android:paddingTop="@dimen/app_spacing_small"
+                                    android:fontFamily="@font/opensans_bold"
+                                    android:textAllCaps="false"
+                                    android:text="MONTHLY PLAN"
+                                    android:textStyle="bold"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/charcoal"
+                                    android:textSize="@dimen/app_normal_text" />
+                        
+                        
+                            <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:background="@color/colorPrimary"
+                                    android:gravity="center">
+                            
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/opensans_bold"
+                                        android:textAllCaps="false"
+                                        android:text="$ "
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/app_small_text"
+                                        android:textStyle="bold" />
+                            
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/opensans_bold"
+                                        android:textAllCaps="false"
+                                        android:text="@string/pricing_monthly"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/creditcard_heading"
+                                        android:textStyle="bold" />
+                        
+                            </LinearLayout>
+                        
+                        
+                            <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/app_spacing_small"
+                                    android:paddingBottom="@dimen/app_spacing_smallest"
+                                    android:paddingTop="@dimen/app_spacing_smallest"
+                                    android:fontFamily="@font/opensans_bold"
+                                    android:textAllCaps="false"
+                                    android:text="See More..."
+                                    android:textAlignment="center"
+                                    android:textColor="@color/gray"
+                                    android:textSize="@dimen/app_small_text" />
+                        
+                        
+                            <Button
+                                    android:id="@+id/b_pricing_monthly"
+                                    android:layout_gravity="center"
+                                    android:paddingLeft="@dimen/app_spacing"
+                                    android:paddingRight="@dimen/app_spacing"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/app_spacing_small"
+                                    android:textColor="@drawable/bidbuybtntextstate"
+                                    android:background="@drawable/bid_buy_btns_home"
+                                    android:padding="@dimen/rating_height"
+                                    android:text="Register Now"
+                                    android:minHeight="@dimen/btnsize"
+                                    android:textSize="@dimen/app_button_text"
+                                    android:textStyle="bold"
+                                    android:textAllCaps="false"/>
+                    
+                        </LinearLayout>
+                
+                    </androidx.cardview.widget.CardView>
+                
+                
+                    <androidx.cardview.widget.CardView
+                            android:id="@+id/pricing_yearly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/app_spacing_small"
+                            android:background="@color/white"
+                            app:cardCornerRadius="@dimen/app_spacing_smallest"
+                            app:cardElevation="@dimen/app_elevation">
+                    
+                        <LinearLayout
+                                android:layout_width="@dimen/home_card_width"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                        
+                            <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingBottom="@dimen/app_spacing_small"
+                                    android:paddingTop="@dimen/app_spacing_small"
+                                    android:fontFamily="@font/opensans_bold"
+                                    android:textAllCaps="false"
+                                    android:text="YEARLY PLAN"
+                                    android:textStyle="bold"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/charcoal"
+                                    android:textSize="@dimen/app_normal_text" />
+                        
+                        
+                            <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:background="#3498DB"
+                                    android:gravity="center">
+                            
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/opensans_bold"
+                                        android:textAllCaps="false"
+                                        android:text="$ "
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/app_small_text"
+                                        android:textStyle="bold" />
+                            
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/opensans_bold"
+                                        android:textAllCaps="false"
+                                        android:text="@string/pricing_yearly"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/creditcard_heading"
+                                        android:textStyle="bold" />
+                        
+                            </LinearLayout>
+                        
+                        
+                            <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/app_spacing_small"
+                                    android:paddingBottom="@dimen/app_spacing_smallest"
+                                    android:paddingTop="@dimen/app_spacing_smallest"
+                                    android:fontFamily="@font/opensans_bold"
+                                    android:textAllCaps="false"
+                                    android:text="See More..."
+                                    android:textAlignment="center"
+                                    android:textColor="@color/gray"
+                                    android:textSize="@dimen/app_small_text" />
+                        
+                        
+                            <Button
+                                    android:id="@+id/b_pricing_yearly"
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingRight="@dimen/app_spacing"
+                                    android:paddingLeft="@dimen/app_spacing"
+                                    android:layout_margin="@dimen/app_spacing_small"
+                                    android:textColor="@drawable/bidbuybtntextstate"
+                                    android:background="@drawable/bid_buy_btns_home"
+                                    android:padding="@dimen/rating_height"
+                                    android:text="Register Now"
+                                    android:minHeight="@dimen/btnsize"
+                                    android:textSize="@dimen/app_button_text"
+                                    android:textStyle="bold"
+                                    android:textAllCaps="false"/>
+                    
+                        </LinearLayout>
+                
+                    </androidx.cardview.widget.CardView>
+                
+                
+                    <androidx.cardview.widget.CardView
+                            android:visibility="gone"
+                            android:id="@+id/pricing_custom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/app_spacing_small"
+                            android:background="@color/white"
+                            app:cardCornerRadius="@dimen/app_spacing_smallest"
+                            app:cardElevation="@dimen/app_elevation">
+                    
+                        <LinearLayout
+                                android:layout_width="@dimen/home_card_width"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                        
+                            <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingBottom="@dimen/app_spacing_small"
+                                    android:paddingTop="@dimen/app_spacing_small"
+                                    android:fontFamily="@font/opensans_bold"
+                                    android:textAllCaps="false"
+                                    android:text="CUSTOM PLAN"
+                                    android:textStyle="bold"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/charcoal"
+                                    android:textSize="@dimen/app_normal_text" />
+                        
+                        
+                            <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:background="@color/black"
+                                    android:gravity="center">
+                            
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/opensans_bold"
+                                        android:textAllCaps="false"
+                                        android:text="For You "
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/app_small_text"
+                                        android:textStyle="bold" />
+                            
+                                <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/opensans_bold"
+                                        android:textAllCaps="false"
+                                        android:text="Package"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/creditcard_heading"
+                                        android:textStyle="bold" />
+                        
+                            </LinearLayout>
+                        
+                        
+                            <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/app_spacing_small"
+                                    android:paddingBottom="@dimen/app_spacing_smallest"
+                                    android:paddingTop="@dimen/app_spacing_smallest"
+                                    android:fontFamily="@font/opensans_bold"
+                                    android:textAllCaps="false"
+                                    android:text="See More..."
+                                    android:textAlignment="center"
+                                    android:textColor="@color/gray"
+                                    android:textSize="@dimen/app_small_text" />
+                        
+                        
+                            <Button
+                                    android:id="@+id/b_pricing_custom"
+                                    android:layout_gravity="center"
+                                    android:paddingLeft="@dimen/app_spacing"
+                                    android:paddingRight="@dimen/app_spacing"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/app_spacing_small"
+                                    android:textColor="@drawable/bidbuybtntextstate"
+                                    android:background="@drawable/bid_buy_btns_home"
+                                    android:padding="@dimen/rating_height"
+                                    android:text="Establish Contact"
+                                
+                                    android:minHeight="@dimen/btnsize"
+                                    android:textSize="@dimen/app_button_text"
+                                    android:textStyle="bold"
+                                    android:textAllCaps="false"/>
+                    
+                        </LinearLayout>
+                
+                    </androidx.cardview.widget.CardView>
+            
+                </LinearLayout>
+        
+        
+            </HorizontalScrollView>
+    
         </LinearLayout>
 
 
