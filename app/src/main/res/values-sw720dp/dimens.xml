@@ -37,7 +37,7 @@
     <dimen name="app_mini_text">20sp</dimen>
     <dimen name="cross_btn_height">45dp</dimen>
     <dimen name="ask_small_img_height">85dp</dimen>
-    <dimen name="bidding_icon_size">45dp</dimen>
+    <dimen name="bidding_icon_size" tools:override="true">45dp</dimen>
     <dimen name="features_width">470dp</dimen>
     <dimen name="col1_width">180dp</dimen>
     <dimen name="col2_width">120dp</dimen>
@@ -46,7 +46,7 @@
     <dimen name="col5_width">100dp</dimen>
     <dimen name="col6_width">100dp</dimen>
     <dimen name="ask_question_grid_img_height">150dp</dimen>
-    <dimen name="app_spacing">20dp</dimen>
+    <dimen name="app_spacing" tools:override="true">20dp</dimen>
     <dimen name="width_iv_home">75dp</dimen>
     <dimen name="app_spacing_small">10dp</dimen>
     <dimen name="seller_img_height_bid_now">200dp</dimen>
@@ -355,7 +355,7 @@
 
     <dimen name="rating_height">25dp</dimen>
     <dimen name="rating_width">120dp</dimen>
-    <dimen name="rating_height2">22dp</dimen>
+    <dimen name="rating_height2" >22dp</dimen>
     <dimen name="rating_width2">135dp</dimen>
 
     <dimen name="home_rc_img_width">260dp</dimen>

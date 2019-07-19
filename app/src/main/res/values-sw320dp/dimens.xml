@@ -34,7 +34,7 @@
     <dimen name="app_normal_text">18sp</dimen> <!--average text like description-->
     <dimen name="app_small_text">14sp</dimen>
     <dimen name="app_mini_text">12sp</dimen><!--like tabs text, privacy line-->
-    <dimen name="app_spacing">15dp</dimen> <!--for extra space between to views-->
+    <dimen name="app_spacing" >15dp</dimen> <!--for extra space between to views-->
     <dimen name="app_spacing_small">7dp</dimen> <!--Normal space between view, used as padding and margins-->
     <dimen name="app_spacing_smallest">4dp</dimen>
     <dimen name="app_elevation">2dp</dimen> <!--elevation of buttons cards every thing-->
@@ -52,7 +52,7 @@
     <dimen name="cross_btn_height">30dp</dimen>
     <dimen name="ask_small_img_height">65dp</dimen>
     <dimen name="header_text_padding_left">22dp</dimen>
-    <dimen name="bidding_icon_size">25dp</dimen>
+    <dimen name="bidding_icon_size" tools:override="true">25dp</dimen>
     <dimen name="input_hint_text">18sp</dimen>
     <dimen name="seller_img_height_bid_now">130dp</dimen>
     <dimen name="heart_size_img">30dp</dimen>
@@ -161,7 +161,7 @@
 
     <dimen name="textsize">16sp</dimen>
     <dimen name="catCardSize">60dp</dimen>
-    <dimen name="catCardHeight">120dp</dimen>
+    <dimen name="catCardHeight" >120dp</dimen>
     <dimen name="tutorCardHeight">120dp</dimen>
     <dimen name="tutorImageSize">80dp</dimen>
 

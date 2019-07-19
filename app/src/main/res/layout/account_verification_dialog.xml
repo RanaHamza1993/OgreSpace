@@ -19,7 +19,7 @@
           android:id="@+id/success_title"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="Success"
+          android:text="Congratulations"
           android:layout_toRightOf="@+id/icon"
           android:textSize="@dimen/default_large_textsize"
           android:textColor="@color/black"

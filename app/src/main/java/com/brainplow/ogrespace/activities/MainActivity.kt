@@ -411,8 +411,8 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
             val iconView: View? = menuView.getChildAt(i).findViewById(R.id.icon)
             val layoutParams: ViewGroup.LayoutParams = iconView?.getLayoutParams()!!
             val displayMetrics = resources.displayMetrics
-            layoutParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, displayMetrics).toInt()
-            layoutParams.width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, displayMetrics).toInt()
+            layoutParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18f, displayMetrics).toInt()
+            layoutParams.width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18f, displayMetrics).toInt()
             iconView.setLayoutParams(layoutParams)
         }
 

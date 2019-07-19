@@ -35,7 +35,7 @@
     <dimen name="takeimg_height_adpost">65dp</dimen>
     <dimen name="button_margin_addpost">16dp</dimen>
     <dimen name="cross_btn_height">40dp</dimen>
-    <dimen name="bidding_icon_size">45dp</dimen>
+    <dimen name="bidding_icon_size" tools:override="true">45dp</dimen>
     <dimen name="features_width">400dp</dimen>
     <dimen name="col1_width">160dp</dimen>
     <dimen name="col2_width">100dp</dimen>
@@ -49,7 +49,7 @@
     <dimen name="app_normal_text">24sp</dimen>
     <dimen name="app_small_text">20sp</dimen>
     <dimen name="app_mini_text">17sp</dimen>
-    <dimen name="app_spacing">20dp</dimen>
+    <dimen name="app_spacing" tools:override="true">20dp</dimen>
     <dimen name="header_text_padding_left">28dp</dimen>
     <dimen name="seller_img_height_bid_now">180dp</dimen>
     <dimen name="heart_size_img">40dp</dimen>
@@ -351,7 +351,7 @@
 
     <dimen name="rating_height">14dp</dimen>
     <dimen name="rating_width">87dp</dimen>
-    <dimen name="rating_height2">20dp</dimen>
+    <dimen name="rating_height2" >20dp</dimen>
     <dimen name="rating_width2">123dp</dimen>
 
     <dimen name="home_rc_img_width">230dp</dimen>

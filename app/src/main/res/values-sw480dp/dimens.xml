@@ -34,7 +34,7 @@
     <dimen name="contact_img_height">270dp</dimen>
     <dimen name="login_top_margin">20dp</dimen>
     <dimen name="button_margin_addpost">14dp</dimen>
-    <dimen name="bidding_icon_size">35dp</dimen>
+    <dimen name="bidding_icon_size" tools:override="true">35dp</dimen>
     <dimen name="features_width">320dp</dimen>
     <dimen name="col1_width">140dp</dimen>
     <dimen name="col2_width">65dp</dimen>
@@ -50,7 +50,7 @@
     <dimen name="app_small_text">16sp</dimen>
     <dimen name="app_mini_text">14sp</dimen>
     <dimen name="header_text_padding_left">25dp</dimen>
-    <dimen name="app_spacing">15dp</dimen>
+    <dimen name="app_spacing" >15dp</dimen>
     <dimen name="app_spacing_small">8dp</dimen>
     <dimen name="dialog_img_height">130dp</dimen>
     <dimen name="width_iv_home">55dp</dimen>
@@ -358,7 +358,7 @@
     <dimen name="home_cat_width">120dp</dimen>
     <dimen name="home_cat_height">100dp</dimen>
 
-    <dimen name="rating_height2">18dp</dimen>
+    <dimen name="rating_height2" tools:override="true">18dp</dimen>
     <dimen name="rating_width2">111dp</dimen>
 
     <dimen name="home_rc_img_width">200dp</dimen>

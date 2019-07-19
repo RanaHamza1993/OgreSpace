@@ -35,7 +35,7 @@
     <dimen name="takeimg_height_adpost">65dp</dimen>
     <dimen name="button_margin_addpost">16dp</dimen>
     <dimen name="cross_btn_height">40dp</dimen>
-    <dimen name="bidding_icon_size">45dp</dimen>
+    <dimen name="bidding_icon_size" tools:override="true">45dp</dimen>
     <dimen name="features_width">400dp</dimen>
     <dimen name="col1_width">160dp</dimen>
     <dimen name="col2_width">100dp</dimen>
@@ -167,7 +167,7 @@
     <dimen name="moreebidCardSize">210dp</dimen>
     <dimen name="offerCardSize">210dp</dimen>
     <dimen name="tutorimgsize">180dp</dimen>
-    <dimen name="bidheartsize">27dp</dimen>
+    <dimen name="bidheartsize" >27dp</dimen>
 
     <dimen name="bidCardbtnheight">42dp</dimen>
     <dimen name="bidCardbtntext">20sp</dimen>
@@ -352,7 +352,7 @@
 
     <dimen name="rating_height">14dp</dimen>
     <dimen name="rating_width">87dp</dimen>
-    <dimen name="rating_height2">20dp</dimen>
+    <dimen name="rating_height2" >20dp</dimen>
     <dimen name="rating_width2">123dp</dimen>
 
     <dimen name="home_rc_img_width">230dp</dimen>
