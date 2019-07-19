@@ -13,6 +13,11 @@ interface Communicator {
         fun notifySuccess(requestType: RequestType?, response: String?,url:String, netWorkResponse:Int?=0){}
         fun notifyError(requestType: RequestType?, error: VolleyError?, url:String, netWorkResponse:Int?=0){}
     }
+    interface ICreditCard {
+
+        fun updateCreditCard(id:Int)
+        fun deleteCreditCard(id:Int)
+    }
     interface IActionBar{
         fun actionBarListener(title: String)
         fun isBackButtonEnabled(isEnabled:Boolean)

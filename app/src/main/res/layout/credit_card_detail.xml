@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/text_padding_how_it"
+            android:paddingLeft="@dimen/text_padding_how_it"
+            android:paddingTop="@dimen/text_padding_how_it">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Nick Name"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/tv_heading5_fontsize"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/nick_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="PayMax"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/tv_heading5_fontsize"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Card Number"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/tv_heading5_fontsize"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/card_number"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="xxxxxxxxxxxx1111"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/tv_heading5_fontsize"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Expiry Date"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/tv_heading5_fontsize"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/ex_date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="10/2025"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/tv_heading5_fontsize"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/default_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Default"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/tv_heading5_fontsize"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/default_check"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/cross_payment" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/update_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/text_padding_how_it"
+                android:layout_weight="1"
+                android:layout_marginBottom="@dimen/crampadding2"
+                android:fontFamily="@font/opensans_bold"
+                android:background="@drawable/bid_buy_btns_home"
+                android:textColor="@drawable/bidbuybtntextstate"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:textSize="@dimen/app_button_text"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/delete_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_padding_how_it"
+                android:layout_weight="1"
+                android:layout_marginBottom="@dimen/crampadding2"
+                android:fontFamily="@font/opensans_bold"
+                android:background="@drawable/bid_buy_btns_home"
+                android:textColor="@drawable/bidbuybtntextstate"
+                android:text="Delete"
+                android:textAllCaps="false"
+                android:textSize="@dimen/app_button_text"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/md_grey_300"/>
+
+</LinearLayout>

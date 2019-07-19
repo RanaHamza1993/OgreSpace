@@ -334,6 +334,9 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
                     R.id.nav_fav -> {
                         navigateToFragment(MyFavFragment())
                     }
+                    R.id.nav_payment -> {
+                        navigateToFragment(PaymentMethodFragment())
+                    }
                     R.id.nav_change_password -> {
                       //  ActivityNavigator<ChangePasswordActivity>(this@MainActivity, ChangePasswordActivity::class.java)
                         val intent = Intent(this@MainActivity, ChangePasswordActivity::class.java)

@@ -29,5 +29,7 @@ object Urls {
     val urlChangePassword = baseUrl + "user/user_change_password/"
     val urlSearchProperties = baseUrl + "office/search_properties1/"
     val urlContactUs = baseUrl + "user/contact_us/"
+    val urlAddCreditCard = baseUrl + "payment/cardinfo/"
+    val urlFromZipCode = baseUrl + "office/zipcode/"
     val urlGooglePlaceSearch = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input="
 }
