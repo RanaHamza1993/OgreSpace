@@ -328,7 +328,7 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
         if (lastname.isEmpty()) {
 
             // lname.error = "Enter Last Name"
-            showErrorMessage("Enter last Name")
+            showErrorMessage("Enter last name")
             return
         }
         if (lastname.length<2) {
