@@ -27,6 +27,7 @@ import com.brainplow.ogrespace.adapters.CreditCardAdapter
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.apputils.Urls.urlAddCreditCard
 import com.brainplow.ogrespace.apputils.Urls.urlFromZipCode
+import com.brainplow.ogrespace.apputils.Urls.urlGetCreditCard
 import com.brainplow.ogrespace.baseclasses.BaseFragment
 import com.brainplow.ogrespace.constants.StaticFunctions.hideKeyboard
 import com.brainplow.ogrespace.customviews.PaymentCreditEditText
@@ -37,6 +38,7 @@ import com.brainplow.ogrespace.interfaces.Communicator
 import com.brainplow.ogrespace.kotlin.JWTUtils
 import com.brainplow.ogrespace.kotlin.MySingleton
 import com.brainplow.ogrespace.kotlin.VolleyService
+import com.brainplow.ogrespace.kotlin.getStringData
 import com.brainplow.ogrespace.models.CreditCardModel
 import com.google.android.material.navigation.NavigationView
 import com.suke.widget.SwitchButton
@@ -371,11 +373,11 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
 
             payment_card?.visibility = View.GONE
             table_recycler?.visibility = View.VISIBLE
-//            launch {
-//                val creditResult: Deferred<String> =   async {  getCreditCards() }
-//                creditCardParsing(creditResult.await())
-//
-//            }
+            launch {
+                val creditResult: Deferred<String> =   async {  getCreditCards() }
+                creditCardParsing(creditResult.await())
+
+            }
 
 
         })
@@ -476,7 +478,7 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
             rootObject.put("zipcode", paymentZipCode?.text?.toString()?.toInt())
             rootObject.put("street_adrress", paymentStreetAddress?.text?.toString())
             rootObject.put("autopay", isChecked)
-            rootObject.put("pinCode", 143)
+          //  rootObject.put("pinCode", 143)
 
             volleyService?.postDataVolley(
                 RequestType.JsonObjectRequest,
@@ -496,10 +498,10 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
 //        MySingleton.getInstance(mcontext!!.applicationContext).addToRequestQueue(jsonObjectRequest)
 //    }
 
-//    suspend fun getCreditCards(): String = suspendCancellableCoroutine { continuation ->
-//        CreditCardsList.clear()
-//        getStringData(mcontext,Url.urlGetCreditCard, token, userid,continuation).getStringRequest()
-//    }
+    suspend fun getCreditCards(): String = suspendCancellableCoroutine { continuation ->
+        CreditCardsList.clear()
+        getStringData(mcontext,urlGetCreditCard, token,continuation).getStringRequest()
+    }
     private fun getFromZipCode(zipCode: Int) {
         val jsonObjectRequest = object : JsonObjectRequest(
             Request.Method.GET, urlFromZipCode + zipCode, null,
@@ -733,6 +735,7 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
     }
     fun creditCardParsing(resp:String?){
         val response= JSONArray(resp)
+        //showErrorBody()
         try {
             for (i in 0 until response.length()) {
 
@@ -741,19 +744,18 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
                 val cardname = jsonObject?.getString("nickname")
                 val cardnumber = jsonObject?.getString("cardNumber")
                 val expirydate = jsonObject?.getString("expiryDate")
-                val cvvnumber = jsonObject?.getString("ccv")
-                val defaultvalue = jsonObject?.getString("default")
-                val cardtype = jsonObject?.getString("card_type")
+                val defaultvalue = jsonObject?.getBoolean("autopay")
+             //   val cardtype = jsonObject?.getString("card_type")
 
                 val creditCard = CreditCardModel(id = cid, cardNumber = cardnumber, nickname = cardname,
-                    ccv = cvvnumber, default = defaultvalue?.toBoolean(), expiryDate = expirydate,
-                    user = null, cardType = cardtype)
+                    ccv = null, default = defaultvalue, expiryDate = expirydate,
+                    user = null, cardType = null)
 
                 CreditCardsList.add(creditCard)
             }
 
 
-            var adapter = CreditCardAdapter(mcontext!!, CreditCardsList, 0)
+            val adapter = CreditCardAdapter(mcontext!!, CreditCardsList, 0)
             adapter.setUpdateCardListener(this)
             adapter.setDeleteCardListener(this)
             table_recycler?.adapter = adapter
@@ -767,34 +769,34 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
 
     }
 
-//    class RequestWithHeaders(
-//        continuation: Continuation<String>
-//    )  : StringRequest(
-//        Request.Method.GET, Url.urlGetCreditCard + PaymentMethodFragment.userid,
-//        Response.Listener { response ->
-//            continuation.resume(response)
-//        },
-//        Response.ErrorListener { error ->
-//
-//            //  it.resume(JSONArray(error.toString()))
-//
-//        }
-//    )
-//    {
-//
-//
-//        override fun parseNetworkResponse(response: NetworkResponse?): Response<String> {
-//            return super.parseNetworkResponse(response)
-//        }
-//
-//        override fun getHeaders(): MutableMap<String, String> {
-//            val headers = HashMap<String, String>()
-//            headers["Content-Type"] = "application/text; charset=utf-8"
-//            if (!token.equals(""))
-//                headers.put("Authorization", "JWT " + token)
-//            return headers
-//        }
-//    }
+    class RequestWithHeaders(
+        continuation: Continuation<String>
+    )  : StringRequest(
+        Request.Method.GET, urlGetCreditCard + PaymentMethodFragment.userid,
+        Response.Listener { response ->
+            continuation.resume(response)
+        },
+        Response.ErrorListener { error ->
+
+            //  it.resume(JSONArray(error.toString()))
+
+        }
+    )
+    {
+
+
+        override fun parseNetworkResponse(response: NetworkResponse?): Response<String> {
+            return super.parseNetworkResponse(response)
+        }
+
+        override fun getHeaders(): MutableMap<String, String> {
+            val headers = HashMap<String, String>()
+            headers["Content-Type"] = "application/text; charset=utf-8"
+            if (!token.equals(""))
+                headers.put("Authorization", "JWT " + token)
+            return headers
+        }
+    }
 }
 
 

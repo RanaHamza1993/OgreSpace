@@ -25,15 +25,15 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 
-class getStringData constructor(val context: Context?,val urlString: String?,val token: String?,val userid:String?,
+class getStringData constructor(val context: Context?,val urlString: String?,val token: String?,
 val continuation: Continuation<String>
-)  : StringRequest(Request.Method.GET, urlString+userid ,
+)  : StringRequest(Request.Method.GET, urlString,
 Response.Listener { response ->
     continuation.resume(response)
 },
 Response.ErrorListener { error ->
 
-    continuation.resume(error.toString())
+    continuation.resume(error.message.toString())
 
 }
 )
@@ -52,7 +52,7 @@ Response.ErrorListener { error ->
         return headers
     }
     fun getStringRequest(){
-        getStringData(context,urlString,token,userid,continuation).also {
+        getStringData(context,urlString,token,continuation).also {
             it.setShouldCache(false)
             MySingleton.getInstance(context!!.applicationContext).addToRequestQueue(it)
 

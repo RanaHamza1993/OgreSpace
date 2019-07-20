@@ -98,16 +98,15 @@ class CreditCardAdapter() : RecyclerView.Adapter<CreditCardAdapter.ViewHolder>()
         internal var name_txt: TextView?
         internal var defaultTxt: LinearLayout?
         internal var cardnumber_txt: TextView?
-        internal var updateCard: Button?
-        internal var deleteCard: Button?
+        internal var updateCard: TextView?
+        internal var deleteCard: TextView?
 
         init {
-
-            checkImage = itemView.findViewById(R.id.default_check) as ImageView
-            defaultTxt = itemView.findViewById(R.id.default_card) as LinearLayout
-            name_txt = itemView.findViewById(R.id.nick_name) as TextView
-            cardnumber_txt = itemView.findViewById(R.id.card_number) as TextView
-            date_txt = itemView.findViewById(R.id.ex_date) as TextView
+            checkImage = itemView.findViewById(R.id.default_check)
+            defaultTxt = itemView.findViewById(R.id.default_card)
+            name_txt = itemView.findViewById(R.id.nick_name)
+            cardnumber_txt = itemView.findViewById(R.id.card_number)
+            date_txt = itemView.findViewById(R.id.ex_date)
             updateCard = itemView.findViewById(R.id.update_card)
             deleteCard = itemView.findViewById(R.id.delete_card)
         }
