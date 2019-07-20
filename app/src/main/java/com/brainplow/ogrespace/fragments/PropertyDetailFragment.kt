@@ -3,11 +3,13 @@ package com.brainplow.ogrespace.fragments
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +26,7 @@ import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.extesnions.showInfoMessage
 import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
+import com.brainplow.ogrespace.kotlin.LoadingDialog
 import com.brainplow.ogrespace.kotlin.SSL
 import com.brainplow.ogrespace.kotlin.VolleyService
 import com.brainplow.ogrespace.models.PropertyModel
@@ -60,15 +63,18 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
         if (url.contains(Urls.urlDelFav, true)) {
             MainActivity.favItemsMap.remove(favId.toString())
             context?.showInfoMessage("Item deleted from favourite successfully")
-        } else if (url.contains(Urls.urlProperyDetail))
+        } else if (url.contains(Urls.urlProperyDetail)) {
             getDetailItems(response)
+        }
+
+        laoding?.dismisss()
     }
 
     override fun notifySuccess(requestType: RequestType?, response: JSONArray?, url: String, netWorkResponse: Int?) {
 
         if (url.contains(Urls.urlSimilarProperties))
             getSimilarItems(response)
-
+        laoding?.dismisss()
 
     }
 
@@ -232,6 +238,19 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
     var mapFragment: SupportMapFragment? = null
     var itemId = 0
     var url_maps = HashMap<String, String>()
+    var laoding: LoadingDialog? = null
+    var handler = Handler()
+
+
+    override fun onPause() {
+
+        handler?.removeCallbacksAndMessages(null)
+        if (laoding?.ishowingg()!!) {
+            laoding?.dismisss()
+        }
+        super.onPause()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.setIVolleyResult(this)
         val view = inflater.inflate(R.layout.fragment_details, container, false)
@@ -241,7 +260,11 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
 
         itemId = b!!.getInt("id")
         setIds(view)
-        volleyRequests()
+        handler?.postDelayed({
+            laoding?.showdialog()
+            volleyRequests()
+        }, 2000)
+
 
         return view
     }
@@ -325,6 +348,8 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
         mDemoSlider = view.findViewById(R.id.property_img);
         mDemoSlider.getPagerIndicator()
             .setDefaultIndicatorColor(getResources().getColor(R.color.Red), getResources().getColor(R.color.gray));
+
+        laoding = LoadingDialog("", activity!!)
     }
 
     fun volleyRequests() {
