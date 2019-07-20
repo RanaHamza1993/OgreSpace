@@ -61,29 +61,28 @@ class CreditCardAdapter() : RecyclerView.Adapter<CreditCardAdapter.ViewHolder>()
                 holder.checkImage?.setImageResource(R.drawable.tik_payment)
             }
 
-            holder.updateCard?.setOnClickListener({
-                updateCardListener?.updateCreditCard(obj.get(position).id!!)
+            holder.updateCard?.setOnClickListener(){
+                updateCardListener?.updateCreditCard(obj[position].id!!)
 
             }
-            )
-            holder.deleteCard?.setOnClickListener({
+            holder.deleteCard?.setOnClickListener(){
 
                 val alertDialogBuilder = AlertDialog.Builder(context!!)
                 alertDialogBuilder.setMessage("Are you sure you want to delete this Payment Method?")
                 alertDialogBuilder.setPositiveButton("yes"
-                ) { arg0, arg1 ->
+                ) { _, _ ->
 
-                    deleteCardListener?.deleteCreditCard(obj.get(position).id!!)
+                    deleteCardListener?.deleteCreditCard(obj[position].id!!)
                     obj.removeAt(position)
                     notifyDataSetChanged()
                 }
 
                 alertDialogBuilder.setNegativeButton("No"
-                ) { dialog, which -> }
+                ) { _, _ -> }
                 val alertDialog = alertDialogBuilder.create()
                 alertDialog.show()
 
-            })
+            }
         }
     }
 

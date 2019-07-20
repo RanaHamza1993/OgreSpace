@@ -33,7 +33,7 @@ Response.Listener { response ->
 },
 Response.ErrorListener { error ->
 
-    continuation.resume(error.message.toString())
+    continuation.resume(error.networkResponse.toString())
 
 }
 )
@@ -59,8 +59,8 @@ Response.ErrorListener { error ->
         }
     }
 }
-class getStringDataFlag constructor(val context: Context?,val urlString: String?,val token: String?,val urlflag:String?,
-                                val continuation: Continuation<String>
+class getStringDataFlag constructor(val context: Context?, private val urlString: String?, val token: String?, private val urlflag:String?,
+                                    private val continuation: Continuation<String>
 )  : StringRequest(Request.Method.GET, urlString ,
         Response.Listener { resp ->
             continuation.resume(resp)
