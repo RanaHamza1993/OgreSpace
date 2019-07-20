@@ -31,5 +31,6 @@ object Urls {
     val urlContactUs = baseUrl + "user/contact_us/"
     val urlAddCreditCard = baseUrl + "payment/cardinfo/"
     val urlFromZipCode = baseUrl + "office/zipcode/"
+    val urlGetCreditCard = baseUrl + "payment/cardinfo/"
     val urlGooglePlaceSearch = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input="
 }

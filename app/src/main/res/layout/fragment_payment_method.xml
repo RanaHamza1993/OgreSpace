@@ -432,7 +432,7 @@
                             android:layout_marginBottom="5dp"
                             android:fontFamily="@font/varela_round"
                             android:gravity="center_vertical"
-                            android:text="Set as default payment method"
+                            android:text="Default auto subscrption"
                             android:textAlignment="center"
                             android:textSize="@dimen/app_small_text"
                             android:textStyle="bold"

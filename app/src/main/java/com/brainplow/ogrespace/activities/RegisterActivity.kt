@@ -60,16 +60,24 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
             spinner?.dismisss()
         }
         if(url.equals(urlEmailCheck)){
-            if(netWorkResponse==201)
-                input_layout_r_mail.error="Email already exist"
-                else if(netWorkResponse==200)
-            input_layout_r_mail.error=""
+            if(netWorkResponse==201) {
+                isEmailValid=false
+                input_layout_r_mail.error = "Email already exist"
+            }
+                else if(netWorkResponse==200) {
+                isEmailValid=true
+                input_layout_r_mail.error = ""
+            }
         }
         if(url.equals(urlUserNameCheck)){
-            if(netWorkResponse==201)
-            input_layout_r_un.error="Username already exist"
-            else if(netWorkResponse==200)
-            input_layout_r_un.error=""
+            if(netWorkResponse==201) {
+                input_layout_r_un.error = "Username already exist"
+                isUnameValid=false
+            }
+            else if(netWorkResponse==200) {
+                input_layout_r_un.error = ""
+                isUnameValid=true
+            }
 
 
 
@@ -78,7 +86,10 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
 
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
         if(url.equals(Urls.urlSignUp)){
-            showErrorBody(error)
+//            showErrorBody(error)
+            showErrorMessage("User not created some error occured")
+            if(spinner!!.ishowingg())
+            spinner?.dismisss()
         }
 
     }
@@ -96,6 +107,8 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
     var checkTerms: Switch? = null
     private lateinit var dialog: Dialog
     var handler: WeakHandler? = null
+    var isEmailValid=false
+    var isUnameValid=false
     private var toolbar: Toolbar? = null
     var signUpRoot: LinearLayout?=null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -345,7 +358,10 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
             showErrorMessage("Username must be between 3 and 64 characters")
             return
         }
-
+        if(!isUnameValid){
+            showErrorMessage("Username already exist")
+            return
+        }
         if (mail.isEmpty()) {
             // var isValid = emailValidator(mail)
             // memail.error = "Enter a valid email address"
@@ -356,6 +372,10 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
 
             // memail.error = "Enter a valid email address"
             showErrorMessage("Enter a valid email address")
+            return
+        }
+        if(!isEmailValid){
+            showErrorMessage("Email already exist")
             return
         }
         if (password.isEmpty()) {
@@ -404,6 +424,7 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
         obj.put("mobile","")
         obj.put("state","")
         obj.put("country","")
+        obj.put("company","")
         obj.put("city","")
         obj.put("zip","")
         obj.put("pic","")
