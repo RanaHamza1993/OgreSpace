@@ -33,6 +33,7 @@
           android:text="Your Account has been created. Please check your inbox for account activation instructions."
           android:textStyle="bold"
           android:textSize="@dimen/default_small_textsize"
+                android:padding="8dp"
           android:textColor="@color/black"/>
       <TextView android:id="@+id/ok_button"
           android:layout_width="wrap_content"
