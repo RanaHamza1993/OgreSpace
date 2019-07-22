@@ -1,5 +1,4 @@
 package com.brainplow.ogrespace.activities
-
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable

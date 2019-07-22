@@ -253,7 +253,7 @@
                                         android:text="0.00"
                                         android:textAlignment="center"
                                         android:textColor="@color/white"
-                                        android:textSize="@dimen/creditcard_heading"
+                                        android:textSize="@dimen/app_heading_text"
                                         android:textStyle="bold" />
                         
                             </LinearLayout>
@@ -273,17 +273,19 @@
                                     android:textSize="@dimen/app_small_text" />
                         
                         
-                            <Button
+                            <TextView
                                     android:id="@+id/b_pricing_trial"
                                     android:layout_gravity="center"
-                                    android:paddingLeft="@dimen/app_spacing"
-                                    android:paddingRight="@dimen/app_spacing"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="@dimen/app_spacing_small"
-                                    android:padding="@dimen/rating_height"
+                                    android:paddingTop="6dp"
+                                    android:paddingBottom="6dp"
+                                    android:paddingLeft="@dimen/app_spacing"
+                                    android:paddingRight="@dimen/app_spacing"
                                     android:text="Register Now"
-                                    android:minHeight="@dimen/btnsize"
+                                    android:gravity="center"
+                                    android:elevation="@dimen/app_elevation"
                                     android:textColor="@drawable/bidbuybtntextstate"
                                     android:background="@drawable/bid_buy_btns_home"
                                     android:textSize="@dimen/app_button_text"
@@ -346,7 +348,7 @@
                                         android:text="@string/pricing_monthly"
                                         android:textAlignment="center"
                                         android:textColor="@color/white"
-                                        android:textSize="@dimen/creditcard_heading"
+                                        android:textSize="@dimen/app_heading_text"
                                         android:textStyle="bold" />
                         
                             </LinearLayout>
@@ -366,7 +368,7 @@
                                     android:textSize="@dimen/app_small_text" />
                         
                         
-                            <Button
+                            <TextView
                                     android:id="@+id/b_pricing_monthly"
                                     android:layout_gravity="center"
                                     android:paddingLeft="@dimen/app_spacing"
@@ -376,9 +378,9 @@
                                     android:layout_margin="@dimen/app_spacing_small"
                                     android:textColor="@drawable/bidbuybtntextstate"
                                     android:background="@drawable/bid_buy_btns_home"
-                                    android:padding="@dimen/rating_height"
+                                    android:paddingTop="6dp"
+                                    android:paddingBottom="6dp"
                                     android:text="Register Now"
-                                    android:minHeight="@dimen/btnsize"
                                     android:textSize="@dimen/app_button_text"
                                     android:textStyle="bold"
                                     android:textAllCaps="false"/>
@@ -441,7 +443,7 @@
                                         android:text="@string/pricing_yearly"
                                         android:textAlignment="center"
                                         android:textColor="@color/white"
-                                        android:textSize="@dimen/creditcard_heading"
+                                        android:textSize="@dimen/app_heading_text"
                                         android:textStyle="bold" />
                         
                             </LinearLayout>
@@ -461,19 +463,19 @@
                                     android:textSize="@dimen/app_small_text" />
                         
                         
-                            <Button
+                            <TextView
                                     android:id="@+id/b_pricing_yearly"
                                     android:layout_gravity="center"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingRight="@dimen/app_spacing"
                                     android:paddingLeft="@dimen/app_spacing"
+                                    android:paddingTop="6dp"
+                                    android:paddingBottom="6dp"
                                     android:layout_margin="@dimen/app_spacing_small"
                                     android:textColor="@drawable/bidbuybtntextstate"
                                     android:background="@drawable/bid_buy_btns_home"
-                                    android:padding="@dimen/rating_height"
                                     android:text="Register Now"
-                                    android:minHeight="@dimen/btnsize"
                                     android:textSize="@dimen/app_button_text"
                                     android:textStyle="bold"
                                     android:textAllCaps="false"/>
@@ -562,6 +564,8 @@
                                     android:layout_gravity="center"
                                     android:paddingLeft="@dimen/app_spacing"
                                     android:paddingRight="@dimen/app_spacing"
+                                    android:paddingTop="6dp"
+                                    android:paddingBottom="6dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="@dimen/app_spacing_small"
@@ -569,8 +573,6 @@
                                     android:background="@drawable/bid_buy_btns_home"
                                     android:padding="@dimen/rating_height"
                                     android:text="Establish Contact"
-                                
-                                    android:minHeight="@dimen/btnsize"
                                     android:textSize="@dimen/app_button_text"
                                     android:textStyle="bold"
                                     android:textAllCaps="false"/>

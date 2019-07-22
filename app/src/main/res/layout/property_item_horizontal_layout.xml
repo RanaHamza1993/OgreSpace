@@ -49,13 +49,12 @@
                     android:id="@+id/p_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/opensans_bold"
+                    android:maxLines="2"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/opensans_semibold"
                     android:text="machine learning"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/cramnormaltext"
-                    android:textStyle="bold"/>
+                    android:textSize="@dimen/app_small_text"/>
 
             <RelativeLayout
                     android:layout_width="match_parent"
@@ -75,12 +74,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
-                            android:fontFamily="@font/opensans_regular"
+                            android:fontFamily="@font/opensans_semibold"
                             android:maxLines="2"
                             android:layout_marginLeft="6dp"
                             android:text="Jhon watson"
                             android:textColor="@color/gray"
-                            android:textSize="@dimen/cramnormaltext"
+                            android:textSize="@dimen/app_mini_text"
                             android:textStyle="normal"/>
                 </LinearLayout>
 
@@ -145,7 +144,7 @@
                         android:text="$20"
                         android:textColor="@color/holo_green_dark"
                         android:textSize="@dimen/app_normal_text"
-                        android:fontFamily="@font/opensans_bold"
+                        android:fontFamily="@font/opensans_semibold"
                         android:textStyle="bold"/>
 
 
@@ -180,7 +179,7 @@
                         android:text="For Lease"
                         android:textColor="@color/black"
                         android:textAllCaps="false"
-                        android:textSize="@dimen/bidCardbtntext"
+                        android:textSize="@dimen/app_small_text"
                         android:textStyle="bold"/>
 
                 <TextView
@@ -194,7 +193,7 @@
                         android:gravity="right"
                         android:textColor="@color/black"
                         android:textAllCaps="false"
-                        android:textSize="@dimen/bidCardbtntext"
+                        android:textSize="@dimen/app_small_text"
                         android:textStyle="bold"/>
 
 
