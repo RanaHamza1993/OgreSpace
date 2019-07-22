@@ -54,6 +54,8 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
             setLeasePropertyAdapter(leaseParsing!!.getPropertyData(JSONObject(response), 1))
         } else if (url == Urls.urlGetSaleProperties)
             setSalePropertyAdapter(volleyParsing!!.getPropertyData(JSONObject(response), 1))
+        else if (url == Urls.urlGetRecentlyViewed)
+            setRecentPropertyAdapter(recentParsing!!.getPropertyData(JSONObject(response), 1))
         else if(url.contains(Urls.urlDelFav,true)){
             MainActivity.favItemsMap.remove(favId.toString())
             context?.showInfoMessage("Item deleted from favourite successfully")
@@ -93,18 +95,22 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
     var volleyService: VolleyService? = null
     var volleyParsing: VolleyParsing? = null
     var leaseParsing: VolleyParsing? = null
+    var recentParsing: VolleyParsing? = null
     var mcontext: Context? = null
     var acBarListener: Communicator.IActionBar? = null
     var main_search_edit: EditText? = null
     var saleMoreText:TextView?=null
     var leaseMoreText:TextView?=null
+    var recentMoreText:TextView?=null
     var rootView: LinearLayout? = null
+    var token: String? = null
     lateinit var mDemoSlider: SliderLayout
     lateinit var bottomNavigation: BottomNavigationView
     var bottomBarListener: Communicator.IBottomBar? = null
     lateinit var recycleStates: RecyclerView
     lateinit var propertiesForSaleRecycler: RecyclerView
     lateinit var propertiesForLeaseRecycler: RecyclerView
+    lateinit var propertiesRecentRecycler: RecyclerView
     override fun onAttach(context: Context) {
         super.onAttach(context)
         this.mcontext = context
@@ -190,8 +196,11 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
     }
 
     fun setIds(view: View) {
+        val sharedPreferences = activity?.getSharedPreferences("login", Context.MODE_PRIVATE)
+        token = sharedPreferences?.getString("token", "")
         volleyParsing = VolleyParsing()
         leaseParsing = VolleyParsing()
+        recentParsing = VolleyParsing()
         volleyService = VolleyService(this, mcontext!!.applicationContext)
         rootView = view.findViewById(R.id.homeFragment)
         main_search_edit = activity?.findViewById(R.id.mainsearch_edittext)
@@ -204,8 +213,10 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
         recycleStates = view.findViewById(R.id.recyclerStates)
         propertiesForSaleRecycler = view.findViewById(R.id.p_sale_recycler)
         propertiesForLeaseRecycler = view.findViewById(R.id.p_lease_recycler)
+        propertiesRecentRecycler = view.findViewById(R.id.p_recent_recycler)
         propertiesForSaleRecycler.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         propertiesForLeaseRecycler.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        propertiesRecentRecycler.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         recycleStates.layoutManager =LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
 
     }
@@ -214,21 +225,22 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
         volleyService?.getDataVolley(RequestType.ArrayRequest, Urls.urlStates, "")
         volleyService?.getDataVolley(RequestType.StringRequest, Urls.urlGetSaleProperties, "")
         volleyService?.getDataVolley(RequestType.StringRequest, Urls.urlGetLeaseProperties, "")
+        volleyService?.getDataVolley(RequestType.StringRequest, Urls.urlGetRecentlyViewed, token!!)
 
     }
 
     private fun homeSlider() {
-        val url_maps = HashMap<String, Int>()
-        url_maps["Electronics"] = R.drawable.slider1
-        url_maps["Beats Audio"] = R.drawable.slider2
-        url_maps["Apple Mackbook Pro"] = R.drawable.slider3
-        url_maps["Home Appliances"] = R.drawable.slider4
-        url_maps["Sports"] = R.drawable.slider5
+        val url_maps = ArrayList<Int>()
+        url_maps.add( R.drawable.slider1)
+        url_maps.add( R.drawable.slider2)
+        url_maps.add(R.drawable.slider3)
+        url_maps.add(R.drawable.slider4)
+        url_maps.add(R.drawable.slider5)
 
-        for (name in url_maps.keys) {
+        for (i in 0 until url_maps.size) {
             val textSliderView = DefaultSliderView(activity)
             // initialize a SliderLayout
-            textSliderView.image(url_maps[name]!!)
+            textSliderView.image(url_maps.get(i))
                 .setScaleType(BaseSliderView.ScaleType.Fit)
 
             mDemoSlider.run {
@@ -239,7 +251,7 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
                 setDuration(5000)
                 textSliderView.bundle(Bundle())
                 textSliderView.bundle
-                    .putString("extra", name)
+                    .putInt("extra", url_maps.get(i))
                 addSlider(textSliderView)
             }
 
@@ -272,6 +284,14 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
             setItemClickListener(this@HomeFragment)
         }
         propertiesForLeaseRecycler.adapter = propertyAdapter
+    }
+    private fun setRecentPropertyAdapter(propertyList: ArrayList<PropertyModel>) {
+        val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutHorizontalProperties)
+        propertyAdapter.run{
+            setFavouriteListener(this@HomeFragment)
+            setItemClickListener(this@HomeFragment)
+        }
+        propertiesRecentRecycler.adapter = propertyAdapter
     }
     fun navigateToMoreProperties(id: Int?, name: String?,mflag:Int){
         val args = Bundle()

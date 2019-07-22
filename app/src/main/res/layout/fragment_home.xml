@@ -170,6 +170,60 @@
 
         </LinearLayout>
     
+    
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+            
+                android:orientation="vertical">
+        
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+            
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/homefragmentmargin"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="Recently Viewed Properties"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textSize="@dimen/app_heading_text"
+                        android:textStyle="bold" />
+            
+                <TextView
+                        android:id="@+id/p_recently_viewed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/homefragmentmargin"
+                        android:textColor="@drawable/bidbuybtntextstate"
+                        android:background="@drawable/bid_buy_btns_home"
+                        android:paddingLeft="16dp"
+                        android:gravity="center"
+                        android:paddingTop="4dp"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="6dp"
+                        android:text="More"
+                        android:elevation="@dimen/button_elevation"
+                        android:textSize="@dimen/bidCardbtntext"
+                        android:textStyle="bold" />
+        
+            </RelativeLayout>
+        
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/p_recent_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="@dimen/_150sdp"
+                    android:clipToPadding="false"
+                    android:paddingLeft="@dimen/homefragmentpadding" />
+    
+        </LinearLayout>
+        
         <LinearLayout
                 android:layout_marginBottom="50dp"
                 android:layout_width="match_parent"
