@@ -1,6 +1,7 @@
 package com.brainplow.ogrespace.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.error.VolleyError
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.activities.FullScreenImageActivity
 import com.brainplow.ogrespace.activities.MainActivity
 import com.brainplow.ogrespace.adapters.PropertyAdapter
 import com.brainplow.ogrespace.adapters.StatesAdapter
@@ -244,7 +246,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
 
     override fun onPause() {
 
-        handler?.removeCallbacksAndMessages(null)
+        handler.removeCallbacksAndMessages(null)
         if (laoding?.ishowingg()!!) {
             laoding?.dismisss()
         }
@@ -260,7 +262,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
 
         itemId = b!!.getInt("id")
         setIds(view)
-        handler?.postDelayed({
+        handler.postDelayed({
             laoding?.showdialog()
             volleyRequests()
         }, 2000)
@@ -309,6 +311,11 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
             // initialize a SliderLayout
             textSliderView.image(url_maps[name])
                 .setScaleType(BaseSliderView.ScaleType.Fit)
+                .setOnSliderClickListener {
+                    val intent= Intent(mcontext, FullScreenImageActivity::class.java)
+                    intent.putExtra("map",url_maps)
+                    startActivity(intent)
+                }
 
             mDemoSlider.run {
                 setBackgroundColor(Color.TRANSPARENT)
