@@ -123,7 +123,7 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
             else if (mflag == 3)
                 actionBarListener("Lease Properties")
             else if (mflag == 4)
-                actionBarListener("Recently Visited Properties")
+                actionBarListener("Recently Viewed Properties")
         }
     }
 
