@@ -22,9 +22,12 @@
             android:roundIcon="@mipmap/app_icon"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".activities.ChangePasswordActivity"
-                  android:theme="@style/AppTheme.Popup"
-                  android:windowSoftInputMode="stateAlwaysHidden">
+        <activity android:name=".activities.FullScreenImageActivity">
+        </activity>
+        <activity
+                android:name=".activities.ChangePasswordActivity"
+                android:theme="@style/AppTheme.Popup"
+                android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity android:name=".activities.ForgotPassActivity">
         </activity>

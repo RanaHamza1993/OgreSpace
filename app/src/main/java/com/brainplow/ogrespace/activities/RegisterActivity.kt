@@ -1,5 +1,4 @@
 package com.brainplow.ogrespace.activities
-
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -189,9 +188,9 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
         alreadySpanable.setSpan(android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 25, 32, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         ss.setSpan(android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 68, 81, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         ss.setSpan(android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 86, 100, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        var fcs = ForegroundColorSpan(resources.getColor(R.color.blue))
-        var fc = ForegroundColorSpan(resources.getColor(R.color.blue))
-        var fccs = ForegroundColorSpan(resources.getColor(R.color.blue))
+        val fcs = ForegroundColorSpan(resources.getColor(R.color.blue))
+        val fc = ForegroundColorSpan(resources.getColor(R.color.blue))
+        val fccs = ForegroundColorSpan(resources.getColor(R.color.blue))
         ss.setSpan(fcs, 68, 81, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         ss.setSpan(fc, 86, 100, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         alreadySpanable.setSpan(fccs,25,32, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
@@ -204,9 +203,9 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
 
     }
     fun setListeners(){
-        app_logo?.setOnClickListener({
+        app_logo?.setOnClickListener{
             onBackPressed()
-        })
+        }
         invite?.setOnClickListener {
             StaticFunctions.inviteOthers(this)
         }
@@ -217,7 +216,7 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
             }
         })
 
-        pass.setCustomSelectionActionModeCallback(object: android.view.ActionMode.Callback {
+        pass.customSelectionActionModeCallback = object: android.view.ActionMode.Callback {
             override fun onActionItemClicked(mode: android.view.ActionMode?, item: MenuItem?): Boolean {
                 return false
             }
@@ -235,8 +234,8 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
             }
 
 
-        })
-        conpass.setCustomSelectionActionModeCallback(object: android.view.ActionMode.Callback {
+        }
+        conpass.customSelectionActionModeCallback = object: android.view.ActionMode.Callback {
             override fun onActionItemClicked(mode: android.view.ActionMode?, item: MenuItem?): Boolean {
                 return false
             }
@@ -254,7 +253,7 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
             }
 
 
-        })
+        }
         pass.setLongClickable(false)
         pass.setTextIsSelectable(false)
         conpass.setLongClickable(false)
@@ -444,10 +443,10 @@ class RegisterActivity : BaseActivity(),Communicator.IVolleResult {
 
     }
 
-    fun checkEmailExistence(email:String?){
+    private fun checkEmailExistence(email:String?){
         volleyService?.postDataVolley(RequestType.JsonObjectRequest, Urls.urlEmailCheck, JSONObject().put("email",email), "")
     }
-    fun checkUserNameExistence(userName:String?){
+    private fun checkUserNameExistence(userName:String?){
         volleyService?.postDataVolley(RequestType.JsonObjectRequest, Urls.urlUserNameCheck, JSONObject().put("username",userName), "")
     }
 

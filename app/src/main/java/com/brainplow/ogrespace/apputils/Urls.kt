@@ -33,5 +33,7 @@ object Urls {
     val urlFromZipCode = baseUrl + "office/zipcode/"
     val urlGetCreditCard = baseUrl + "payment/cardinfo/"
     val urlGetServices = baseUrl + "office/listing_services/"
+    val urlGetRecentlyViewed = baseUrl + "office/recently_viewed_android/"
+    val urlDeleteCreditCard = baseUrl + "payment/cardinfodelete/"
     val urlGooglePlaceSearch = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input="
 }

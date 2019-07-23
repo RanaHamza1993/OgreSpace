@@ -50,7 +50,7 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
 
     override fun notifySuccess(requestType: RequestType?, response: JSONArray?, url: String, netWorkResponse: Int?) {
         if (url.contains(urlGetPlaces)) {
-            spinner_layout?.visibility = View.GONE
+           // spinner_layout?.visibility = View.GONE
             //  searchIcon?.visibility = View.GONE
             keyWordsList.clear()
             for (i in 0 until response!!.length()) {
@@ -298,7 +298,7 @@ class SearchFragment : BaseFragment(), Communicator.IVolleResult {
                     main_edit_cross.visibility = View.GONE
                     main_edit_mic.visibility = View.VISIBLE
                     //   searchIcon?.visibility = View.VISIBLE
-                    spinner_layout?.visibility = View.VISIBLE
+                //    spinner_layout?.visibility = View.VISIBLE
 
 
                 }

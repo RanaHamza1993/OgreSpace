@@ -63,14 +63,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:fontFamily="@font/opensans_bold"
-                        android:maxLength="26"
+                        android:fontFamily="@font/opensans_semibold"
                         android:maxLines="2"
+                        android:minLines="2"
                         android:layout_alignParentStart="true"
                         android:text="machine learning"
                         android:layout_toLeftOf="@id/del_fav"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/app_normal_text"
+                        android:textSize="@dimen/app_small_text"
                         android:textStyle="bold"/>
                     <ImageView android:layout_width="@dimen/app_normal_text"
                               android:layout_gravity="right"
@@ -97,12 +97,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
-                            android:fontFamily="@font/opensans_regular"
+                            android:fontFamily="@font/opensans_semibold"
                             android:maxLines="2"
+                            android:minLines="2"
                             android:layout_marginLeft="6dp"
                             android:text="Jhon watson"
                             android:textColor="@color/gray"
-                            android:textSize="@dimen/app_small_text"
+                            android:textSize="@dimen/app_mini_text"
                             android:textStyle="normal"/>
                 </LinearLayout>
                 <RelativeLayout
@@ -136,19 +137,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
-                            android:maxLength="8"
                             android:maxLines="1"
                             android:text="$20"
+                            android:gravity="center_vertical"
                             android:textColor="@color/holo_green_dark"
-                            android:textSize="@dimen/app_heading_text"
-                            android:fontFamily="@font/opensans_bold"
+                            android:textSize="@dimen/app_normal_text"
+                            android:fontFamily="@font/opensans_semibold"
                             android:textStyle="bold"/>
                     
                     <ImageView
-                            android:layout_margin="@dimen/crammargin6"
+                            android:layout_marginLeft="@dimen/crammargin6"
+                            android:layout_marginRight="@dimen/crammargin6"
                             android:id="@+id/img_fav"
                             android:layout_width="@dimen/bidheartsize"
                             android:layout_height="@dimen/bidheartsize"
+                            android:layout_gravity="center_vertical"
                             android:layout_alignParentRight="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/bottom_heart_home"
@@ -178,8 +181,9 @@
                         android:text="For Lease"
                         android:textColor="@color/black"
                         android:textAllCaps="false"
+                        android:fontFamily="@font/opensans_semibold"
                         android:textSize="@dimen/app_small_text"
-                        android:textStyle="bold"/>
+                />
                 
                 <TextView
                         android:id="@+id/p_area"
@@ -190,10 +194,11 @@
                         android:layout_marginBottom="@dimen/crammargin3"
                         android:text="600 Sqrf"
                         android:gravity="right"
+                        android:fontFamily="@font/opensans_semibold"
                         android:textColor="@color/black"
                         android:textAllCaps="false"
                         android:textSize="@dimen/app_small_text"
-                        android:textStyle="bold"/>
+                />
             
             
             </LinearLayout>
