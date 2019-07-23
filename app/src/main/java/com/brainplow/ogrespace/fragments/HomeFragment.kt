@@ -128,7 +128,7 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
 //        acBotListeners()
         setIds(view)
         cursorVisible()
-        homeSlider()
+
         setListeners()
         volleyRequests()
         return view
@@ -152,6 +152,7 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
     override fun onResume() {
         super.onResume()
         acBotListeners()
+        homeSlider()
         bottomNavigation.menu.findItem(R.id.bottom_home).setChecked(true)
     }
 

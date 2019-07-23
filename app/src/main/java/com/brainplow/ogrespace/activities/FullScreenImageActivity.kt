@@ -11,6 +11,8 @@ import com.github.chrisbanes.photoview.PhotoView
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.LinearLayout
 
 
@@ -23,25 +25,30 @@ class FullScreenImageActivity : AppCompatActivity() {
     private var viewPager: ViewPager? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.requestFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
         setContentView(R.layout.activity_full_screen_image)
 
-
         val imageIntent = intent
-        imageMap=imageIntent.getSerializableExtra("map") as HashMap<String, String>
+        imageList=imageIntent.getSerializableExtra("map") as ArrayList<String>
+        val pos=imageIntent.getIntExtra("pos",0)
         viewPager = findViewById(R.id.image_pager)
-        for(a in imageMap.keys){
-            imageList.add(imageMap.get(a)!!)
-        }
+//        for(a in imageMap.keys){
+//            imageList.add(imageMap.get(a)!!)
+//        }
 //        val photoView = findViewById(R.id.photo_view) as PhotoView
 //        Glide.with(this)
 //            .load(imageList.get(0)).placeholder(R.drawable.placeholder)
 //            .into(photoView)
-//        adapter= FullScreenImageAdapter(this,imageList)
-//        viewPager!!.setAdapter(adapter)
-        viewPager!!.setAdapter(SamplePagerAdapter())
+        adapter= FullScreenImageAdapter(this,imageList)
+        viewPager!!.setAdapter(adapter)
+ //       viewPager!!.setAdapter(SamplePagerAdapter())
 //
 //        // displaying selected image first
-        viewPager!!.setCurrentItem(0)
+        viewPager!!.setCurrentItem(pos)
 
 
     }
@@ -57,7 +64,7 @@ class FullScreenImageActivity : AppCompatActivity() {
            // photoView.setImageResource(imageList[position])
             // Now just add PhotoView to ViewPager and return it
                     Glide.with(this@FullScreenImageActivity)
-            .load(imageList.get(0)).placeholder(R.drawable.placeholder)
+            .load(imageList.get(position)).placeholder(R.drawable.placeholder)
             .into(photoView)
             container.addView(photoView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
             return photoView

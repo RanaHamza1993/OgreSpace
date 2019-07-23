@@ -140,8 +140,8 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
         val arrayPics = baseObj.getJSONArray("pics")
         for (i in 0 until arrayPics?.length()!!) {
             val picUrl: String = arrayPics.getString(i)
-            Log.d("propertPics", picUrl)
-            url_maps.put(i.toString(), picUrl)
+           // Log.d("propertPics", picUrl)
+            url_maps.add(picUrl)
         }
         propertyImages()
         val arrayResults = baseObj.getJSONArray("results")
@@ -239,7 +239,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
     var token: String? = null
     var mapFragment: SupportMapFragment? = null
     var itemId = 0
-    var url_maps = HashMap<String, String>()
+    var url_maps = ArrayList<String>()
     var laoding: LoadingDialog? = null
     var handler = Handler()
 
@@ -306,14 +306,15 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
     private fun propertyImages() {
 
 
-        for (name in url_maps.keys) {
+        for (i in 0 until   url_maps.size) {
             val textSliderView = DefaultSliderView(activity)
             // initialize a SliderLayout
-            textSliderView.image(url_maps[name])
+            textSliderView.image(url_maps[i])
                 .setScaleType(BaseSliderView.ScaleType.Fit)
                 .setOnSliderClickListener {
                     val intent= Intent(mcontext, FullScreenImageActivity::class.java)
                     intent.putExtra("map",url_maps)
+                    intent.putExtra("pos",i)
                     startActivity(intent)
                 }
 
@@ -325,7 +326,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
                 setDuration(5000)
                 textSliderView.bundle(Bundle())
                 textSliderView.bundle
-                    .putString("extra", name)
+                    .putString("extra", url_maps[i])
                 addSlider(textSliderView)
             }
 

@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Bitmap
 import androidx.viewpager.widget.ViewPager
 import com.brainplow.ogrespace.java.TouchImageView
+import com.bumptech.glide.Glide
 
 class FullScreenImageAdapter():PagerAdapter() {
 
@@ -40,10 +41,14 @@ class FullScreenImageAdapter():PagerAdapter() {
         inflater = container.context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val viewLayout = inflater!!.inflate(R.layout.layout_fullscreen_image, container, false)
         imgDisplay =  viewLayout.findViewById(R.id.imgDisplay)
-        val options = BitmapFactory.Options()
-        options.inPreferredConfig = Bitmap.Config.ARGB_8888
-        val bitmap = BitmapFactory.decodeFile(imagePaths!!.get(position), options)
-        imgDisplay.setImageBitmap(bitmap)
+       // val options = BitmapFactory.Options()
+       // options.inPreferredConfig = Bitmap.Config.ARGB_8888
+       // val bitmap = BitmapFactory.decodeFile(imagePaths!!.get(position), options)
+       // imgDisplay.setImageBitmap(bitmap)
+
+                Glide.with(context!!)
+            .load(imagePaths!!.get(position)).placeholder(R.drawable.placeholder)
+            .into(imgDisplay)
         (container as ViewPager).addView(viewLayout)
 
         return viewLayout
