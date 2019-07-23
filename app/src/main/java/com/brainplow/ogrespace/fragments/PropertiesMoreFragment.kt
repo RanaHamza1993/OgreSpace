@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.error.VolleyError
 
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.activities.MainActivity
 import com.brainplow.ogrespace.adapters.PropertyAdapter
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.baseclasses.BaseFragment
@@ -34,10 +35,13 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
         // if (url.contains(Urls.urlPropertyByState)) {
         if (url.equals(Urls.urlAddToFav)) {
-            if (netWorkResponse == 200)
+            if (netWorkResponse == 200) {
+                MainActivity.favItemsMap.put(favId.toString(), favId!!)
                 context?.showSuccessMessage("Item added to favourite successfully")
-            else if (netWorkResponse == 202)
+            }
+            else if (netWorkResponse == 202) {
                 deleteFromFav(favId)
+            }
         } else {
             if (pages == 1) {
                 try {
@@ -64,6 +68,7 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
 
     override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
         if (url.contains(Urls.urlDelFav, true)) {
+            MainActivity.favItemsMap.remove(favId.toString())
             context?.showInfoMessage("Item deleted from favourite successfully")
         }
     }
@@ -71,6 +76,7 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
     var bidPages = 0
     var bidItems = 0
     var pages = 1
+    var token: String? = null
     var acBarListener: Communicator.IActionBar? = null
     var mcontext: Context? = null
     var volleyService: VolleyService? = null
@@ -116,6 +122,8 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
                 actionBarListener("Sale Properties")
             else if (mflag == 3)
                 actionBarListener("Lease Properties")
+            else if (mflag == 4)
+                actionBarListener("Recently Visited Properties")
         }
     }
 
@@ -123,6 +131,8 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
         var bidPages = 0
         var bidItems = 0
         var pages = 1
+        val sharedPreferences = activity?.getSharedPreferences("login", Context.MODE_PRIVATE)
+        token = sharedPreferences?.getString("token", "")
         load = LoadingDialog("Loading", context)
         volleyParsing = VolleyParsing()
         volleyService = VolleyService(this, mcontext!!.applicationContext)
@@ -149,6 +159,12 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
                 RequestType.JsonObjectRequest,
                 Urls.urlGetLeaseProperties + "?page=" + pages,
                 ""
+            )
+        else if (mflag == 4)
+            volleyService?.getDataVolley(
+                RequestType.JsonObjectRequest,
+                Urls.urlGetRecentlyViewed + "?page=" + pages,
+                token!!
             )
     }
 
@@ -192,6 +208,12 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
                                 RequestType.JsonObjectRequest,
                                 Urls.urlGetLeaseProperties + "?page=" + pages,
                                 ""
+                            )
+                        else if (mflag == 4)
+                            volleyService?.getDataVolley(
+                                RequestType.JsonObjectRequest,
+                                Urls.urlGetRecentlyViewed + "?page=" + pages,
+                                token!!
                             )
 
                         flag = 0

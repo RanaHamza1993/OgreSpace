@@ -26,6 +26,7 @@ import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.adapters.CreditCardAdapter
 import com.brainplow.ogrespace.apputils.Urls
 import com.brainplow.ogrespace.apputils.Urls.urlAddCreditCard
+import com.brainplow.ogrespace.apputils.Urls.urlDeleteCreditCard
 import com.brainplow.ogrespace.apputils.Urls.urlFromZipCode
 import com.brainplow.ogrespace.apputils.Urls.urlGetCreditCard
 import com.brainplow.ogrespace.baseclasses.BaseFragment
@@ -33,12 +34,10 @@ import com.brainplow.ogrespace.constants.StaticFunctions.hideKeyboard
 import com.brainplow.ogrespace.customviews.PaymentCreditEditText
 import com.brainplow.ogrespace.enums.RequestType
 import com.brainplow.ogrespace.extesnions.showErrorMessage
+import com.brainplow.ogrespace.extesnions.showInfoMessage
 import com.brainplow.ogrespace.extesnions.showSuccessMessage
 import com.brainplow.ogrespace.interfaces.Communicator
-import com.brainplow.ogrespace.kotlin.JWTUtils
-import com.brainplow.ogrespace.kotlin.MySingleton
-import com.brainplow.ogrespace.kotlin.VolleyService
-import com.brainplow.ogrespace.kotlin.getStringData
+import com.brainplow.ogrespace.kotlin.*
 import com.brainplow.ogrespace.models.CreditCardModel
 import com.google.android.material.navigation.NavigationView
 import com.suke.widget.SwitchButton
@@ -61,13 +60,26 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
 
     override fun notifySuccess(requestType: RequestType?, response: JSONObject?, url: String, netWorkResponse: Int?) {
         if(url.equals(urlAddCreditCard)){
+            if(load!!.ishowingg())
+                load?.dismisss()
+            clearFields()
             context?.showSuccessMessage("Credit card added successfully")
         }
     }
 
+    override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
+        if(url.contains(urlDeleteCreditCard)){
+            context?.showInfoMessage("Card deleted successfully")
+        }
+    }
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
         if(url.equals(urlAddCreditCard)){
+            if(load!!.ishowingg())
+                load?.dismisss()
             showErrorBody(error)
+        }
+        if(url.contains(urlDeleteCreditCard)){
+            context?.showInfoMessage("Card could not be deleted")
         }
     }
 
@@ -103,7 +115,7 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
     var table_recycler: RecyclerView? = null
     var acBarListener: Communicator.IActionBar? = null
     var mcontext: Context? = null
-
+    var load: LoadingDialog? = null
     var decode: String? = null
 
     var cardType: String = "Mastercard"
@@ -125,6 +137,7 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
         val view = layoutInflater.inflate(R.layout.fragment_payment_method, container, false)
         navigationView = activity!!.findViewById(R.id.nav_view)
         job = Job()
+        load = LoadingDialog("", mcontext)
         val sharedPreferences = activity?.getSharedPreferences("login", Context.MODE_PRIVATE)
         volleyService = VolleyService(this, mcontext!!.applicationContext)
         val date = SimpleDateFormat("MM/yy", Locale.getDefault()).format(Date())
@@ -259,7 +272,7 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
 
         })
 
-        expiry_date?.setOnFocusChangeListener(object : View.OnFocusChangeListener {
+        expiry_date?.onFocusChangeListener = object : View.OnFocusChangeListener {
             override fun onFocusChange(v: View?, hasFocus: Boolean) {
 
 
@@ -273,7 +286,7 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
 
             }
 
-        })
+        }
 
         add_btn?.setOnClickListener({
             AddCreditCard()
@@ -479,13 +492,14 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
             rootObject.put("street_adrress", paymentStreetAddress?.text?.toString())
             rootObject.put("autopay", isChecked)
           //  rootObject.put("pinCode", 143)
-
+            load?.showdialog()
             volleyService?.postDataVolley(
                 RequestType.JsonObjectRequest,
                 urlAddCreditCard,
                 rootObject,
                 token!!
             )
+
         }
     }
 
@@ -555,41 +569,11 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
     }
 
     override fun deleteCreditCard(id: Int) {
-
-//        val stringRequest = object : StringRequest(
-//            Request.Method.DELETE, Url.urlEditCreditCard + id,
-//            Response.Listener { response ->
-//
-//                // val handler = Handler()
-//
-//              //  --MainActivity.totalCreditCards
-//                Toasty.info(mcontext!!.applicationContext, "Card Deleted Successfully", Toast.LENGTH_SHORT, true).show();
-//
-//            },
-//            Response.ErrorListener { error ->
-//                //Toast.makeText(context, "" + error.toString()+" Item not deleted", Toast.LENGTH_LONG).show()
-//                // Toasty.error(mcontext!!.applicationContext, "Item Not Deleted!", Toast.LENGTH_SHORT, true).show();
-//
-//
-//            }
-//        ) {
-//
-//
-//            override fun parseNetworkResponse(response: NetworkResponse?): Response<String> {
-//                return super.parseNetworkResponse(response)
-//            }
-//
-//            override fun getHeaders(): MutableMap<String, String> {
-//                val headers = HashMap<String, String>()
-//                headers["Content-Type"] = "application/text; charset=utf-8"
-//                if (!token.equals(""))
-//                    headers.put("Authorization", "JWT " + token)
-//                return headers
-//            }
-//        }
-//
-//        stringRequest.setShouldCache(false)
-//        MySingleton.getInstance(mcontext!!.applicationContext).requestQueue.add(stringRequest)
+        volleyService?.deleteDataVolley(
+            RequestType.StringRequest,
+            urlDeleteCreditCard+id,
+            token!!
+        )
 
     }
 

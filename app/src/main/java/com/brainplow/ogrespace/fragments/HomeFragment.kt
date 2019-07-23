@@ -68,8 +68,9 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
                  MainActivity.favItemsMap.put(favId.toString(),favId!!)
                  context?.showSuccessMessage("Item added to favourite successfully")
              }
-             else if(netWorkResponse==202)
+             else if(netWorkResponse==202) {
                  deleteFromFav(favId)
+             }
 
         }
 
@@ -208,6 +209,7 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
         bottomNavigation = activity!!.findViewById(R.id.navigation)
         saleMoreText=view.findViewById(R.id.p_sale_more)
         leaseMoreText=view.findViewById(R.id.p_lease_more)
+        recentMoreText=view.findViewById(R.id.p_recently_more)
         mDemoSlider = view.findViewById(R.id.banner1);
         mDemoSlider.getPagerIndicator()
             .setDefaultIndicatorColor(getResources().getColor(R.color.Red), getResources().getColor(R.color.gray));
@@ -318,6 +320,9 @@ class HomeFragment : PropertyBaseFragment(), Communicator.IVolleResult, Communic
         leaseMoreText?.setOnClickListener(){
             navigateToMoreProperties(0,"",3)
         }
+         recentMoreText?.setOnClickListener(){
+             navigateToMoreProperties(0,"",4)
+         }
         main_search_edit!!.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View, event: MotionEvent): Boolean {
 
