@@ -73,12 +73,20 @@ class ServiceAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 if (sServiceArray?.get(position)!!.check_value == false) {
                     sServiceArray?.get(position)!!.check_value = true
                     sb_user.append(sServiceArray!!.get(position).state!!+" ")
-                    //     servicesStringArray.add(sServiceArray!!.get(position).state!!)
+//                    val list= sb_user.toString().trim().split("\\s+".toRegex())
+//                    val a=JSONArray(list)
+//                    val b=5
+                         servicesStringArray.add(sServiceArray!!.get(position).state!!)
+//                    val js=JSONArray(servicesStringArray)
+//
+//                    val a=5
                 } else {
                     sServiceArray?.get(position)!!.check_value = false
                     val index=sb_user.indexOf(sServiceArray!![position].state!!)
                     if(index!=-1){
-                        sb_user.delete(index,index+sServiceArray!![position].state!!.length)
+                        sb_user.delete(index,index+(sServiceArray!![position].state!!.length+1))
+//                       val list= sb_user.toList()
+//                        val a=5
                     }
                     servicesStringArray.remove(sServiceArray!![position].state!!)
                 }
