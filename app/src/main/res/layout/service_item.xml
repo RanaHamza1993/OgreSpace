@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/main_layout"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:orientation="vertical"
+>
+    
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/app_spacing"
+            android:orientation="horizontal">
+        
+        <ImageView
+                android:visibility="visible"
+                android:id="@+id/service_title"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:scaleType="centerInside"
+                android:src="@drawable/place_search" />
+        
+        <TextView
+                android:id="@+id/service_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/app_spacing"
+                android:maxLines="5"
+                android:ellipsize="end"
+                android:text="United"
+                android:textColor="#000"
+                android:textSize="@dimen/app_small_text" />
+    </LinearLayout>
+    <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:paddingLeft="@dimen/app_spacing"
+            android:paddingRight="@dimen/app_spacing"
+            android:layout_marginTop="2dp"
+            android:background="@color/md_grey_300"
+    />
+
+
+</LinearLayout>

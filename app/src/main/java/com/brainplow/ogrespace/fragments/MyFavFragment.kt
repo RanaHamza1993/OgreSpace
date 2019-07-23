@@ -37,28 +37,29 @@ import com.facebook.share.Share
 import org.json.JSONArray
 import org.json.JSONObject
 
-class MyFavFragment : PropertyBaseFragment(),Communicator.IVolleResult {
-
+class MyFavFragment : PropertyBaseFragment(), Communicator.IVolleResult {
 
 
     override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
 
-        if(url.equals(urlGetFav)) {
-          //  val response = JSONObject(response)
+        if (url.equals(urlGetFav)) {
+            //  val response = JSONObject(response)
             parseData(JSONObject(response))
-           // setSalePropertyAdapter(volleyParsing?.getFavPropertyData(response, 1)!!)
-        } else if(url.contains(Urls.urlDelFav,true)){
+            // setSalePropertyAdapter(volleyParsing?.getFavPropertyData(response, 1)!!)
+        } else if (url.contains(Urls.urlDelFav, true)) {
             MainActivity.favItemsMap.remove(favId.toString())
             context?.showInfoMessage("Item deleted from favourite successfully")
         }
     }
+
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
-        if(url.equals(urlAddToFav)){
+        if (url.equals(urlAddToFav)) {
             context?.showSuccessMessage("Item not added to favourite")
-        } else if(url.equals(Urls.urlDelFav)){
+        } else if (url.equals(Urls.urlDelFav)) {
             context?.showErrorMessage("Item not deleted from favourite")
         }
     }
+
     var propertyList: ArrayList<PropertyModel>? = ArrayList<PropertyModel>()
     var recycle_states_more: RecyclerView? = null
     var layoutManager: LinearLayoutManager? = null
@@ -113,15 +114,15 @@ class MyFavFragment : PropertyBaseFragment(),Communicator.IVolleResult {
 
     }
 
-    private fun parseData(response: JSONObject?){
+    private fun parseData(response: JSONObject?) {
 
-        val array=response?.getJSONArray("results")
+        val array = response?.getJSONArray("results")
         try {
             for (i in 0 until array!!.length()) {
 
                 var jsonObject = array.getJSONObject(i)
                 val Id = jsonObject?.getString("id")
-                jsonObject=jsonObject?.getJSONObject("Property_id")
+                jsonObject = jsonObject?.getJSONObject("Property_id")
                 val Address = jsonObject?.getString("address")
                 val property_id = jsonObject?.getString("id")
                 val title = jsonObject?.getString("property_title")
@@ -133,9 +134,19 @@ class MyFavFragment : PropertyBaseFragment(),Communicator.IVolleResult {
                 val lat = jsonObject?.getString("latitude")
                 val long = jsonObject?.getString("longitude")
 
-                val favourite = PropertyModel(address = Address, id = property_id?.toInt(),property_id = id?.toInt(), property_title = title,
-                    property_type = type, one_pic = pic, price = Price?.toDouble(),property_area = area?.toDouble(),post_type = postType,
-                    latitude = lat?.toDouble(), longitude = long?.toDouble())
+                val favourite = PropertyModel(
+                    address = Address,
+                    id = property_id?.toInt(),
+                    property_id = id?.toInt(),
+                    property_title = title,
+                    property_type = type,
+                    one_pic = pic,
+                    price = Price,
+                    property_area = area?.toDouble(),
+                    post_type = postType,
+                    latitude = lat?.toDouble(),
+                    longitude = long?.toDouble()
+                )
 
                 propertyList?.add(favourite)
             }
@@ -146,9 +157,10 @@ class MyFavFragment : PropertyBaseFragment(),Communicator.IVolleResult {
         }
 
     }
+
     private fun setSalePropertyAdapter(propertyList: ArrayList<PropertyModel>) {
         val propertyAdapter = PropertyAdapter(context, propertyList, LayoutType.LayoutFavourites)
-        propertyAdapter.run{
+        propertyAdapter.run {
             setFavouriteListener(this@MyFavFragment)
             setItemClickListener(this@MyFavFragment)
         }

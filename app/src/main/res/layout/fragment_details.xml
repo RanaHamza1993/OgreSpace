@@ -7,7 +7,7 @@
               android:layout_height="wrap_content">
     
     <ScrollView
-            android:layout_marginBottom="@dimen/app_heading_text"
+            
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <LinearLayout
@@ -41,7 +41,7 @@
                 <TextView
                         android:textSize="@dimen/app_normal_text"
                         android:textColor="@color/black"
-                        android:text="$ "
+                        android:text="$"
                         android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -51,7 +51,7 @@
                         android:textSize="@dimen/app_heading_text"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:text="5,000"
+                        android:text="0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -60,7 +60,7 @@
                     android:layout_marginLeft="@dimen/homefragmentmargin"
                     android:layout_marginRight="@dimen/homefragmentmargin"
                     android:fontFamily="@font/opensans_bold"
-                    android:text="Kdkjhvh jhkjfhjkfdkdvkjdvjk  djjfk dhbc dh dhn dhxvn dh dh  hnd vx hdn vh ndhxn  hn db cdhj dx cdjhn h ed  "
+                    android:text="Description"
                     android:id="@+id/property_dis_txt"
                     android:textSize="@dimen/app_normal_text"
                     android:textColor="@color/black"
@@ -405,7 +405,7 @@
                           android:layout_height="wrap_content"
                           android:orientation="vertical">
                 <androidx.recyclerview.widget.RecyclerView
-                        
+                        android:layout_marginBottom="@dimen/app_heading_text"
                         android:layout_marginLeft="@dimen/homefragmentmargin"
                         android:layout_marginRight="@dimen/homefragmentmargin"
                         android:id="@+id/recyc_similar_prop"

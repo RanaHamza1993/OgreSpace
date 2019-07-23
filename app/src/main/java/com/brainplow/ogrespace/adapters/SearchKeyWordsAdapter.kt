@@ -1,5 +1,6 @@
 package com.brainplow.ogrespace.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,8 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.brainplow.ogrespace.R
+import com.brainplow.ogrespace.models.StateModel
 
 class SearchKeyWordsAdapter() : RecyclerView.Adapter<SearchKeyWordsAdapter.SearchHolder>() {
+
 
     companion object {
         var list: List<String>? = null
@@ -24,11 +27,15 @@ class SearchKeyWordsAdapter() : RecyclerView.Adapter<SearchKeyWordsAdapter.Searc
         SearchKeyWordsAdapter.searchListener = searchListener
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchKeyWordsAdapter.SearchHolder {
         var view: View? = null
         val layoutInflater = LayoutInflater.from(parent.context)
+
         view = layoutInflater.inflate(R.layout.search_item, parent, false)
-        return SearchHolder(view)
+
+
+        return SearchHolder(view!!)
     }
 
 

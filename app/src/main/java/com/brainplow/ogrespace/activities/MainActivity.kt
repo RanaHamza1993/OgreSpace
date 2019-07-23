@@ -320,6 +320,10 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
                         // ActivityNavigator<MapsActivity>(this@MainActivity,MapsActivity::class.java)
                         navigateToFragment(OgreasService())
                     }
+                    R.id.nav_add_list -> {
+                        // ActivityNavigator<MapsActivity>( @MainActivity,MapsActivity::class.java)
+                        navigateToFragment(AddListingFragment())
+                    }
                     R.id.nav_terms_condition -> {
                         ActivityNavigator<TermsOfUseActivity>(this@MainActivity, TermsOfUseActivity::class.java)
 

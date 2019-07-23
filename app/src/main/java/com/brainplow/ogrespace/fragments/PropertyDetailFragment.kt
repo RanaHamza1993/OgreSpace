@@ -96,7 +96,8 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
             propertyModel.one_pic = one_pic
 
             val price = baseObj?.getDouble("price")
-            propertyModel.price = price
+            var result = comaAdder(price.toString().replace(".0", ""))
+            propertyModel.price = result
 
             val property_area = baseObj?.getDouble("property_area")
             propertyModel.property_area = property_area
@@ -171,41 +172,86 @@ class PropertyDetailFragment : PropertyBaseFragment(), Communicator.IVolleResult
                 recyc_features?.setNestedScrollingEnabled(true);
             }
             val id = dataObj.getString("id")
+
             val address = dataObj.getString("address")
             property_address_txt?.setText(address)
             property_location_txt?.setText(address)
+
             val property_type = dataObj.getString("property_type")
             property_type_txt?.setText(property_type)
+
             propertyLat = dataObj.getString("latitude")
             propertyLng = dataObj.getString("longitude")
+
             val pic_url = dataObj.getString("pic_url")
             val one_pic = dataObj.getString("one_pic")
+
             val property_id = dataObj.getString("property_id")
             property_id_txt?.setText(property_id)
+
             val description = dataObj.getString("description")
             property_dis_txt?.setText(description)
+
             val price = dataObj.getString("price")
             property_price_txt?.setText(price)
             property_pri_txt?.setText(price)
+
+
             var presented_company = dataObj.getString("presented_company")
+
             val presented_name = dataObj.getString("presented_name")
             property_presented_txt?.setText(presented_name)
+
             val state = dataObj.getString("state")
+
             val zipcode = dataObj.getString("zipcode")
             val city = dataObj.getString("city")
+
             val country = dataObj.getString("country")
             val posted_date = dataObj.getString("posted_date")
             val services = dataObj.getString("services")
+
             property_title = dataObj.getString("property_title")
             property_company_txt?.setText(property_title)
+
             val contact_no = dataObj.getString("contact_no")
             val active_bool = dataObj.getBoolean("active_bool")
+
             val property_area = dataObj.getString("property_area")
-            property_area_txt?.setText(property_area)
+            property_area_txt?.setText(property_area + " Sqrf")
+
             var price_type = dataObj.getString("price_type")
             var post_type = dataObj.getString("post_type")
         }
         setMap(propertyLat, propertyLng, property_title)
+    }
+
+    private fun comaAdder(totalResults: String): String {
+        var resultVal: String? = null
+        if (totalResults.length == 3) {
+            resultVal = totalResults
+        } else {
+            var counter = 0
+            var resultComa: String? = null
+            for (i in totalResults.length - 1 downTo 0) {
+                val ch = totalResults.get(i)
+                resultComa = ch.toString() + resultComa
+                counter++
+                if (counter % 3 === 0) {
+                    resultComa = "," + resultComa
+                }
+
+            }
+            resultVal = resultComa!!.replace("null", "")
+            if (resultVal.length == 8) {
+                resultVal = charRemoveAt(resultVal, 0)
+            }
+        }
+        return resultVal!!
+    }
+
+    private fun charRemoveAt(totalResults: String, i: Int): String? {
+        return totalResults.substring(0, i) + totalResults.substring(i + 1);
     }
 
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {

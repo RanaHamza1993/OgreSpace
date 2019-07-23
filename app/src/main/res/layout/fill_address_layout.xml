@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+>
+    <androidx.cardview.widget.CardView
+            android:id="@+id/crd_address_inner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/app_elevation">
+        <LinearLayout
+                android:padding="@dimen/app_small_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            <Spinner
+                    android:id="@+id/s_p_type"
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"/>
+            <EditText
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:id="@+id/et_space_services"
+                    android:hint="Select Services*"
+                    android:textSize="@dimen/app_small_text"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            
+            
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/services_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="4dp"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_height="wrap_content"/>
+            
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/EditTextTheme"
+                    app:errorTextAppearance="@style/error_appearance"
+                    app:hintTextAppearance="@style/TextLabel">
+                
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_p_price"
+                        android:hint="Property Price*"
+                        android:textSize="@dimen/app_small_text"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="24dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/EditTextTheme"
+                    app:errorTextAppearance="@style/error_appearance"
+                    app:hintTextAppearance="@style/TextLabel">
+                
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_p_area"
+                        android:hint="Property Area*"
+                        android:textSize="@dimen/app_small_text"
+                        android:textColor="@color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            
+            
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/EditTextTheme"
+                    app:errorTextAppearance="@style/error_appearance"
+                    app:hintTextAppearance="@style/TextLabel">
+                
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_p_company"
+                        android:hint="Presenting Company's Name*"
+                        android:textSize="@dimen/app_small_text"
+                        android:textColor="@color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/EditTextTheme"
+                    app:errorTextAppearance="@style/error_appearance"
+                    app:hintTextAppearance="@style/TextLabel">
+                
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_contact"
+                        android:hint="Contact No*"
+                        android:textSize="@dimen/app_small_text"
+                        android:textColor="@color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/EditTextTheme"
+                    app:errorTextAppearance="@style/error_appearance"
+                    app:hintTextAppearance="@style/TextLabel">
+                
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_description"
+                        android:hint="Property Description*"
+                        android:textSize="@dimen/app_small_text"
+                        android:textColor="@color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            
+            <LinearLayout
+                    android:layout_marginTop="@dimen/crammargin10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
+                <TextView
+                        android:id="@+id/b_address_back"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/button_elevation"
+                        android:layout_marginRight="@dimen/button_elevation"
+                        android:background="@drawable/bid_buy_btns_home"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@drawable/bidbuybtntextstate"
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:elevation="@dimen/button_elevation"
+                        android:text="Back"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/app_button_text"
+                        android:textStyle="bold"/>
+                <TextView
+                        android:id="@+id/b_address_next"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/button_elevation"
+                        android:layout_marginRight="@dimen/button_elevation"
+                        android:background="@drawable/bid_buy_btns_home"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@drawable/bidbuybtntextstate"
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:elevation="@dimen/button_elevation"
+                        android:text="Next"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/app_button_text"
+                        android:textStyle="bold"/>
+            </LinearLayout>
+        
+        
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

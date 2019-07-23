@@ -24,7 +24,7 @@ data class PropertyModel(
     var posted_date: Any? = null,
     var presented_company: Any? = null,
     var presented_name: String? = null,
-    var price: Double? = null,
+    var price: String? = null,
     var price_type: String? = null,
     var property_area: Double? = null,
     var property_id: Int? = null,
@@ -36,6 +36,6 @@ data class PropertyModel(
     var subspace_status: Boolean? = null,
     var user_id: Int? = null,
     var zipcode: String? = null
-){
+) {
 
 }

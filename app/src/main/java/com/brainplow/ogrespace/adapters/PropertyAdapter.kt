@@ -110,9 +110,40 @@ class PropertyAdapter(context: Context?, itemss: ArrayList<PropertyModel>?) :
                 .into(propertyImage!!)
             propertyName?.setText(property.property_title)
             propertyAddress?.setText(property.address)
-            propertyPrice?.setText("$${property.price}")
+            var result = comaAdder(property.price!!.replace(".00", ""))
+            propertyPrice?.setText("$${result}")
             propertyType?.setText("For ${property.post_type}")
             propertArea?.setText("${property.property_area} Sqrf")
+        }
+
+        private fun comaAdder(totalResults: String): String {
+            var resultVal: String? = null
+            if (totalResults.length == 3) {
+                resultVal = totalResults
+            } else {
+                var counter = 0
+                var resultComa: String? = null
+                for (i in totalResults.length - 1 downTo 0) {
+                    val ch = totalResults.get(i)
+                    resultComa = ch.toString() + resultComa
+                    counter++
+                    if (counter % 3 === 0) {
+                        resultComa = "," + resultComa
+                    }
+
+                }
+                resultVal = resultComa!!.replace("null", "")
+                if (resultVal.length == 8) {
+                    resultVal = charRemoveAt(resultVal, 0)
+                }else if (resultVal.length == 7) {
+                    resultVal = charRemoveAt(resultVal, 6)
+                }
+            }
+            return resultVal!!
+        }
+
+        private fun charRemoveAt(totalResults: String, i: Int): String? {
+            return totalResults.substring(0, i) + totalResults.substring(i + 1);
         }
 
         fun setClicks(value: PropertyModel) {
