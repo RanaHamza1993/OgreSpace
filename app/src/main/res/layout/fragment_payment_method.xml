@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
               android:gravity="center_horizontal"
               android:background="@color/white"
 
@@ -93,7 +93,7 @@
                         android:textSize="@dimen/app_heading_text"
                         android:textStyle="bold"
                         android:typeface="sans"
-                        app:fontFamily="@font/opensans_bold" />
+                        app:fontFamily="@font/opensans_bold"/>
                 
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -179,7 +179,7 @@
                             android:inputType="number"
                             android:fontFamily="@font/opensans_regular"
                             android:paddingLeft="5dp"
-                            android:singleLine="true" />
+                            android:singleLine="true"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 
                 <LinearLayout
@@ -235,7 +235,7 @@
                                 android:digits="0123456789/"
                                 android:fontFamily="@font/opensans_regular"
                                 android:layout_marginRight="7dp"
-                                android:paddingLeft="5dp" />
+                                android:paddingLeft="5dp"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
                 
@@ -291,7 +291,7 @@
                                 android:enabled="false"
                                 android:fontFamily="@font/opensans_regular"
                                 android:layout_marginRight="7dp"
-                                android:paddingLeft="5dp" />
+                                android:paddingLeft="5dp"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
                 
@@ -344,7 +344,7 @@
                                 android:digits="0123456789/"
                                 android:fontFamily="@font/opensans_regular"
                                 android:layout_marginRight="7dp"
-                                android:paddingLeft="5dp" />
+                                android:paddingLeft="5dp"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
                 
@@ -418,8 +418,7 @@
                         android:orientation="horizontal"
                         android:layout_marginTop="5dp"
                         android:layout_gravity="left"
-                        android:layout_marginBottom="5dp"
-                >
+                        android:layout_marginBottom="5dp">
                     
                     <com.suke.widget.SwitchButton
                             android:id="@+id/switch_button"
@@ -464,10 +463,8 @@
             </LinearLayout>
         
         
-        
         </ScrollView>
     </LinearLayout>
-    
     
     
     <androidx.recyclerview.widget.RecyclerView

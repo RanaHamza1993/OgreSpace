@@ -137,6 +137,19 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
         val view = layoutInflater.inflate(R.layout.fragment_payment_method, container, false)
         navigationView = activity!!.findViewById(R.id.nav_view)
         job = Job()
+        setIds(view)
+        setListeners()
+        return view
+
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        acBarListener = context as Communicator.IActionBar
+        mcontext = context
+    }
+
+    fun setIds(view:View){
         load = LoadingDialog("", mcontext)
         val sharedPreferences = activity?.getSharedPreferences("login", Context.MODE_PRIVATE)
         volleyService = VolleyService(this, mcontext!!.applicationContext)
@@ -146,31 +159,15 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
         datePart2 = parts[1]; // 034556
         //     println("currentDate"+ datePart1 + "" + datePart2)
         token = sharedPreferences?.getString("token", "")//"No name defined" is the default value.
-//        try {
-//            decode = JWTUtils.decoded(token)
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//
-//        }
-//        if (decode != null) {
-//            var decodejson = JSONObject(decode)
-//            userid = decodejson.getString("user_id")
-//        }
         acBarListener?.actionBarListener("Payment Methods")
         acBarListener?.isBackButtonEnabled(true)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        //  activity?.main_searchbar?.visibility = View.GONE
-
-//        table_recycler = view.findViewById(R.id.table_payment_method)
-
         table_recycler = view.findViewById(R.id.table_payment_method)
         payment_card = view.findViewById(R.id.payment_card)
         rootLayout=view.findViewById(R.id.parent_linear)
         btn_discover = view.findViewById(R.id.btn_discover)
         btn_master = view.findViewById(R.id.btn_master)
         btn_visa = view.findViewById(R.id.btn_visa)
-        //btn_pay = view.findViewById(R.id.btn_pay)
-        // add_card=view.findViewById(R.id.add_card)
         add_card_text = view.findViewById(R.id.add_card_txt)
         //  card_detail=view.findViewById(R.id.card_detail)
         card_detail_text = view.findViewById(R.id.card_detail_txt)
@@ -187,6 +184,246 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
         add_btn = view.findViewById(R.id.add_btn)
         switch_default = view.findViewById(R.id.switch_button)
 
+    }
+    override fun onResume() {
+        super.onResume()
+
+        if (counter == 1) {
+            add_card_text?.performClick()
+        } else {
+            card_detail_text?.performClick()
+        }
+        acBarListener?.isBackButtonEnabled(true)
+        acBarListener?.toolbarBackground(false)
+    }
+
+    private fun AddCreditCard() {
+        val isValidated = checkValidation()
+        if (isValidated) {
+            val rootObject = JSONObject()
+            // rootObject.put("initial_amount", profilepicname.toString())
+            val cardnumber = card_number?.text?.toString()
+            val cardname = name?.text?.toString()
+            var expirydate = expiry_date?.text?.toString()
+            expirydate = expirydate?.replace("/", "")
+            val cvvnumber = ccv_number?.text?.toString()
+            val isChecked = switch_default?.isChecked
+            rootObject.put("number", cardnumber?.replace("-", ""))
+            rootObject.put("name", cardname)
+            rootObject.put("expDate", expirydate)
+            rootObject.put("cvc", cvvnumber)
+            rootObject.put("card_type", cardType)
+            rootObject.put("nickname", paymentNickName?.text?.toString())
+            rootObject.put("state", paymentState?.text?.toString())
+            rootObject.put("city", paymentCity?.text?.toString())
+            rootObject.put("country", paymentCountry?.text?.toString())
+            rootObject.put("zipcode", paymentZipCode?.text?.toString()?.toInt())
+            rootObject.put("street_adrress", paymentStreetAddress?.text?.toString())
+            rootObject.put("autopay", isChecked)
+          //  rootObject.put("pinCode", 143)
+            load?.showdialog()
+            volleyService?.postDataVolley(
+                RequestType.JsonObjectRequest,
+                urlAddCreditCard,
+                rootObject,
+                token!!
+            )
+
+        }
+    }
+
+
+//    private suspend fun getCreditCards()= suspendCoroutine<String> {
+//
+//
+//        val jsonObjectRequest =
+//        jsonObjectRequest.setShouldCache(false)
+//        MySingleton.getInstance(mcontext!!.applicationContext).addToRequestQueue(jsonObjectRequest)
+//    }
+
+    suspend fun getCreditCards(): String = suspendCancellableCoroutine { continuation ->
+        CreditCardsList.clear()
+        getStringData(mcontext,urlGetCreditCard, token,continuation).getStringRequest()
+    }
+    private fun getFromZipCode(zipCode: Int) {
+        val jsonObjectRequest = object : JsonObjectRequest(
+            Request.Method.GET, urlFromZipCode + zipCode, null,
+            Response.Listener { response ->
+                paymentCountry?.setText(response?.getString("country"))
+                paymentCity?.setText(response?.getString("city"))
+                paymentState?.setText(response?.getString("state"))
+
+                try {
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+
+            },
+            Response.ErrorListener { error ->
+                // showErrorBody(error)
+                var statusCode = error.networkResponse.statusCode
+                if (statusCode == 400)
+                    context?.showErrorMessage("Invalid zipcode")
+            }
+        ) {
+
+
+            override fun parseNetworkResponse(response: NetworkResponse?): Response<JSONObject> {
+                return super.parseNetworkResponse(response)
+            }
+
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Content-Type"] = "application/json; charset=utf-8"
+                if (!token.equals(""))
+                    headers.put("Authorization", "JWT " + token)
+                return headers
+            }
+        }
+        MySingleton.getInstance(mcontext!!.applicationContext).addToRequestQueue(jsonObjectRequest)
+    }
+
+    override fun updateCreditCard(id: Int) {
+//        val args = Bundle()
+//        args.putInt("id", id)
+//        var fragment = UpdateCreditCardFragment()
+//        fragment.arguments = args
+//        var fragmentTransaction = fragmentManager?.beginTransaction()
+//        fragmentTransaction?.replace(R.id.content_frame, fragment)
+//        fragmentTransaction?.addToBackStack(null)
+//        counter++;
+//        fragmentTransaction?.commit()
+
+    }
+
+    override fun deleteCreditCard(id: Int) {
+        volleyService?.deleteDataVolley(
+            RequestType.StringRequest,
+            urlDeleteCreditCard+id,
+            token!!
+        )
+
+    }
+
+    fun checkValidation(): Boolean {
+        val cardnumber = card_number?.text?.toString()?.trim()
+        val cardname = name?.text?.toString()?.trim()
+        var expirydate = expiry_date?.text?.toString()?.trim()
+        expirydate = expirydate?.replace("/", "")
+        val cvvnumber = ccv_number?.text?.toString()
+        val zipCode = paymentZipCode?.text?.toString()
+        val city = paymentCity?.text?.toString()
+        val country = paymentCountry?.text?.toString()
+        val state = paymentState?.text?.toString()
+        val nickName = paymentNickName?.text?.toString()
+        val streedAddress = paymentStreetAddress?.text?.toString()
+        if (cardnumber!!.isEmpty()) {
+
+            //card_number?.error = "Enter Card Number"
+            context?.showErrorMessage("Enter card number")
+            return false
+        } else if (cardnumber.length < 19) {
+            //card_number?.error = "Enter Full Card Number"
+            context?.showErrorMessage("Enter full card number")
+            return false
+        } else if(cardType.equals("Mastercard",true)&& !cardnumber.replace("-","").matches("^5[1-5][0-9]{1,14}$".toRegex())){
+
+            context?.showErrorMessage("Invalid master cardnumber")
+            return false
+        }else if(cardType.equals("Visa",true)&& !cardnumber.replace("-","").matches("^4[0-9]{2,12}(?:[0-9]{3})?$".toRegex())){
+
+            context?.showErrorMessage("Invalid visa cardnumber")
+            return false
+        }else if(cardType.equals("Discover",true)&& !cardnumber.replace("-","").matches("^65[4-9][0-9]{13}|64[4-9][0-9]{13}|6011[0-9]{12}|(622(?:12[6-9]|1[3-9][0-9]|[2-8][0-9][0-9]|9[01][0-9]|92[0-5])[0-9]{10})$".toRegex())){
+
+            context?.showErrorMessage("Invalid discover cardnumber")
+            return false
+        }
+        else if (cvvnumber!!.isEmpty()) {
+
+            // ccv_number?.error = "Enter Cvv Number"
+            context?.showErrorMessage("Enter cvv number")
+            return false
+        } else if (cvvnumber.length < 3) {
+
+            //ccv_number?.error = "Enter Full Cvv Number"
+            context?.showErrorMessage("Enter full cvv number")
+            return false
+        } else if (expirydate!!.isEmpty()) {
+
+            //expiry_date?.error = "Enter Expiry Date"
+            context?.showErrorMessage("Enter expiry date")
+            return false
+        } else if (expirydate.length < 4) {
+            //  expiry_date?.error = "Invalid Expiry Date"
+            context?.showErrorMessage("Invalid expiry date")
+            return false
+        } else if (zipCode!!.length < 5) {
+            //   expiry_date?.error = "Invalid ZipCode"
+            context?.showErrorMessage("Invalid zipcode")
+            return false
+        } else if (city!!.isEmpty()) {
+            context?.showErrorMessage("Invalid zipcode")
+            return false
+        } else if (streedAddress!!.isEmpty()) {
+            //expiry_date?.error = "Enter Street Address"
+            context?.showErrorMessage("Enter street address")
+            return false
+        } else if (cardname!!.isEmpty()) {
+
+            //name?.error = "Enter Name"
+            context?.showErrorMessage("Enter Cardholder Name")
+            return false
+        } else if (cardname.length<2) {
+            context?.showErrorMessage(" Cardholder Name must be between 2 and 14 characters")
+            //name?.error = "Enter Name"
+            return false
+        } else if (nickName!!.isEmpty()) {
+            //expiry_date?.error = "Enter Street Address"
+            context?.showErrorMessage("Enter nickname")
+            return false
+        } else if (nickName.length < 2) {
+            //expiry_date?.error = "Enter Street Address"
+            context?.showErrorMessage(" Nick Name name must be between 2 and 14 characters")
+            return false
+        }  else {
+            val mon = expirydate?.substring(0, 2).toInt()
+            val year = expirydate?.substring(2).toInt()
+            if (mon < 1 || mon > 12) {
+                expiry_date?.error = "Invalid Expiry Date"
+                return false
+            } else if (year < datePart2.toInt()) {
+                expiry_date?.error = "Invalid Expiry Date"
+                return false
+            } else if ((year == datePart2.toInt()) && (mon < datePart1.toInt())) {
+                expiry_date?.error = "Invalid Expiry Date"
+                return false
+            }
+            return true
+        }
+
+    }
+
+    fun setListeners() {
+        paymentZipCode?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.toString().length == 5)
+                    getFromZipCode(s.toString().toInt())
+                else {
+                    paymentState?.setText("")
+                    paymentCountry?.setText("")
+                    paymentCity?.setText("")
+                }
+            }
+
+        })
         card_number?.addTextChangedListener(object : TextWatcher {
 
             private val TOTAL_SYMBOLS = 19 // size of pattern 0000-0000-0000-0000
@@ -442,258 +679,6 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
         setListeners()
         rootLayout!!.setOnClickListener({
             hideKeyboard(it,context)
-        })
-        return view
-
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        acBarListener = context as Communicator.IActionBar
-        mcontext = context
-    }
-
-    fun setIds(view:View){
-
-    }
-    override fun onResume() {
-        super.onResume()
-
-        if (counter == 1) {
-            add_card_text?.performClick()
-        } else {
-            card_detail_text?.performClick()
-        }
-        acBarListener?.isBackButtonEnabled(true)
-        acBarListener?.toolbarBackground(false)
-    }
-
-    private fun AddCreditCard() {
-        val isValidated = checkValidation()
-        if (isValidated) {
-            val rootObject = JSONObject()
-            // rootObject.put("initial_amount", profilepicname.toString())
-            val cardnumber = card_number?.text?.toString()
-            val cardname = name?.text?.toString()
-            var expirydate = expiry_date?.text?.toString()
-            expirydate = expirydate?.replace("/", "")
-            val cvvnumber = ccv_number?.text?.toString()
-            val isChecked = switch_default?.isChecked
-            rootObject.put("number", cardnumber?.replace("-", ""))
-            rootObject.put("name", cardname)
-            rootObject.put("expDate", expirydate)
-            rootObject.put("cvc", cvvnumber)
-            rootObject.put("card_type", cardType)
-            rootObject.put("nickname", paymentNickName?.text?.toString())
-            rootObject.put("state", paymentState?.text?.toString())
-            rootObject.put("city", paymentCity?.text?.toString())
-            rootObject.put("country", paymentCountry?.text?.toString())
-            rootObject.put("zipcode", paymentZipCode?.text?.toString()?.toInt())
-            rootObject.put("street_adrress", paymentStreetAddress?.text?.toString())
-            rootObject.put("autopay", isChecked)
-          //  rootObject.put("pinCode", 143)
-            load?.showdialog()
-            volleyService?.postDataVolley(
-                RequestType.JsonObjectRequest,
-                urlAddCreditCard,
-                rootObject,
-                token!!
-            )
-
-        }
-    }
-
-
-//    private suspend fun getCreditCards()= suspendCoroutine<String> {
-//
-//
-//        val jsonObjectRequest =
-//        jsonObjectRequest.setShouldCache(false)
-//        MySingleton.getInstance(mcontext!!.applicationContext).addToRequestQueue(jsonObjectRequest)
-//    }
-
-    suspend fun getCreditCards(): String = suspendCancellableCoroutine { continuation ->
-        CreditCardsList.clear()
-        getStringData(mcontext,urlGetCreditCard, token,continuation).getStringRequest()
-    }
-    private fun getFromZipCode(zipCode: Int) {
-        val jsonObjectRequest = object : JsonObjectRequest(
-            Request.Method.GET, urlFromZipCode + zipCode, null,
-            Response.Listener { response ->
-                paymentCountry?.setText(response?.getString("country"))
-                paymentCity?.setText(response?.getString("city"))
-                paymentState?.setText(response?.getString("state"))
-
-                try {
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
-
-            },
-            Response.ErrorListener { error ->
-                // showErrorBody(error)
-                var statusCode = error.networkResponse.statusCode
-                if (statusCode == 400)
-                    context?.showErrorMessage("Invalid zipcode")
-            }
-        ) {
-
-
-            override fun parseNetworkResponse(response: NetworkResponse?): Response<JSONObject> {
-                return super.parseNetworkResponse(response)
-            }
-
-            override fun getHeaders(): MutableMap<String, String> {
-                val headers = HashMap<String, String>()
-                headers["Content-Type"] = "application/json; charset=utf-8"
-                if (!token.equals(""))
-                    headers.put("Authorization", "JWT " + token)
-                return headers
-            }
-        }
-        MySingleton.getInstance(mcontext!!.applicationContext).addToRequestQueue(jsonObjectRequest)
-    }
-
-    override fun updateCreditCard(id: Int) {
-//        val args = Bundle()
-//        args.putInt("id", id)
-//        var fragment = UpdateCreditCardFragment()
-//        fragment.arguments = args
-//        var fragmentTransaction = fragmentManager?.beginTransaction()
-//        fragmentTransaction?.replace(R.id.content_frame, fragment)
-//        fragmentTransaction?.addToBackStack(null)
-//        counter++;
-//        fragmentTransaction?.commit()
-
-    }
-
-    override fun deleteCreditCard(id: Int) {
-        volleyService?.deleteDataVolley(
-            RequestType.StringRequest,
-            urlDeleteCreditCard+id,
-            token!!
-        )
-
-    }
-
-    fun checkValidation(): Boolean {
-        val cardnumber = card_number?.text?.toString()?.trim()
-        val cardname = name?.text?.toString()?.trim()
-        var expirydate = expiry_date?.text?.toString()?.trim()
-        expirydate = expirydate?.replace("/", "")
-        val cvvnumber = ccv_number?.text?.toString()
-        val zipCode = paymentZipCode?.text?.toString()
-        val city = paymentCity?.text?.toString()
-        val country = paymentCountry?.text?.toString()
-        val state = paymentState?.text?.toString()
-        val nickName = paymentNickName?.text?.toString()
-        val streedAddress = paymentStreetAddress?.text?.toString()
-        if (cardnumber!!.isEmpty()) {
-
-            //card_number?.error = "Enter Card Number"
-            context?.showErrorMessage("Enter card number")
-            return false
-        } else if (cardnumber.length < 19) {
-            //card_number?.error = "Enter Full Card Number"
-            context?.showErrorMessage("Enter full card number")
-            return false
-        } else if(cardType.equals("Mastercard",true)&& !cardnumber.replace("-","").matches("^5[1-5][0-9]{1,14}$".toRegex())){
-
-            context?.showErrorMessage("Invalid master cardnumber")
-            return false
-        }else if(cardType.equals("Visa",true)&& !cardnumber.replace("-","").matches("^4[0-9]{2,12}(?:[0-9]{3})?$".toRegex())){
-
-            context?.showErrorMessage("Invalid visa cardnumber")
-            return false
-        }else if(cardType.equals("Discover",true)&& !cardnumber.replace("-","").matches("^65[4-9][0-9]{13}|64[4-9][0-9]{13}|6011[0-9]{12}|(622(?:12[6-9]|1[3-9][0-9]|[2-8][0-9][0-9]|9[01][0-9]|92[0-5])[0-9]{10})$".toRegex())){
-
-            context?.showErrorMessage("Invalid discover cardnumber")
-            return false
-        }
-        else if (cvvnumber!!.isEmpty()) {
-
-            // ccv_number?.error = "Enter Cvv Number"
-            context?.showErrorMessage("Enter cvv number")
-            return false
-        } else if (cvvnumber.length < 3) {
-
-            //ccv_number?.error = "Enter Full Cvv Number"
-            context?.showErrorMessage("Enter full cvv number")
-            return false
-        } else if (expirydate!!.isEmpty()) {
-
-            //expiry_date?.error = "Enter Expiry Date"
-            context?.showErrorMessage("Enter expiry date")
-            return false
-        } else if (expirydate.length < 4) {
-            //  expiry_date?.error = "Invalid Expiry Date"
-            context?.showErrorMessage("Invalid expiry date")
-            return false
-        } else if (zipCode!!.length < 5) {
-            //   expiry_date?.error = "Invalid ZipCode"
-            context?.showErrorMessage("Invalid zipcode")
-            return false
-        } else if (city!!.isEmpty()) {
-            context?.showErrorMessage("Invalid zipcode")
-            return false
-        } else if (streedAddress!!.isEmpty()) {
-            //expiry_date?.error = "Enter Street Address"
-            context?.showErrorMessage("Enter street address")
-            return false
-        } else if (cardname!!.isEmpty()) {
-
-            //name?.error = "Enter Name"
-            context?.showErrorMessage("Enter Cardholder Name")
-            return false
-        } else if (cardname.length<2) {
-            context?.showErrorMessage(" Cardholder Name must be between 2 and 14 characters")
-            //name?.error = "Enter Name"
-            return false
-        } else if (nickName!!.isEmpty()) {
-            //expiry_date?.error = "Enter Street Address"
-            context?.showErrorMessage("Enter nickname")
-            return false
-        } else if (nickName.length < 2) {
-            //expiry_date?.error = "Enter Street Address"
-            context?.showErrorMessage(" Nick Name name must be between 2 and 14 characters")
-            return false
-        }  else {
-            val mon = expirydate?.substring(0, 2).toInt()
-            val year = expirydate?.substring(2).toInt()
-            if (mon < 1 || mon > 12) {
-                expiry_date?.error = "Invalid Expiry Date"
-                return false
-            } else if (year < datePart2.toInt()) {
-                expiry_date?.error = "Invalid Expiry Date"
-                return false
-            } else if ((year == datePart2.toInt()) && (mon < datePart1.toInt())) {
-                expiry_date?.error = "Invalid Expiry Date"
-                return false
-            }
-            return true
-        }
-
-    }
-
-    fun setListeners() {
-        paymentZipCode?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.toString().length == 5)
-                    getFromZipCode(s.toString().toInt())
-                else {
-                    paymentState?.setText("")
-                    paymentCountry?.setText("")
-                    paymentCity?.setText("")
-                }
-            }
-
         })
     }
 
