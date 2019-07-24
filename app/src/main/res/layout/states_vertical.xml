@@ -6,9 +6,6 @@
         android:background="#fff"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_marginLeft="@dimen/crammargin8"
-        android:layout_marginTop="@dimen/crammargin8"
-        android:layout_marginRight="@dimen/crammargin8"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android">
     

@@ -26,6 +26,10 @@ import org.json.JSONArray
 class StatesFragment : PropertyBaseFragment(), Communicator.IVolleResult,Communicator.IStates {
 
 
+    override fun onStateItemClick(id: Int?, name: String?) {
+        navigateToMoreProperties(id, name, 1)
+
+    }
     override fun notifySuccess(requestType: RequestType?, response: JSONArray?, url: String, netWorkResponse: Int?) {
         if (url == Urls.urlStates) {
             setStatesAdapter(volleyParsing!!.getStateData(response, 1))
@@ -61,6 +65,7 @@ class StatesFragment : PropertyBaseFragment(), Communicator.IVolleResult,Communi
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        super.setIVolleyResult(this)
         val view = inflater.inflate(R.layout.fragment_states, container, false)
         setIds(view)
         setListeners()
@@ -73,7 +78,7 @@ class StatesFragment : PropertyBaseFragment(), Communicator.IVolleResult,Communi
         volleyParsing = VolleyParsing()
         volleyService = VolleyService(this, mcontext!!.applicationContext)
         recycleStates = view.findViewById(R.id.recycle_states)
-        recycleStates.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        recycleStates.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
     }
 
     private fun setListeners() {
@@ -89,6 +94,22 @@ class StatesFragment : PropertyBaseFragment(), Communicator.IVolleResult,Communi
         recycleStates.adapter = statesAdapter
         statesAdapter.run {
             setStateListener(this@StatesFragment)
+        }
+    }
+
+    fun navigateToMoreProperties(id: Int?, name: String?,mflag:Int){
+        val args = Bundle()
+        args.putInt("mflag", mflag)
+        args.putInt("stateId", id!!)
+        args.putString("stateName", name)
+        val fragment = PropertiesMoreFragment()
+        fragment.arguments = args
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.run {
+            replace(R.id.content_frame, fragment)
+            addToBackStack(fragment.toString())
+            commit()
+
         }
     }
 }
