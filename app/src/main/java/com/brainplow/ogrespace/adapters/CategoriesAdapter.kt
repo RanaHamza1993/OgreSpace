@@ -26,7 +26,7 @@ class CategoriesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         this.catList=catList
         this.layoutType=layoutType
     }
-    fun setCategory(catListener:ICategory){
+    fun setCategoryListener(catListener:ICategory){
         this.catListener=catListener
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -53,7 +53,7 @@ class CategoriesAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             catImage?.setImageDrawable(context?.resources?.getDrawable(R.drawable.cplaceholder))
             catName?.setText(catList!![position].Property_type)
             itemView.setOnClickListener {
-
+                catListener?.onCatClick(catList!![position].id,catList!![position].Property_type)
             }
         }
     }

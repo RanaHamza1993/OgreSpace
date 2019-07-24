@@ -36,5 +36,6 @@ object Urls {
     val urlGetRecentlyViewed = baseUrl + "office/recently_viewed_android/"
     val urlDeleteCreditCard = baseUrl + "payment/cardinfodelete/"
     val urlGetPropertyCategories = baseUrl + "office/property_type/"
+    val urlGetPropertyByCategories = baseUrl + "office/Category_Property_android/"
     val urlGooglePlaceSearch = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input="
 }

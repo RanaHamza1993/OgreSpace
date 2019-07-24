@@ -63,7 +63,8 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
         if (url.contains(Urls.urlPropertyByState)) {
             showErrorBody(error)
-        }
+        }else
+            showErrorBody(error)
     }
 
     override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
@@ -87,6 +88,7 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
     var mflag: Int? = null
     lateinit var load: LoadingDialog
     lateinit var recycleProperty: RecyclerView
+    var catObject:JSONObject?=null
     var stateName: String? = null
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -105,6 +107,7 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
         val bundle = arguments
         stateName = bundle?.getString("stateName")
         mflag = bundle?.getInt("mflag")
+        catObject=JSONObject().put("category_name",stateName)
         setIds(view)
         setListeners()
         volleyRequests()
@@ -116,7 +119,7 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
         acBarListener?.run {
             isBackButtonEnabled(true)
             toolbarBackground(false)
-            if (mflag == 1)
+            if (mflag == 1||mflag==5)
                 actionBarListener("${stateName} Properties")
             else if (mflag == 2)
                 actionBarListener("Sale Properties")
@@ -166,6 +169,14 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
                 Urls.urlGetRecentlyViewed + "?page=" + pages,
                 token!!
             )
+        else if (mflag == 5) {
+
+            volleyService?.postDataVolley(
+                RequestType.JsonObjectRequest,
+                Urls.urlGetPropertyByCategories + "?page=" + pages,catObject,
+                token!!
+            )
+        }
     }
 
     fun setListeners() {
@@ -213,6 +224,12 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
                             volleyService?.getDataVolley(
                                 RequestType.JsonObjectRequest,
                                 Urls.urlGetRecentlyViewed + "?page=" + pages,
+                                token!!
+                            )
+                        else if (mflag == 5)
+                            volleyService?.postDataVolley(
+                                RequestType.JsonObjectRequest,
+                                Urls.urlGetPropertyByCategories + "?page=" + pages,catObject,
                                 token!!
                             )
 

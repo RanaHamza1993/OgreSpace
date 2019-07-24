@@ -14,6 +14,7 @@ import com.brainplow.ogrespace.R
 import com.brainplow.ogrespace.adapters.CategoriesAdapter
 import com.brainplow.ogrespace.adapters.StatesAdapter
 import com.brainplow.ogrespace.apputils.Urls
+import com.brainplow.ogrespace.baseclasses.BaseFragment
 import com.brainplow.ogrespace.baseclasses.PropertyBaseFragment
 import com.brainplow.ogrespace.enums.LayoutType
 import com.brainplow.ogrespace.enums.RequestType
@@ -24,8 +25,24 @@ import com.brainplow.ogrespace.kotlin.VolleyService
 import com.brainplow.ogrespace.models.CategoriesModel
 import org.json.JSONArray
 
-class CategoriesFragment : PropertyBaseFragment(),Communicator.IVolleResult {
+class CategoriesFragment : BaseFragment(),Communicator.IVolleResult,CategoriesAdapter.ICategory {
 
+
+    override fun onCatClick(id: Int?, name: String?) {
+        val args = Bundle()
+        args.putInt("mflag", 5)
+        args.putInt("stateId", 0)
+        args.putString("stateName", name)
+        val fragment = PropertiesMoreFragment()
+        fragment.arguments = args
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.run {
+            replace(R.id.content_frame, fragment)
+            addToBackStack(fragment.toString())
+            commit()
+
+        }
+    }
 
     var volleyService: VolleyService? = null
     var volleyParsing: VolleyParsing? = null
@@ -87,8 +104,11 @@ class CategoriesFragment : PropertyBaseFragment(),Communicator.IVolleResult {
     }
 
     private fun setCategoryAdapter(categories: ArrayList<CategoriesModel>) {
-        val statesAdapter = CategoriesAdapter(context, categories, LayoutType.LayoutCategories)
-        recyclerCategories.adapter = statesAdapter
+        val categoryAdapter = CategoriesAdapter(context, categories, LayoutType.LayoutCategories)
+        recyclerCategories.adapter = categoryAdapter
+        categoryAdapter.run{
+            setCategoryListener(this@CategoriesFragment)
+        }
 
     }
 
