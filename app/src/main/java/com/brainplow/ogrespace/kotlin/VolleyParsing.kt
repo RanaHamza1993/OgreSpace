@@ -1,6 +1,7 @@
 package com.brainplow.ogrespace.kotlin
 
 import android.util.Log
+import com.brainplow.ogrespace.models.CategoriesModel
 import com.brainplow.ogrespace.models.MyFavModel
 import com.brainplow.ogrespace.models.PropertyModel
 import com.brainplow.ogrespace.models.StateModel
@@ -11,9 +12,11 @@ import org.json.JSONObject
 
 class VolleyParsing {
     var stateList = ArrayList<StateModel>()
+    var catList = ArrayList<CategoriesModel>()
     var propertyList = ArrayList<PropertyModel>()
     var favModel = ArrayList<MyFavModel>()
     val stateType = object : TypeToken<ArrayList<StateModel>>() {}.type
+    val catType = object : TypeToken<ArrayList<CategoriesModel>>() {}.type
     val propertyType = object : TypeToken<ArrayList<PropertyModel>>() {}.type
     val favType = object : TypeToken<ArrayList<MyFavModel>>() {}.type
     fun getStateData(response: JSONArray?, pageNo: Int): ArrayList<StateModel> {
@@ -27,6 +30,17 @@ class VolleyParsing {
             Log.d("error", e.toString())
         }
         return stateList
+    }
+    fun getCategoriesData(response: JSONArray?): ArrayList<CategoriesModel> {
+            catList.clear()
+        try {
+            //   val array = JSONObject(response)
+            // val marry: JSONArray = array.get("courses") as JSONArray
+            catList.addAll(GsonBuilder().serializeNulls().create().fromJson(response.toString(), catType))
+        } catch (e: Exception) {
+            Log.d("error", e.toString())
+        }
+        return catList
     }
 
     fun getPropertyData(response: JSONObject?, pageNo: Int): ArrayList<PropertyModel> {

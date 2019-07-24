@@ -8,19 +8,20 @@
             android:id="@+id/bot_states"
             android:icon="@drawable/locationplaceholder"
             android:title="States"/>
+    
+    
     <item
-            android:id="@+id/bot_save"
-            android:icon="@drawable/bottom_heart_home"
-            android:title="Favorites"/>
+            android:id="@+id/bot_addlisting"
+            android:icon="@drawable/botaddlisting"
+            android:title="Add Listing"/>
+    <item
+            android:id="@+id/bot_category"
+            android:icon="@drawable/botcategory"
+            android:title="Categories"/>
+
     <item
             android:id="@+id/bottom_search"
             android:icon="@drawable/bottom_search_home"
             android:title="Search"/>
-   
-    <item
-            android:id="@+id/bot_profile"
-            android:icon="@drawable/bottom_profile_home"
-            android:title="Profile"/>
-
 
 </menu>

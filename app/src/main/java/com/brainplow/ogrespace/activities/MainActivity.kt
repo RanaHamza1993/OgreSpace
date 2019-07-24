@@ -298,11 +298,11 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
                     R.id.bot_states -> {
                         navigateToFragment(StatesFragment())
                     }
-                    R.id.bot_save -> {
-                        navigateToFragment(MyFavFragment())
+                    R.id.bot_category -> {
+                        navigateToFragment(CategoriesFragment())
                     }
-                    R.id.bot_profile -> {
-                        navigateToFragment(ProfileFragment())
+                    R.id.bot_addlisting -> {
+                        navigateToFragment(AddListingFragment())
                     }
 
                 }

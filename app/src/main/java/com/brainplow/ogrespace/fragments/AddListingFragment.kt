@@ -213,7 +213,7 @@ class AddListingFragment : BaseFragment(), Communicator.IVolleResult {
 
     private fun setAdapters() {
         sSpaceAdapter = object : ArrayAdapter<String>(
-            activity,
+            mcontext,
             android.R.layout.simple_spinner_item, sTypeArray
         ) {
 
@@ -225,7 +225,7 @@ class AddListingFragment : BaseFragment(), Communicator.IVolleResult {
 
 
         sPropertyAdapter = object : ArrayAdapter<String>(
-            activity,
+            mcontext,
             android.R.layout.simple_spinner_item, sPropertyArray
         ) {
 
@@ -296,22 +296,22 @@ class AddListingFragment : BaseFragment(), Communicator.IVolleResult {
     }
 
     private fun parseData(jsonArray: JSONArray) {
-        for (i in 0 until jsonArray?.length()!!) {
-            var stateModel = StateModel()
-            var baseObj: JSONObject = jsonArray?.getJSONObject(i)
-            var our_services = baseObj?.getString("our_services")
-            var logo_of_services_32px = baseObj?.getString("logo_of_services_32px")
+        for (i in 0 until jsonArray.length()) {
+            val stateModel = StateModel()
+            val baseObj: JSONObject = jsonArray.getJSONObject(i)
+            val our_services = baseObj.getString("our_services")
+            val logo_of_services_32px = baseObj.getString("logo_of_services_32px")
 
-            stateModel?.state = our_services
-            stateModel?.icon_image = logo_of_services_32px
-            stateModel?.check_value = false
+            stateModel.state = our_services
+            stateModel.icon_image = logo_of_services_32px
+            stateModel.check_value = false
 
             sServiceArray?.add(stateModel)
 
 
         }
-        var manager: LinearLayoutManager = LinearLayoutManager(activity)
-        serviceAdapter = ServiceAdapter(activity!!, sServiceArray!!)
+        val manager: LinearLayoutManager = LinearLayoutManager(activity)
+        serviceAdapter = ServiceAdapter(mcontext!!, sServiceArray!!)
         services_recycler!!.layoutManager = manager
         services_recycler!!.adapter = serviceAdapter
         sSpaceAdapter?.notifyDataSetChanged()
