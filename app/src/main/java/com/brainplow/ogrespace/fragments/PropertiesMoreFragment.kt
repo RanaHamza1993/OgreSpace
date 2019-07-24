@@ -61,10 +61,9 @@ class PropertiesMoreFragment : PropertyBaseFragment(), Communicator.IVolleResult
 
 
     override fun notifyError(requestType: RequestType?, error: VolleyError?, url: String, netWorkResponse: Int?) {
-        if (url.contains(Urls.urlPropertyByState)) {
-            showErrorBody(error)
-        }else
-            showErrorBody(error)
+//        if (url.contains(Urls.urlPropertyByState)) {
+//            showErrorBody(error)
+//        }
     }
 
     override fun notifySuccess(requestType: RequestType?, response: String?, url: String, netWorkResponse: Int?) {
