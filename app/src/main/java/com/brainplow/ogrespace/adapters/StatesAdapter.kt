@@ -49,7 +49,10 @@ class StatesAdapter(context: Context?, itemss: ArrayList<StateModel>?) : Generic
         var view: View? = null
         if (layoutType == LayoutType.LayoutStatesCat) {
             view = layoutInflater.inflate(R.layout.carditems, parent, false)
-        } else if (layoutType == LayoutType.LayoutStateSmall) {
+        }else if (layoutType == LayoutType.LayoutStatesVertical) {
+            view = layoutInflater.inflate(R.layout.states_vertical, parent, false)
+        }
+        else if (layoutType == LayoutType.LayoutStateSmall) {
             view = layoutInflater.inflate(R.layout.card_small_item, parent, false)
         }
         return StatesHolder(view!!)

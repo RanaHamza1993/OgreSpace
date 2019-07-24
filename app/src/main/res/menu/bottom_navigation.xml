@@ -5,18 +5,18 @@
             android:icon="@drawable/botnavhome"
             android:title="Home"/>
     <item
-            android:id="@+id/bottom_search"
-            android:icon="@drawable/bottom_search_home"
-            android:title="Search"/>
+            android:id="@+id/bot_states"
+            android:icon="@drawable/locationplaceholder"
+            android:title="States"/>
     <item
             android:id="@+id/bot_save"
             android:icon="@drawable/bottom_heart_home"
             android:title="Favorites"/>
-    
     <item
-            android:id="@+id/bot_notification"
-            android:icon="@drawable/bottom_bell_home"
-            android:title="Notifications"/>
+            android:id="@+id/bottom_search"
+            android:icon="@drawable/bottom_search_home"
+            android:title="Search"/>
+   
     <item
             android:id="@+id/bot_profile"
             android:icon="@drawable/bottom_profile_home"

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<LinearLayout
+        android:orientation="vertical"
+        android:background="#fff"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/crammargin8"
+        android:layout_marginTop="@dimen/crammargin8"
+        android:layout_marginRight="@dimen/crammargin8"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_height="wrap_content"
+                  android:layout_width="match_parent">
+        
+        <ImageView
+                android:layout_height="@dimen/catimgsize"
+                android:layout_width="@dimen/catimgsize"
+                android:layout_marginTop="@dimen/crammargin5"
+                android:layout_marginRight="@dimen/margintop_large"
+                android:layout_marginBottom="@dimen/crammargin5"
+                android:layout_marginLeft="@dimen/margintop_large"
+                android:src="@drawable/cplaceholder"
+                android:id="@+id/state_image"/>
+        
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/state_name"
+                android:textSize="@dimen/front_cat_text_size"
+                android:maxLines="1"
+                android:gravity="center"
+                android:fontFamily="@font/opensans_semibold"
+                android:layout_marginLeft="@dimen/crammargin8"
+                android:ellipsize="end"
+                android:text="Art and "
+                android:textAlignment="center"
+        />
+    
+    </LinearLayout>
+    <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/md_grey_300"/>
+</LinearLayout>
+
+

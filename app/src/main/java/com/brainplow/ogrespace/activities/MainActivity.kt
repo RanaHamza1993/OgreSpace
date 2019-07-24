@@ -292,8 +292,11 @@ class MainActivity : BaseActivity(), Communicator.IActionBar, Communicator.IBott
 
                         }
                     }
-                    R.id.bot_notification -> {
-                        navigateToFragment(NotificationsFragment())
+//                    R.id.bot_notification -> {
+//                        navigateToFragment(NotificationsFragment())
+//                    }
+                    R.id.bot_states -> {
+                        navigateToFragment(StatesFragment())
                     }
                     R.id.bot_save -> {
                         navigateToFragment(MyFavFragment())

@@ -262,7 +262,7 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
             },
             Response.ErrorListener { error ->
                 // showErrorBody(error)
-                var statusCode = error.networkResponse.statusCode
+                val statusCode = error.networkResponse.statusCode
                 if (statusCode == 400)
                     context?.showErrorMessage("Invalid zipcode")
             }
@@ -614,7 +614,7 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
             table_recycler?.visibility = View.GONE
         })
 
-        card_detail_text?.setOnClickListener({
+        card_detail_text?.setOnClickListener(){
 
             card_detail_text?.setBackgroundColor(resources.getColor(R.color.black))
             card_detail_text?.setTextColor(resources.getColor(R.color.white))
@@ -630,7 +630,7 @@ class PaymentMethodFragment() : BaseFragment(), Communicator.ICreditCard, Corout
             }
 
 
-        })
+        }
 
 //        btn_pay.setOnClickListener{
 //            btn_pay.setBackgroundResource(R.drawable.border)
